@@ -1,0 +1,10 @@
+<resources>
+    <!-- basic color palette -->
+    <color name="primary">#3f51b5</color>
+    <color name="primaryDark">#303f9f</color>
+    <color name="accent">#c5cae9</color>
+
+    <color name="background">#e8eaf6</color>
+    <color name="textColorWhite">#ffffff</color>
+    
+</resources>

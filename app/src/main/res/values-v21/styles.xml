@@ -1,0 +1,16 @@
+<resources>
+	<!-- Default style sheet fro Android = Lollipop : API v21 -->
+    <style name="AppTheme" parent="android:Theme.Material.Light">
+        <!--   your app branding color for the app bar -->
+        <item name="android:colorPrimary">@color/primary</item>
+
+        <!--   darker variant for the status bar and contextual app bars -->
+        <item name="android:colorPrimaryDark">@color/primaryDark</item>
+
+        <!--   theme UI controls like checkboxes and text fields -->
+        <item name="android:colorAccent">@color/accent</item>
+
+        <!--   color fro the title bar -->
+        <item name="android:textColorPrimary">@color/textColorWhite</item>
+    </style>
+</resources>
