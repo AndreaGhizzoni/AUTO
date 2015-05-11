@@ -1,4 +1,4 @@
-package it.science.unitn.lpsmt.auto;
+package it.science.unitn.lpsmt.auto.ui;
 
 import android.app.Activity;
 import android.os.Bundle;
