@@ -24,8 +24,12 @@ public class Vehicle {
 //==================================================================================================
 // SETTER
 //==================================================================================================
-    public void setId(Long id){
-        if( id != null && !id.equals(this.id) )
+    public void setId(Long id) throws IllegalArgumentException{
+        if( id == null )
+            this.id = Const.NO_DB_ID_SET;
+        else if( id < Const.NO_DB_ID_SET )
+                throw new IllegalArgumentException("ID of vehicle can not be less then "+Const.NO_DB_ID_SET);
+        else
             this.id = id;
     }
 
@@ -34,14 +38,18 @@ public class Vehicle {
             this.plate = plate;
     }
 
-    public void setPurchaseDate(Date purchaseDate) {
-        // TODO check if future date
-        if( purchaseDate != null )
-            this.purchaseDate = purchaseDate;
+    public void setPurchaseDate(Date purchaseDate) throws IllegalArgumentException{
+        if( purchaseDate == null )
+            throw new IllegalArgumentException("Purchase Date of vehicle can not be null.");
+        if( purchaseDate.after(new Date()) )
+            throw new IllegalArgumentException("Purchase Date can not be in the future.");
+
+        this.purchaseDate = purchaseDate;
     }
 
-    public void setName(String name) {
-        // TODO check if null or empty string
+    public void setName(String name) throws IllegalArgumentException{
+        if( name == null || name.isEmpty() )
+            throw new IllegalArgumentException("Name of vehicle can not be null or empty string");
 
         this.name = name;
     }
@@ -49,18 +57,13 @@ public class Vehicle {
 //==================================================================================================
 // GETTER
 //==================================================================================================
-    public String getPlate() {
-        return plate;
-    }
+    public String getPlate() { return plate; }
 
-    public Date getPurchaseDate() {
-        return purchaseDate;
-    }
+    public Date getPurchaseDate() { return purchaseDate; }
 
-    public String getName() {
-        return name;
-    }
+    public String getName() { return name; }
 
+    public Long getId(){ return this.id; }
 
 //==================================================================================================
 //  INNER CLASS
@@ -69,18 +72,18 @@ public class Vehicle {
      * TODO add doc
      */
     public static class Default{
-        public static Vehicle defInstance;
+        public static Vehicle instance;
 
         public Vehicle get(){
-            if(defInstance == null){
-                defInstance = new Vehicle(
+            if(instance == null){
+                instance = new Vehicle(
                         "Default",
                         "XX123XX",
                         new Date(),
                         Const.NO_DB_ID_SET
                 );
             }
-            return defInstance;
+            return instance;
         }
     }
 
