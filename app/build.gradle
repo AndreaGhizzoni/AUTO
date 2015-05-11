@@ -12,7 +12,7 @@ android {
     compileSdkVersion 22
     buildToolsVersion "21.1.2"
     defaultConfig {
-        applicationId "lpsmt.science.unitn.it.auto"
+        applicationId "it.science.unitn.lpsmt.auto"
         minSdkVersion 14
         targetSdkVersion 22
         versionCode 1

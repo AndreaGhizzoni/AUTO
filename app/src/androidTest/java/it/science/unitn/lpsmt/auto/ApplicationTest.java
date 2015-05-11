@@ -1,4 +1,4 @@
-package lpsmt.science.unitn.it.auto;
+package it.science.unitn.lpsmt.auto;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

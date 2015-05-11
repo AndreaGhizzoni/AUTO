@@ -1,7 +1,9 @@
-package lpsmt.science.unitn.it.auto;
+package it.science.unitn.lpsmt.auto;
 
 import android.app.Activity;
 import android.os.Bundle;
+
+import lpsmt.science.unitn.it.auto.R;
 
 
 public class MainActivity extends Activity{
