@@ -1,5 +1,5 @@
 <resources>
-	<!-- Default style sheet fro Android = Lollipop : API v21 -->
+	<!-- Default style sheet for Android = Lollipop : API v21 -->
     <style name="AppTheme" parent="android:Theme.Material.Light">
         <!--   your app branding color for the app bar -->
         <item name="android:colorPrimary">@color/primary</item>

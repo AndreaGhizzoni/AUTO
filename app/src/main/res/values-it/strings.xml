@@ -1,3 +1,4 @@
 <resources>
+    <string name="test">questa e\' una string in italiano</string>
 
 </resources>

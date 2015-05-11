@@ -1,10 +1,10 @@
 package lpsmt.science.unitn.it.auto;
 
+import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends Activity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
