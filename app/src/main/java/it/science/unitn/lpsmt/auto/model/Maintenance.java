@@ -1,7 +1,5 @@
 package it.science.unitn.lpsmt.auto.model;
 
-import it.science.unitn.lpsmt.auto.model.util.Const;
-
 /**
  * TODO add doc
  */
@@ -12,52 +10,44 @@ public class Maintenance extends Cost {
     private Reminder reminder;
 
     public Maintenance( Type type, String name, Float amount, Place place, Reminder reminder,
-                        String notes ) {
-        super(amount, notes, Const.NO_DB_ID_SET);
+                        String notes, Long id ) {
+        super(amount, notes, id);
         this.setType(type);
         this.setName(name);
         this.setPlace(place);
         this.setReminder(reminder);
     }
 
-    public Maintenance( String name, Float amount ){
-        this(null, name, amount, null, null, null);
-    }
-
-    public Maintenance(){
-        this(null, null);
-    }
-
 //==================================================================================================
 //  METHOD
 //==================================================================================================
-    // not sure for these kind of methods
-    public static Maintenance getOrdinaryMaintenance(String name, Float amount){
-        Maintenance m = new Maintenance();
-        m.setType(Type.ORDINARY);
-        m.setName(name);
-        m.setAmount(amount);
-        // TODO maybe set with some place and reminder
-        return m;
-    }
-
-    public static Maintenance getExtraordinaryMaintenance(String name, Float amount){
-        Maintenance m = new Maintenance();
-        m.setType(Type.EXTRAORDINARY);
-        m.setName(name);
-        m.setAmount(amount);
-        //TODO maybe set with some place and reminder
-        return m;
-    }
-
-    public static Maintenance getTaxMaintenance(String name, Float amount){
-        Maintenance m = new Maintenance();
-        m.setType(Type.TAX);
-        m.setName(name);
-        m.setAmount(amount);
-        //TODO maybe set with some place and reminder
-        return m;
-    }
+//    // not sure for these kind of methods
+//    public static Maintenance getOrdinaryMaintenance(String name, Float amount){
+//        Maintenance m = new Maintenance();
+//        m.setType(Type.ORDINARY);
+//        m.setName(name);
+//        m.setAmount(amount);
+//        // TODO maybe set with some place and reminder
+//        return m;
+//    }
+//
+//    public static Maintenance getExtraordinaryMaintenance(String name, Float amount){
+//        Maintenance m = new Maintenance();
+//        m.setType(Type.EXTRAORDINARY);
+//        m.setName(name);
+//        m.setAmount(amount);
+//        //TODO maybe set with some place and reminder
+//        return m;
+//    }
+//
+//    public static Maintenance getTaxMaintenance(String name, Float amount){
+//        Maintenance m = new Maintenance();
+//        m.setType(Type.TAX);
+//        m.setName(name);
+//        m.setAmount(amount);
+//        //TODO maybe set with some place and reminder
+//        return m;
+//    }
 
 //==================================================================================================
 // SETTER

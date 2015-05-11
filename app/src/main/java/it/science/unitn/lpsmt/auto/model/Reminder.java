@@ -2,8 +2,6 @@ package it.science.unitn.lpsmt.auto.model;
 
 import java.util.Date;
 
-import it.science.unitn.lpsmt.auto.model.util.Const;
-
 /**
  * TODO add doc
  */
@@ -19,10 +17,6 @@ public class Reminder {
         this.setId(id);
     }
 
-    public Reminder(){
-        this(null, null, Const.NO_DB_ID_SET);
-    }
-
 //==================================================================================================
 // SETTER
 //==================================================================================================
@@ -32,6 +26,7 @@ public class Reminder {
     }
 
     public void setDate( Date date ){
+        // TODO check if is an expired date
         if( date != null )
             this.date = date;
     }

@@ -1,7 +1,5 @@
 package it.science.unitn.lpsmt.auto.model;
 
-import it.science.unitn.lpsmt.auto.model.util.Const;
-
 /**
  * TODO add description
  */
@@ -14,14 +12,6 @@ public abstract class Cost {
         this.setAmount(amount);
         this.setNotes(notes);
         this.setId(id);
-    }
-
-    public Cost(Float amount) {
-        this(amount, "", Const.NO_DB_ID_SET);
-    }
-
-    public Cost(){
-        this(null);
     }
 
 //==================================================================================================

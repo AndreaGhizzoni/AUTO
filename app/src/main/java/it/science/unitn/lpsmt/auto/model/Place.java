@@ -2,8 +2,6 @@ package it.science.unitn.lpsmt.auto.model;
 
 import android.location.Location;
 
-import it.science.unitn.lpsmt.auto.model.util.Const;
-
 /**
  * TODO add doc
  */
@@ -16,10 +14,6 @@ public class Place {
         this.setGeoTag(geoTag);
         this.setAddress(address);
         this.setId(id);
-    }
-
-    public Place(){
-        this(null, null, Const.NO_DB_ID_SET);
     }
 
 //==================================================================================================

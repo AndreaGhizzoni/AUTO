@@ -21,18 +21,6 @@ public class Vehicle {
         this.setId(id);
     }
 
-    public Vehicle( String name, String plate, Date purchaseDate ){
-        this(name, plate, purchaseDate, Const.NO_DB_ID_SET);
-    }
-
-    public Vehicle( String name, String plate ){
-        this(name, plate, null);
-    }
-
-    public Vehicle(){
-        this(null, null);
-    }
-
 //==================================================================================================
 // SETTER
 //==================================================================================================
@@ -47,13 +35,15 @@ public class Vehicle {
     }
 
     public void setPurchaseDate(Date purchaseDate) {
+        // TODO check if future date
         if( purchaseDate != null )
             this.purchaseDate = purchaseDate;
     }
 
     public void setName(String name) {
-        if( name != null )
-            this.name = name;
+        // TODO check if null or empty string
+
+        this.name = name;
     }
 
 //==================================================================================================
@@ -83,10 +73,12 @@ public class Vehicle {
 
         public Vehicle get(){
             if(defInstance == null){
-                defInstance = new Vehicle();
-                defInstance.setName("Default");
-                defInstance.setPlate("XX123XX");
-                defInstance.setPurchaseDate(new Date());
+                defInstance = new Vehicle(
+                        "Default",
+                        "XX123XX",
+                        new Date(),
+                        Const.NO_DB_ID_SET
+                );
             }
             return defInstance;
         }
