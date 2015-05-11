@@ -2,20 +2,24 @@ package it.science.unitn.lpsmt.auto.model;
 
 import android.location.Location;
 
+import it.science.unitn.lpsmt.auto.model.util.Const;
+
 /**
  * TODO add doc
  */
 public class Place {
+    private Long id;
     private Location geoTag;
     private String address;
 
-    public Place( Location geoTag, String address ){
+    public Place( Location geoTag, String address, Long id ){
         this.setGeoTag(geoTag);
         this.setAddress(address);
+        this.setId(id);
     }
 
     public Place(){
-        this( null, null );
+        this(null, null, Const.NO_DB_ID_SET);
     }
 
 //==================================================================================================
@@ -31,9 +35,16 @@ public class Place {
             this.address = address;
     }
 
+    public void setId( Long id ){
+        if( id != null && !id.equals(this.id) )
+            this.id = id;
+    }
+
 //==================================================================================================
 // GETTER
 //==================================================================================================
+    public Long getId(){ return id; }
+
     public Location getGeoTag() { return geoTag; }
 
     public String getAddress() { return address; }

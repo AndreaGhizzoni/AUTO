@@ -1,5 +1,7 @@
 package it.science.unitn.lpsmt.auto.model;
 
+import it.science.unitn.lpsmt.auto.model.util.Const;
+
 /**
  * TODO add doc
  */
@@ -11,7 +13,7 @@ public class Maintenance extends Cost {
 
     public Maintenance( Type type, String name, Float amount, Place place, Reminder reminder,
                         String notes ) {
-        super(amount, notes, -1L);
+        super(amount, notes, Const.NO_DB_ID_SET);
         this.setType(type);
         this.setName(name);
         this.setPlace(place);

@@ -2,6 +2,8 @@ package it.science.unitn.lpsmt.auto.model;
 
 import java.util.Date;
 
+import it.science.unitn.lpsmt.auto.model.util.Const;
+
 /**
  * TODO add doc
  */
@@ -13,7 +15,7 @@ public class Refuel extends Cost {
 
     public Refuel( Float amount, Float pricePerLiter, Integer km, Place place, Date date,
                    String note ){
-        super(amount, note, -1L);
+        super(amount, note, Const.NO_DB_ID_SET);
         this.setPricePerLiter(pricePerLiter);
         this.setKm(km);
         this.setDate(date);

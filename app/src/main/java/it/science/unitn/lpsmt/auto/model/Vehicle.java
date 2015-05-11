@@ -2,6 +2,8 @@ package it.science.unitn.lpsmt.auto.model;
 
 import java.util.Date;
 
+import it.science.unitn.lpsmt.auto.model.util.Const;
+
 /**
  * TODO add doc
  */
@@ -20,7 +22,7 @@ public class Vehicle {
     }
 
     public Vehicle( String name, String plate, Date purchaseDate ){
-        this(name, plate, purchaseDate, -1L);
+        this(name, plate, purchaseDate, Const.NO_DB_ID_SET);
     }
 
     public Vehicle( String name, String plate ){
@@ -34,6 +36,11 @@ public class Vehicle {
 //==================================================================================================
 // SETTER
 //==================================================================================================
+    public void setId(Long id){
+        if( id != null && !id.equals(this.id) )
+            this.id = id;
+    }
+
     public void setPlate(String plate) {
         if( plate != null )
             this.plate = plate;
@@ -47,11 +54,6 @@ public class Vehicle {
     public void setName(String name) {
         if( name != null )
             this.name = name;
-    }
-
-    public void setId(Long id){
-        if( id != null && !id.equals(this.id) )
-            this.id = id;
     }
 
 //==================================================================================================

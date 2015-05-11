@@ -2,24 +2,25 @@ package it.science.unitn.lpsmt.auto.model;
 
 import java.util.Date;
 
+import it.science.unitn.lpsmt.auto.model.util.Const;
+
 /**
  * TODO add doc
  */
 public class Reminder {
-    private Long id; //TODO move -1 in model/Const.java
+    private Long id;
     private Date date;
     private Integer calendarID;
     //<Something> periodic
 
-
-    public Reminder( Date date, Integer calendarID ){
+    public Reminder( Date date, Integer calendarID, Long id ){
         this.setDate(date);
         this.setCalendarID(calendarID);
-        this.setId(-1L);
+        this.setId(id);
     }
 
     public Reminder(){
-        this(null, null);
+        this(null, null, Const.NO_DB_ID_SET);
     }
 
 //==================================================================================================
