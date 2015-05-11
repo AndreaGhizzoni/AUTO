@@ -48,4 +48,17 @@ public class Reminder {
     public Date getDate() { return date; }
 
     public Integer getCalendarID() { return calendarID; }
+
+//==================================================================================================
+//  INNER CLASS
+//==================================================================================================
+    /**
+     * TODO add doc
+     */
+    public static final class SQLData{
+        public static final String TABLE_NAME  = Reminder.class.getSimpleName().toLowerCase();
+        public static final String ID          = "id";
+        public static final String DATE        = "date";
+        public static final String CALENDAR_ID = "calendar_id";
+    }
 }

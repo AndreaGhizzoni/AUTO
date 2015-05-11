@@ -89,4 +89,15 @@ public class Vehicle {
             return defInstance;
         }
     }
+
+    /**
+     * TODO add doc
+     */
+    public static final class SQLData{
+        public static final String TABLE_NAME    = Vehicle.class.getSimpleName().toLowerCase();
+        public static final String ID            = "id";
+        public static final String NAME          = "name";
+        public static final String PURCHASE_DATA = "purchase_data";
+        public static final String PLATE         = "plate";
+    }
 }

@@ -37,4 +37,18 @@ public class Place {
     public Location getGeoTag() { return geoTag; }
 
     public String getAddress() { return address; }
+
+//==================================================================================================
+//  INNER CLASS
+//==================================================================================================
+    /**
+     * TODO add doc
+     */
+    public static final class SQLData{
+        public static final String TABLE_NAME = Place.class.getSimpleName().toLowerCase();
+        public static final String ID         = "id";
+        public static final String LATITUDE   = "latitude";
+        public static final String LONGITUDE  = "longitude";
+        public static final String ADDRESS    = "address";
+    }
 }
