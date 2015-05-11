@@ -4,25 +4,27 @@ package it.science.unitn.lpsmt.auto.model;
  * TODO add doc
  */
 public class Maintenance extends Cost {
-    String name;
-    Maintenance.Type type;
-    Place place;
-    Reminder reminder;
+    private String name;
+    private Maintenance.Type type;
+    private Place place;
+    private Reminder reminder;
 
-    public Maintenance( String name, Type type, Float amount, Place place, Reminder reminder,
+    public Maintenance( Type type, String name, Float amount, Place place, Reminder reminder,
                         String notes ) {
-        super(amount, notes);
-        this.setName(name);
+        super(amount, notes, -1L);
         this.setType(type);
+        this.setName(name);
         this.setPlace(place);
         this.setReminder(reminder);
     }
 
     public Maintenance( String name, Float amount ){
-        this(name, null, amount, null, null, null);
+        this(null, name, amount, null, null, null);
     }
 
-    public Maintenance(){ super(); }
+    public Maintenance(){
+        this(null, null);
+    }
 
 //==================================================================================================
 //  METHOD
@@ -40,6 +42,15 @@ public class Maintenance extends Cost {
     public static Maintenance getExtraordinaryMaintenance(String name, Float amount){
         Maintenance m = new Maintenance();
         m.setType(Type.EXTRAORDINARY);
+        m.setName(name);
+        m.setAmount(amount);
+        //TODO maybe set with some place and reminder
+        return m;
+    }
+
+    public static Maintenance getTaxMaintenance(String name, Float amount){
+        Maintenance m = new Maintenance();
+        m.setType(Type.TAX);
         m.setName(name);
         m.setAmount(amount);
         //TODO maybe set with some place and reminder

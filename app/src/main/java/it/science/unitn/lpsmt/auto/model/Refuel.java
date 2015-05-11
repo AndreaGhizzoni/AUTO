@@ -6,16 +6,18 @@ import java.util.Date;
  * TODO add doc
  */
 public class Refuel extends Cost {
-    Float pricePerLiter;
-    Date date;
-    Integer km;
-    Place place;
+    private Float pricePerLiter;
+    private Date date;
+    private Integer km;
+    private Place place;
 
-    public Refuel( float amount, Float pricePerLiter, Integer km, Place place, Date date, String note ){
-        super(amount, note);
+    public Refuel( Float amount, Float pricePerLiter, Integer km, Place place, Date date,
+                   String note ){
+        super(amount, note, -1L);
         this.setPricePerLiter(pricePerLiter);
         this.setKm(km);
         this.setDate(date);
+        this.setPlace(place);
     }
 
     public Refuel( float amount, Float pricePerLiter, Integer km ){
@@ -26,7 +28,9 @@ public class Refuel extends Cost {
         this(amount, null, null);
     }
 
-    public Refuel(){ super(); }
+    public Refuel(){
+        this(null);
+    }
 
 //==================================================================================================
 // SETTER
@@ -50,7 +54,6 @@ public class Refuel extends Cost {
         if( location != null )
             this.place = location;
     }
-
 
 //==================================================================================================
 // GETTER

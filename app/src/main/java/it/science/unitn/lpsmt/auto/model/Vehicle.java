@@ -6,22 +6,30 @@ import java.util.Date;
  * TODO add doc
  */
 public class Vehicle {
-    String name;
-    Date purchaseDate;
-    String plate;
+    private Long id;
+    private String name;
+    private Date purchaseDate;
+    private String plate;
     // photo ?
 
-    public Vehicle( String name, String plate, Date purchaseDate ){
+    public Vehicle( String name, String plate, Date purchaseDate, Long id  ){
         this.setName(name);
         this.setPlate(plate);
         this.setPurchaseDate(purchaseDate);
+        this.setId(id);
+    }
+
+    public Vehicle( String name, String plate, Date purchaseDate ){
+        this(name, plate, purchaseDate, -1L);
     }
 
     public Vehicle( String name, String plate ){
         this(name, plate, null);
     }
 
-    public Vehicle(){}
+    public Vehicle(){
+        this(null, null);
+    }
 
 //==================================================================================================
 // SETTER
@@ -39,6 +47,11 @@ public class Vehicle {
     public void setName(String name) {
         if( name != null )
             this.name = name;
+    }
+
+    public void setId(Long id){
+        if( id != null && !id.equals(this.id) )
+            this.id = id;
     }
 
 //==================================================================================================
