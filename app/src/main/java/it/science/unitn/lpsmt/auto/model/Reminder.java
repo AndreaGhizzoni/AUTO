@@ -2,6 +2,8 @@ package it.science.unitn.lpsmt.auto.model;
 
 import java.util.Date;
 
+import it.science.unitn.lpsmt.auto.model.util.Const;
+
 /**
  * TODO add doc
  */
@@ -9,7 +11,7 @@ public class Reminder {
     private Long id;
     private Date date;
     private Integer calendarID;
-    //<Something> periodic
+    //<Something> periodic // TODO figure out how to do this fucking
 
     public Reminder( Date date, Integer calendarID, Long id ){
         this.setDate(date);
@@ -21,14 +23,16 @@ public class Reminder {
 // SETTER
 //==================================================================================================
     public void setId( Long id ){
-        if( id != null && !id.equals(this.id) )
+        if( id == null )
+            this.id = Const.NO_DB_ID_SET;
+        else if( id < Const.NO_DB_ID_SET )
+                throw new IllegalArgumentException("ID of Reminder can not be less then "+Const.NO_DB_ID_SET);
+        else
             this.id = id;
     }
 
     public void setDate( Date date ){
-        // TODO check if is an expired date
-        if( date != null )
-            this.date = date;
+        this.date = date;
     }
 
     public void setCalendarID( Integer calendarID ){

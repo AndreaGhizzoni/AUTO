@@ -38,6 +38,7 @@ public class Vehicle {
             this.plate = plate;
     }
 
+    // TODO do not check if is null, null can be passed to constructor to say "not set"
     public void setPurchaseDate(Date purchaseDate) throws IllegalArgumentException{
         if( purchaseDate == null )
             throw new IllegalArgumentException("Purchase Date of vehicle can not be null.");

@@ -1,0 +1,40 @@
+ideas for Persistence data
+
+PersistenceDAO:
+> package class, avoid to instance directly
+> extends SQLiteOpenHelper
+> constructor with Context patameter for super() call
+> override onCreate() and onUpgrade()
+> implements open() and close() ( instead to implements for each PersDAO<T> )
+
+<T>DAO:
+> interface with the follow methods:
+  - public Long save( <T> t ) 
+    where T is the type ( Vehicle, Cost .. ) and the
+    return value is the database ID associeted.
+
+  - public void delete( <T> t )
+  - public void delete( Long id )
+    we know wich table the id is associated because every interface has this
+    method
+
+  - public List<T> getAll<T>()
+
+  - util-static methods ? 
+    public static ContentValues <T>ToContentValues( <T> t )
+    public static <T> CursorTo<T>( Cursor c )
+
+
+(<T>DAO means interface, PersDAO<T> class that implemtns <T>DAO)
+                _________________________________________
+               |                                         |
+VehicleDAO --> | PersDAOVehicle  > --------------------  |
+               |                   |                  |  |  
+CostDAO    --> | PersDAOCost     > |                  |  |
+               |                   |  PersistenceDAO  |  |
+ReminderDAO--> | PersDAOReminder > |                  |  |
+               |                   |                  |  |
+PlaceDAO   --> | PersDAOPlace    > --------------------  |
+               |_________________________________________|
+
+
