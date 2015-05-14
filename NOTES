@@ -1,11 +1,11 @@
 ideas for Persistence data
 
 PersistenceDAO:
-> package class, avoid to instance directly
-> extends SQLiteOpenHelper
-> constructor with Context patameter for super() call
-> override onCreate() and onUpgrade()
-> implements open() and close() ( instead to implements for each PersDAO<T> )
+> package class, avoid to instance directly : DONE
+> extends SQLiteOpenHelper : DONE
+> constructor with Context patameter for super() call : DONE
+> override onCreate() and onUpgrade() : DONE
+> implements open() and close() ( instead to implements for each PersDAO<T> ) : DONE
 
 <T>DAO:
 > interface with the follow methods:
@@ -25,16 +25,16 @@ PersistenceDAO:
     public static <T> CursorTo<T>( Cursor c )
 
 
-(<T>DAO means interface, PersDAO<T> class that implemtns <T>DAO)
-                _________________________________________
-               |                                         |
-VehicleDAO --> | PersDAOVehicle  > --------------------  |
-               |                   |                  |  |  
-CostDAO    --> | PersDAOCost     > |                  |  |
-               |                   |  PersistenceDAO  |  |
-ReminderDAO--> | PersDAOReminder > |                  |  |
-               |                   |                  |  |
-PlaceDAO   --> | PersDAOPlace    > --------------------  |
-               |_________________________________________|
+(<T>DAO means interface, DAO<T> class that implemtns <T>DAO)
+                ______________________________________
+               |                                     |
+VehicleDAO --> | DAOVehicle  > --------------------  |
+               |               |                  |  |  
+CostDAO    --> | DAOCost     > |                  |  |
+               |               |  PersistenceDAO  |  |
+ReminderDAO--> | DAOReminder > |                  |  |
+               |               |                  |  |
+PlaceDAO   --> | DAOPlace    > --------------------  |
+               |_____________________________________|
 
 
