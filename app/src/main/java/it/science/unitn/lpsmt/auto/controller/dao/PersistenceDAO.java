@@ -1,49 +1,35 @@
 package it.science.unitn.lpsmt.auto.controller.dao;
 
-import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import it.science.unitn.lpsmt.auto.controller.Const;
+import it.science.unitn.lpsmt.auto.ui.MainActivity;
 
 /**
  * TODO add doc
  */
 class PersistenceDAO extends SQLiteOpenHelper {
-    private SQLiteDatabase db;
+    private static PersistenceDAO instance;
 
-    public PersistenceDAO(Context context) {
-        super(context, Const.DB_NAME, null, Const.DB_VERSION);
+    // TODO add doc
+    private PersistenceDAO() {
+        super(
+            MainActivity.getAppContext(), // static reference to context
+            Const.DB_NAME,                // db name
+            null,                         // default cursor factory
+            Const.DB_VERSION              // db version
+        );
     }
 
-//==================================================================================================
-//  METHOD
-//==================================================================================================
-    /**
-     * TODO add doc
-     */
-    public void open(){
-        if(db == null)
-            db = getWritableDatabase();
-    }
-
-    /**
-     * TODO add doc
-     */
-    public void close(){
-        if(db != null)
-            db.close();
-    }
-
-//==================================================================================================
-//  GETTER
-//==================================================================================================
     /**
      * TODO add doc
      * @return
      */
-    public SQLiteDatabase getDb(){
-        return this.db;
+    public static PersistenceDAO getInstance(){
+        if(instance == null)
+            instance = new PersistenceDAO();
+        return instance;
     }
 
 //==================================================================================================
@@ -53,7 +39,6 @@ class PersistenceDAO extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         // TODO insert here sqLiteDatabase.execSQL( sql )
         // where sql is the create sql statement for all the table we need
-        open();
     }
 
     @Override

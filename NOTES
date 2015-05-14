@@ -25,7 +25,7 @@ PersistenceDAO:
     public static <T> CursorTo<T>( Cursor c )
 
 
-(<T>DAO means interface, DAO<T> class that implemtns <T>DAO)
+(<T>DAO means interface, <T> class that implemtns <T>DAO)
                 ______________________________________
                |                                     |
 VehicleDAO --> | DAOVehicle  > --------------------  |
