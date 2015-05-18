@@ -52,8 +52,8 @@ public abstract class Cost {
         public static final String ID         = "id" ;
         public static final String AMOUNT     = "amount";
         public static final String NOTES      = "notes";
-        public static final String PLACE      = "place_id";
         public static final String CLASS      = "class"; // subclass of Cost
+        public static final String PLACE_ID   = "place_id";
 
         // if class == refuel these fields are set
         public static final String PRICE_PER_LITER = "price_per_liter";

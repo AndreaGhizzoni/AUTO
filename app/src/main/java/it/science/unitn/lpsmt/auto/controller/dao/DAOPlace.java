@@ -1,6 +1,5 @@
 package it.science.unitn.lpsmt.auto.controller.dao;
 
-import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.util.List;
@@ -15,7 +14,7 @@ import it.science.unitn.lpsmt.auto.model.Place;
 public class DAOPlace implements PlaceDAO {
     private final SQLiteDatabase db;
 
-    public DAOPlace( Context c ){
+    public DAOPlace(){
         db = PersistenceDAO.getInstance().getWritableDatabase();
     }
 

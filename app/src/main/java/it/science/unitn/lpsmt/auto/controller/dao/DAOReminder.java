@@ -1,6 +1,5 @@
 package it.science.unitn.lpsmt.auto.controller.dao;
 
-import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.util.List;
@@ -16,7 +15,7 @@ import it.science.unitn.lpsmt.auto.model.Reminder;
 public class DAOReminder implements ReminderDAO {
     private final SQLiteDatabase db;
 
-    public DAOReminder(Context c){
+    public DAOReminder(){
         db = PersistenceDAO.getInstance().getWritableDatabase();
     }
 
