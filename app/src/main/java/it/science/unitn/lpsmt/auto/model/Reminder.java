@@ -61,9 +61,10 @@ public class Reminder {
         public static final String CALENDAR_ID = "calendar_id";
 
         public static final String SQL_CREATE =
-                "create table "+ Reminder.SQLData.TABLE_NAME+"( " +
-                Reminder.SQLData.ID+" integer primary key autoincrement, " +
-                Reminder.SQLData.DATE+" datetime, " +
-                Reminder.SQLData.CALENDAR_ID+" integer);";
+                "create table "+TABLE_NAME+" ( "+
+                    ID+" integer primary key autoincrement, "+
+                    DATE+" datetime, "+
+                    CALENDAR_ID+" integer "+
+                ");";
     }
 }

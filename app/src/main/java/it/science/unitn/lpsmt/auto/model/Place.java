@@ -57,10 +57,11 @@ public class Place {
         public static final String ADDRESS    = "address";
 
         public static final String SQL_CREATE =
-                "create table "+ Place.SQLData.TABLE_NAME+"( " +
-                Place.SQLData.ID+" integer primary key autoincrement, " +
-                Place.SQLData.LATITUDE+" real, " +
-                Place.SQLData.LONGITUDE+" real, " +
-                Place.SQLData.ADDRESS+" text);";
+                "create table "+TABLE_NAME+" ( " +
+                    ID+" integer primary key autoincrement, " +
+                    LATITUDE+" real, "+
+                    LONGITUDE+" real, "+
+                    ADDRESS+" text "+
+                ");";
     }
 }
