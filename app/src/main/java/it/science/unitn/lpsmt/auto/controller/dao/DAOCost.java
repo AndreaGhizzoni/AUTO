@@ -1,6 +1,5 @@
 package it.science.unitn.lpsmt.auto.controller.dao;
 
-import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.util.List;
@@ -16,7 +15,7 @@ import it.science.unitn.lpsmt.auto.model.Cost;
 public class DAOCost implements CostDAO {
     private final SQLiteDatabase db;
 
-    public DAOCost( Context c ){
+    public DAOCost(){
         db = PersistenceDAO.getInstance().getWritableDatabase();
     }
 
