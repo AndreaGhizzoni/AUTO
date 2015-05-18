@@ -24,6 +24,13 @@ public interface VehicleDAO {
 
     /**
      * TODO add doc
+     * @param id
+     * @return
+     */
+    boolean exists( Long id );
+
+    /**
+     * TODO add doc
      * @param v
      */
     void delete( Vehicle v );

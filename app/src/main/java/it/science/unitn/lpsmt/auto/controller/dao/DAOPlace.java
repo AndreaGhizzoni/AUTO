@@ -29,6 +29,11 @@ public class DAOPlace implements PlaceDAO {
     }
 
     @Override
+    public boolean exists(Long id) {
+        return false;
+    }
+
+    @Override
     public void delete(Place p) {
 
     }

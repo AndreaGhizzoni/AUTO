@@ -24,6 +24,13 @@ public interface CostDAO {
 
     /**
      * TODO add doc
+     * @param id
+     * @return
+     */
+    boolean exists( Long id );
+
+    /**
+     * TODO add doc
      * @param c
      */
     void delete( Cost c );

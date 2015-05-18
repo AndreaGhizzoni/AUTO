@@ -30,6 +30,11 @@ public class DAOReminder implements ReminderDAO {
     }
 
     @Override
+    public boolean exists(Long id) {
+        return false;
+    }
+
+    @Override
     public void delete(Reminder r) {
 
     }

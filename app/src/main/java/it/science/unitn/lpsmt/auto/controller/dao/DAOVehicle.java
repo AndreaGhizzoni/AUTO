@@ -65,6 +65,11 @@ public class DAOVehicle implements VehicleDAO{
     }
 
     @Override
+    public boolean exists(Long id) {
+        return !(id == null || id.equals(-1L)) && get(id) != null;
+    }
+
+    @Override
     public void delete(Long id) {
         if( id == null || id.equals(-1L) )
             return;

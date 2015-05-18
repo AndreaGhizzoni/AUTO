@@ -24,6 +24,13 @@ public interface ReminderDAO {
 
     /**
      * TODO add doc
+     * @param id
+     * @return
+     */
+    boolean exists( Long id );
+
+    /**
+     * TODO add doc
      * @param r
      */
     void delete( Reminder r );

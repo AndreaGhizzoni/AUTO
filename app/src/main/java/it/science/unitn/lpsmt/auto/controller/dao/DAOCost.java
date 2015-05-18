@@ -30,6 +30,11 @@ public class DAOCost implements CostDAO {
     }
 
     @Override
+    public boolean exists(Long id) {
+        return false;
+    }
+
+    @Override
     public void delete(Cost c) {
 
     }

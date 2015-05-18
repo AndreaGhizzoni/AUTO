@@ -24,6 +24,13 @@ public interface PlaceDAO {
 
     /**
      * TODO add doc
+     * @param id
+     * @return
+     */
+    boolean exists( Long id );
+
+    /**
+     * TODO add doc
      * @param p
      */
     void delete( Place p );
