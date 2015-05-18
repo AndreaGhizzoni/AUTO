@@ -50,10 +50,7 @@ public class Vehicle {
             this.plate = plate;
     }
 
-    // TODO do not check if is null, null can be passed to constructor to say "not set"
     public void setPurchaseDate(Date purchaseDate) throws IllegalArgumentException{
-        if( purchaseDate == null )
-            throw new IllegalArgumentException("Purchase Date of vehicle can not be null.");
         if( purchaseDate.after(new Date()) )
             throw new IllegalArgumentException("Purchase Date can not be in the future.");
 
@@ -80,6 +77,30 @@ public class Vehicle {
 
     public ArrayList<Cost> getCosts(){ return this.costs; }
 
+    public boolean isDefaultVehicle(){ return this.equals(Default.get()); }
+
+//==================================================================================================
+//  OVERRIDE
+//==================================================================================================
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Vehicle vehicle = (Vehicle) o;
+
+        if (id != null ? !id.equals(vehicle.id) : vehicle.id != null) return false;
+        return !(plate != null ? !plate.equals(vehicle.plate) : vehicle.plate != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (plate != null ? plate.hashCode() : 0);
+        return result;
+    }
+
 //==================================================================================================
 //  INNER CLASS
 //==================================================================================================
@@ -88,13 +109,14 @@ public class Vehicle {
      */
     public static class Default{
         public static Vehicle instance;
+        private static String DEF_PLATE = "XX123XX";
 
-        public Vehicle get(){
+        public static Vehicle get(){
             if(instance == null){
                 instance = new Vehicle(
                         "Default",
-                        "XX123XX",
-                        new Date(),
+                        DEF_PLATE,
+                        null,
                         Const.NO_DB_ID_SET
                 );
             }
