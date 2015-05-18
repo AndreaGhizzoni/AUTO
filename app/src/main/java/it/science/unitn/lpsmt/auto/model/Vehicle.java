@@ -91,7 +91,6 @@ public class Vehicle {
 
         if (id != null ? !id.equals(vehicle.id) : vehicle.id != null) return false;
         return !(plate != null ? !plate.equals(vehicle.plate) : vehicle.plate != null);
-
     }
 
     @Override
@@ -133,6 +132,8 @@ public class Vehicle {
         public static final String NAME          = "name";
         public static final String PURCHASE_DATA = "purchase_data";
         public static final String PLATE         = "plate";
+
+        public static final String[] ALL_COLUMNS = {ID, NAME, PLATE, PURCHASE_DATA};
 
         public static final String SQL_CREATE =
                 "create table "+TABLE_NAME+" ( "+

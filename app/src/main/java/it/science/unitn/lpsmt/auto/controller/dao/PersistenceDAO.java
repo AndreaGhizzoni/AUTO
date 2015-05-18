@@ -2,8 +2,13 @@ package it.science.unitn.lpsmt.auto.controller.dao;
 
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import it.science.unitn.lpsmt.auto.controller.util.Const;
+import it.science.unitn.lpsmt.auto.model.Cost;
+import it.science.unitn.lpsmt.auto.model.Place;
+import it.science.unitn.lpsmt.auto.model.Reminder;
+import it.science.unitn.lpsmt.auto.model.Vehicle;
 import it.science.unitn.lpsmt.auto.ui.MainActivity;
 
 /**
@@ -37,8 +42,20 @@ class PersistenceDAO extends SQLiteOpenHelper {
 //==================================================================================================
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        // TODO insert here sqLiteDatabase.execSQL( sql )
         // where sql is the create sql statement for all the table we need
+        SQLiteDatabase db = getWritableDatabase();
+        db.beginTransaction();
+        try {
+            db.execSQL(Vehicle.SQLData.SQL_CREATE);
+            db.execSQL(Reminder.SQLData.SQL_CREATE);
+            db.execSQL(Place.SQLData.SQL_CREATE);
+            db.execSQL(Cost.SQLData.SQL_CREATE);
+            db.setTransactionSuccessful();
+        }catch ( Throwable ex ){
+            Log.e(PersistenceDAO.class.getSimpleName(), ex.getMessage());
+        }finally {
+            db.endTransaction();
+        }
     }
 
     @Override
