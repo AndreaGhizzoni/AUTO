@@ -1,5 +1,6 @@
 package it.science.unitn.lpsmt.auto.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import it.science.unitn.lpsmt.auto.model.util.Const;
@@ -12,13 +13,24 @@ public class Vehicle {
     private String name;
     private Date purchaseDate;
     private String plate;
-    // photo ?
+
+    private final ArrayList<Cost> costs = new ArrayList<>();
 
     public Vehicle( String name, String plate, Date purchaseDate, Long id  ){
         this.setName(name);
         this.setPlate(plate);
         this.setPurchaseDate(purchaseDate);
         this.setId(id);
+    }
+
+//==================================================================================================
+// METHOD
+//==================================================================================================
+    public void addCost( Cost c ) throws IllegalArgumentException{
+        if( c == null )
+            throw new IllegalArgumentException("Cost to add can not be null.");
+
+        this.costs.add(c);
     }
 
 //==================================================================================================
@@ -65,6 +77,8 @@ public class Vehicle {
     public String getName() { return name; }
 
     public Long getId(){ return this.id; }
+
+    public ArrayList<Cost> getCosts(){ return this.costs; }
 
 //==================================================================================================
 //  INNER CLASS
