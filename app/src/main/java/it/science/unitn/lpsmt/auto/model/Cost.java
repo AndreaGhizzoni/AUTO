@@ -64,5 +64,23 @@ public abstract class Cost {
         public static final String NAME        = "name";
         public static final String TYPE        = "type";
         public static final String REMINDER_ID = "reminder_id";
+
+        public static final String SQL_CREATE =
+                "create table "+ Cost.SQLData.TABLE_NAME+"( " +
+                Cost.SQLData.ID+" integer primary key autoincrement, " +
+                Cost.SQLData.AMOUNT+" real not null, " +
+                Cost.SQLData.NOTES+" text, " +
+                Cost.SQLData.CLASS+" text not null, " +
+                Cost.SQLData.PLACE_ID+" integer, " +
+                Cost.SQLData.PRICE_PER_LITER+" real, " +
+                Cost.SQLData.DATE+" datetime, " +
+                Cost.SQLData.AT_KM+" integer, " +
+                Cost.SQLData.NAME+" text, " +
+                Cost.SQLData.TYPE+" text, " +
+                Cost.SQLData.REMINDER_ID+" integer, " +
+                "foreign key ("+Cost.SQLData.PLACE_ID+") references " +
+                Place.SQLData.TABLE_NAME+" ("+Place.SQLData.ID+"), " +
+                "foreign key ("+Cost.SQLData.REMINDER_ID+") references " +
+                Reminder.SQLData.ID+" ("+Reminder.SQLData.ID+") );";
     }
 }

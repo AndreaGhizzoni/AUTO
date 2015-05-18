@@ -1,4 +1,4 @@
-package it.science.unitn.lpsmt.auto.controller.Util;
+package it.science.unitn.lpsmt.auto.controller.util;
 
 /**
  * TODO add doc

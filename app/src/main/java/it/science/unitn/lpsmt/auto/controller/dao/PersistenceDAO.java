@@ -3,7 +3,7 @@ package it.science.unitn.lpsmt.auto.controller.dao;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import it.science.unitn.lpsmt.auto.controller.Util.Const;
+import it.science.unitn.lpsmt.auto.controller.util.Const;
 import it.science.unitn.lpsmt.auto.ui.MainActivity;
 
 /**

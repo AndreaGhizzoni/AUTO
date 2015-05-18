@@ -1,4 +1,4 @@
-package it.science.unitn.lpsmt.auto.controller.Util;
+package it.science.unitn.lpsmt.auto.controller.util;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -14,6 +14,9 @@ import it.science.unitn.lpsmt.auto.model.Place;
 import it.science.unitn.lpsmt.auto.model.Refuel;
 import it.science.unitn.lpsmt.auto.model.Reminder;
 import it.science.unitn.lpsmt.auto.model.Vehicle;
+
+import static it.science.unitn.lpsmt.auto.controller.util.Date.getDateFromString;
+import static it.science.unitn.lpsmt.auto.controller.util.Date.getStringFromDate;
 
 /**
  * TODO add doc
@@ -32,7 +35,7 @@ public final class Converter {
         c.put(Vehicle.SQLData.ID, v.getId());
         c.put(Vehicle.SQLData.NAME, v.getName());
         c.put(Vehicle.SQLData.PLATE, v.getPlate());
-        c.put(Vehicle.SQLData.PURCHASE_DATA, v.getPurchaseDate().getTime());
+        c.put(Vehicle.SQLData.PURCHASE_DATA, getStringFromDate(v.getPurchaseDate()));
         return c;
     }
 
@@ -48,7 +51,7 @@ public final class Converter {
         Long id = c.getLong(0);
         String name = c.getString(1);
         String plate = c.getString(2);
-        Date purchase_date = new Date(c.getLong(3));
+        Date purchase_date = getDateFromString(c.getString(3));
         return new Vehicle(name, plate, purchase_date, id);
     }
 
@@ -63,7 +66,7 @@ public final class Converter {
 
         ContentValues c = new ContentValues();
         c.put(Reminder.SQLData.ID, r.getId());
-        c.put(Reminder.SQLData.DATE, r.getDate().getTime());
+        c.put(Reminder.SQLData.DATE, getStringFromDate(r.getDate()));
         c.put(Reminder.SQLData.CALENDAR_ID, r.getCalendarID());
         return c;
     }
@@ -78,7 +81,7 @@ public final class Converter {
             return null;
 
         Long id = c.getLong(0);
-        Date date = new Date( c.getLong(1) );
+        Date date = getDateFromString(c.getString(1));
         Integer calendarID = c.getInt(2);
         return new Reminder(date, calendarID, id);
     }
@@ -100,7 +103,7 @@ public final class Converter {
             Refuel tmp = (Refuel) o;
             c.put(Cost.SQLData.CLASS, Refuel.class.getSimpleName().toLowerCase());
             c.put(Cost.SQLData.PRICE_PER_LITER, tmp.getPricePerLiter());
-            c.put(Cost.SQLData.DATE, tmp.getDate().getTime());
+            c.put(Cost.SQLData.DATE, getStringFromDate(tmp.getDate()));
             c.put(Cost.SQLData.AT_KM, tmp.getKm());
             c.put(Cost.SQLData.PLACE_ID, tmp.getPlace().getId() );
         }else if(o instanceof Maintenance) {
@@ -132,7 +135,7 @@ public final class Converter {
 
         if(clazz.equals(Refuel.class.getSimpleName().toLowerCase())){
             Float pricePerLiter = c.getFloat(4);
-            Date d = new Date(c.getLong(5));
+            Date d = getDateFromString(c.getString(5));
             Integer atKm = c.getInt(6);
             cost = new Refuel(amount, pricePerLiter, atKm, place, d, notes, id);
         }else if(clazz.equals(Maintenance.class.getSimpleName().toLowerCase())){
@@ -173,7 +176,7 @@ public final class Converter {
         Long id = c.getLong(0);
         Location location = new Location("db");
         location.setLatitude(c.getDouble(1));
-        location.setLongitude( c.getDouble(2) );
+        location.setLongitude(c.getDouble(2));
         String address = c.getString(3);
 
         return new Place(location, address, id);

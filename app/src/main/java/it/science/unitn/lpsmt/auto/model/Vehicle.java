@@ -97,5 +97,12 @@ public class Vehicle {
         public static final String NAME          = "name";
         public static final String PURCHASE_DATA = "purchase_data";
         public static final String PLATE         = "plate";
+
+        public static final String SQL_CREATE =
+                "create table "+ Vehicle.SQLData.TABLE_NAME+"( "+
+                Vehicle.SQLData.ID+" integer primary key autoincrement, "+
+                Vehicle.SQLData.NAME+" text not null, "+
+                Vehicle.SQLData.PLATE+" text not null, "+
+                Vehicle.SQLData.PURCHASE_DATA+" datetime not null);";
     }
 }

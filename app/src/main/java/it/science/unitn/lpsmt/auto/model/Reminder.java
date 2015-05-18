@@ -11,7 +11,6 @@ public class Reminder {
     private Long id;
     private Date date;
     private Integer calendarID;
-    //<Something> periodic // TODO figure out how to do this fucking
 
     public Reminder( Date date, Integer calendarID, Long id ){
         this.setDate(date);
@@ -60,5 +59,11 @@ public class Reminder {
         public static final String ID          = "id";
         public static final String DATE        = "date";
         public static final String CALENDAR_ID = "calendar_id";
+
+        public static final String SQL_CREATE =
+                "create table "+ Reminder.SQLData.TABLE_NAME+"( " +
+                Reminder.SQLData.ID+" integer primary key autoincrement, " +
+                Reminder.SQLData.DATE+" datetime, " +
+                Reminder.SQLData.CALENDAR_ID+" integer);";
     }
 }
