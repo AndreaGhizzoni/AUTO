@@ -77,9 +77,9 @@ public class DAOVehicle implements VehicleDAO{
         db.beginTransaction();
         try{
             db.delete(
-                    Vehicle.SQLData.TABLE_NAME,
-                    Vehicle.SQLData.ID + " = ?",
-                    new String[]{"" + id}
+                Vehicle.SQLData.TABLE_NAME,
+                Vehicle.SQLData.ID + " = ?",
+                new String[]{"" + id}
             );
             db.setTransactionSuccessful();
         }catch (Throwable t){
@@ -100,9 +100,9 @@ public class DAOVehicle implements VehicleDAO{
     public List<Vehicle> getAll() {
         ArrayList<Vehicle> list = new ArrayList<>();
         Cursor c = db.query(
-                Vehicle.SQLData.TABLE_NAME,
-                Vehicle.SQLData.ALL_COLUMNS,
-                null, null, null, null, null
+            Vehicle.SQLData.TABLE_NAME,
+            Vehicle.SQLData.ALL_COLUMNS,
+            null, null, null, null, null
         );
 
         c.moveToFirst();
