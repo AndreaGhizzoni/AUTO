@@ -3,6 +3,7 @@ package it.science.unitn.lpsmt.auto.controller.dao;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,16 +24,25 @@ public class DAOVehicle implements VehicleDAO{
         db = PersistenceDAO.getInstance().getWritableDatabase();
     }
 
-    //TODO IMPLEMENTS TRANSACTIONS
-
     @Override
     public Long save(Vehicle v) {
         if( v == null || v.isDefaultVehicle() )
-            return -1L;
+            return Const.NO_DB_ID_SET;
 
-        //TODO check if is already inserted ??
-        ContentValues cv = Converter.vehicleToContentValues(v);
-        return db.insert( Vehicle.SQLData.TABLE_NAME, null, cv );
+        Long id = Const.NO_DB_ID_SET;
+        db.beginTransaction();
+        try{
+            //TODO check if is already inserted ??
+            ContentValues cv = Converter.vehicleToContentValues(v);
+            id = db.insert( Vehicle.SQLData.TABLE_NAME, null, cv );
+            db.setTransactionSuccessful();
+        }catch ( Throwable t){
+            Log.e(DAOVehicle.class.getSimpleName(), t.getMessage());
+        }finally {
+            db.endTransaction();
+        }
+
+        return id;
     }
 
     @Override
@@ -59,11 +69,19 @@ public class DAOVehicle implements VehicleDAO{
         if( id == null || id.equals(-1L) )
             return;
 
-        db.delete(
-                Vehicle.SQLData.TABLE_NAME,
-                Vehicle.SQLData.ID + " = ?",
-                new String[]{"" + id}
-        );
+        db.beginTransaction();
+        try{
+            db.delete(
+                    Vehicle.SQLData.TABLE_NAME,
+                    Vehicle.SQLData.ID + " = ?",
+                    new String[]{"" + id}
+            );
+            db.setTransactionSuccessful();
+        }catch (Throwable t){
+            Log.e(DAOVehicle.class.getSimpleName(), t.getMessage());
+        }finally {
+            db.endTransaction();
+        }
     }
 
     @Override
