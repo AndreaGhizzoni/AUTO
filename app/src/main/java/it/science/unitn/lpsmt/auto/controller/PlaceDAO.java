@@ -10,6 +10,11 @@ import it.science.unitn.lpsmt.auto.model.Place;
 public interface PlaceDAO {
     /**
      * TODO add doc
+     */
+    void close();
+
+    /**
+     * TODO add doc
      * @param p
      * @return
      */

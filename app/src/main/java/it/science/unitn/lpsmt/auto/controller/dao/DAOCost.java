@@ -48,4 +48,9 @@ public class DAOCost implements CostDAO {
     public List<Cost> getAll() {
         return null;
     }
+
+    @Override
+    public void close(){
+        this.db.close();
+    }
 }

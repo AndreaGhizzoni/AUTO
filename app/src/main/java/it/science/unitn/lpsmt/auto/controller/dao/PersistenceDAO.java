@@ -28,19 +28,21 @@ class PersistenceDAO extends SQLiteOpenHelper {
             null,                         // default cursor factory
             Const.DB_VERSION              // db version
         );
+        instance = this; // necessary because public constructor
     }
 
     /**
      * TODO add doc
-     * @param textContext
+     * @param testContext
      */
-    public PersistenceDAO(Context textContext){
+    public PersistenceDAO(Context testContext){
         super(
-            textContext,
+            testContext,
             Const.DB_NAME,                // db name
             null,                         // default cursor factory
             Const.DB_VERSION              // db version
         );
+        instance = this; // necessary because public constructor
     }
 
     /**
@@ -57,9 +59,9 @@ class PersistenceDAO extends SQLiteOpenHelper {
 //  OVERRIDE
 //==================================================================================================
     @Override
-    public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        // where sql is the create sql statement for all the table we need
-        SQLiteDatabase db = getWritableDatabase();
+    public void onCreate(SQLiteDatabase db) {
+        // use the db passed as arg because the db is not already created
+        // so "db" is the only valid instance. https://goo.gl/gwctTn
         db.beginTransaction();
         try {
             db.execSQL(Vehicle.SQLData.SQL_CREATE);

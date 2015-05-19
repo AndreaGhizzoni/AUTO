@@ -52,14 +52,14 @@ public class DAOVehicle implements VehicleDAO{
 
     @Override
     public Vehicle get(Long id) {
-        if( id == null || id.equals(-1L) )
+        if( id == null || id.equals(Const.NO_DB_ID_SET) )
             return null;
 
         Cursor c = db.query(               // select from
             Vehicle.SQLData.TABLE_NAME,
             Vehicle.SQLData.ALL_COLUMNS,   // where
-            Vehicle.SQLData.ID + "+ ?",
-            new String[]{"" + id},
+            Vehicle.SQLData.ID+" = ?",
+            new String[]{id.toString()},
             null, null, null
         );
         c.moveToFirst();
@@ -121,4 +121,10 @@ public class DAOVehicle implements VehicleDAO{
 
         return list;
     }
+
+    @Override
+    public void close(){
+        this.db.close();
+    }
+
 }

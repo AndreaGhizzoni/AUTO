@@ -10,6 +10,11 @@ import it.science.unitn.lpsmt.auto.model.Reminder;
 public interface ReminderDAO {
     /**
      * TODO add doc
+     */
+    void close();
+
+    /**
+     * TODO add doc
      * @param r
      * @return
      */

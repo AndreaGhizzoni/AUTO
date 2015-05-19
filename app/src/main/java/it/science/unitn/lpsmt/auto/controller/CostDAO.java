@@ -10,6 +10,11 @@ import it.science.unitn.lpsmt.auto.model.Cost;
 public interface CostDAO {
     /**
      * TODO add doc
+     */
+    void close();
+
+    /**
+     * TODO add doc
      * @param c
      * @return
      */

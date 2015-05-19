@@ -32,7 +32,7 @@ public final class Converter {
             return null;
 
         ContentValues c = new ContentValues();
-        c.put(Vehicle.SQLData.ID, v.getId());
+//        c.put(Vehicle.SQLData.ID, v.getId());
         c.put(Vehicle.SQLData.NAME, v.getName());
         c.put(Vehicle.SQLData.PLATE, v.getPlate());
         c.put(Vehicle.SQLData.PURCHASE_DATA, getStringFromDate(v.getPurchaseDate()));

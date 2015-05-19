@@ -47,4 +47,9 @@ public class DAOPlace implements PlaceDAO {
     public List<Place> getAll() {
         return null;
     }
+
+    @Override
+    public void close(){
+        this.db.close();
+    }
 }

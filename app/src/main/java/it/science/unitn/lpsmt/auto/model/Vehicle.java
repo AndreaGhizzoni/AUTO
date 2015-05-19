@@ -45,13 +45,15 @@ public class Vehicle {
             this.id = id;
     }
 
-    public void setPlate(String plate) {
-        if( plate != null )
-            this.plate = plate;
+    public void setPlate(String plate) throws IllegalArgumentException{
+        if( plate == null || plate.isEmpty() )
+            throw new IllegalArgumentException("Plate can not be null or empty string.");
+
+        this.plate = plate;
     }
 
     public void setPurchaseDate(Date purchaseDate) throws IllegalArgumentException{
-        if( purchaseDate.after(new Date()) )
+        if( purchaseDate != null && purchaseDate.after(new Date()) )
             throw new IllegalArgumentException("Purchase Date can not be in the future.");
 
         this.purchaseDate = purchaseDate;

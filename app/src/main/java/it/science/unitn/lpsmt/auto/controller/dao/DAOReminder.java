@@ -48,4 +48,9 @@ public class DAOReminder implements ReminderDAO {
     public List<Reminder> getAll() {
         return null;
     }
+
+    @Override
+    public void close(){
+        this.db.close();
+    }
 }

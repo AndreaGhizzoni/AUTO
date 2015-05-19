@@ -10,6 +10,11 @@ import it.science.unitn.lpsmt.auto.model.Vehicle;
 public interface VehicleDAO {
     /**
      * TODO add doc
+     */
+    void close();
+
+    /**
+     * TODO add doc
      * @param v
      * @return
      */
