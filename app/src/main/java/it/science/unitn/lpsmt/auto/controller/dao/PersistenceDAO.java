@@ -1,5 +1,6 @@
 package it.science.unitn.lpsmt.auto.controller.dao;
 
+import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
@@ -17,10 +18,25 @@ import it.science.unitn.lpsmt.auto.ui.MainActivity;
 class PersistenceDAO extends SQLiteOpenHelper {
     private static PersistenceDAO instance;
 
-    // TODO add doc
-    private PersistenceDAO() {
+    /**
+     * TODO add doc
+     */
+    public PersistenceDAO() {
         super(
             MainActivity.getAppContext(), // static reference to context
+            Const.DB_NAME,                // db name
+            null,                         // default cursor factory
+            Const.DB_VERSION              // db version
+        );
+    }
+
+    /**
+     * TODO add doc
+     * @param textContext
+     */
+    public PersistenceDAO(Context textContext){
+        super(
+            textContext,
             Const.DB_NAME,                // db name
             null,                         // default cursor factory
             Const.DB_VERSION              // db version

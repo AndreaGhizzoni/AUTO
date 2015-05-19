@@ -1,6 +1,7 @@
 package it.science.unitn.lpsmt.auto.controller.dao;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
@@ -22,6 +23,10 @@ public class DAOVehicle implements VehicleDAO{
 
     public DAOVehicle(){
         db = PersistenceDAO.getInstance().getWritableDatabase();
+    }
+
+    public DAOVehicle( Context testContext ){
+        db = new PersistenceDAO(testContext).getWritableDatabase();
     }
 
     @Override
