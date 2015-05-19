@@ -71,20 +71,20 @@ public class DAOVehicle implements VehicleDAO{
 
     @Override
     public boolean exists(Long id) {
-        return !(id == null || id.equals(-1L)) && get(id) != null;
+        return !(id == null || id.equals(Const.NO_DB_ID_SET)) && get(id) != null;
     }
 
     @Override
     public void delete(Long id) {
-        if( id == null || id.equals(-1L) )
+        if( id == null || id.equals(Const.NO_DB_ID_SET) )
             return;
 
         db.beginTransaction();
         try{
             db.delete(
                 Vehicle.SQLData.TABLE_NAME,
-                Vehicle.SQLData.ID + " = ?",
-                new String[]{"" + id}
+                Vehicle.SQLData.ID+" = ?",
+                new String[]{id.toString()}
             );
             db.setTransactionSuccessful();
         }catch (Throwable t){
@@ -126,5 +126,4 @@ public class DAOVehicle implements VehicleDAO{
     public void close(){
         this.db.close();
     }
-
 }
