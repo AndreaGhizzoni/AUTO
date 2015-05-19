@@ -2,6 +2,8 @@ package it.science.unitn.lpsmt.auto.model;
 
 import android.location.Location;
 
+import it.science.unitn.lpsmt.auto.model.util.Const;
+
 /**
  * TODO add doc
  */
@@ -20,17 +22,22 @@ public class Place {
 // SETTER
 //==================================================================================================
     public void setGeoTag( Location geoTag ){
-        if( geoTag != null )
-            this.geoTag = geoTag;
+        this.geoTag = geoTag;
     }
 
-    public void setAddress( String address ){
-        if( address != null )
-            this.address = address;
+    public void setAddress( String address ) throws IllegalArgumentException{
+        if( address == null || !address.isEmpty() )
+            throw new IllegalArgumentException("Address can not be null or empty string.");
+
+        this.address = address;
     }
 
-    public void setId( Long id ){
-        if( id != null && !id.equals(this.id) )
+    public void setId( Long id ) throws IllegalArgumentException{
+        if( id == null )
+            this.id = Const.NO_DB_ID_SET;
+        else if( id < Const.NO_DB_ID_SET )
+            throw new IllegalArgumentException("ID of Place can not be less then "+Const.NO_DB_ID_SET);
+        else
             this.id = id;
     }
 

@@ -158,8 +158,14 @@ public final class Converter {
 
         ContentValues c = new ContentValues();
         c.put(Place.SQLData.ID, p.getId());
-        c.put(Place.SQLData.LATITUDE, p.getGeoTag().getLatitude());
-        c.put(Place.SQLData.LONGITUDE, p.getGeoTag().getLongitude());
+        if( p.getGeoTag() != null ) {
+            c.put(Place.SQLData.LATITUDE, p.getGeoTag().getLatitude());
+            c.put(Place.SQLData.LONGITUDE, p.getGeoTag().getLongitude());
+        }else{
+            double minusOne = -1;
+            c.put(Place.SQLData.LATITUDE, minusOne );
+            c.put(Place.SQLData.LONGITUDE, minusOne );
+        }
         c.put(Place.SQLData.ADDRESS, p.getAddress());
         return c;
     }
@@ -174,11 +180,16 @@ public final class Converter {
             return null;
 
         Long id = c.getLong(0);
-        Location location = new Location("db");
-        location.setLatitude(c.getDouble(1));
-        location.setLongitude(c.getDouble(2));
+        Location l = null;
+        double lat = c.getDouble(1);
+        double lon = c.getDouble(2);
+        if( lat != -1 && lon != -1 ){
+            l = new Location("db");
+            l.setLatitude(lat);
+            l.setLongitude(lon);
+        }
         String address = c.getString(3);
 
-        return new Place(location, address, id);
+        return new Place(l, address, id);
     }
 }
