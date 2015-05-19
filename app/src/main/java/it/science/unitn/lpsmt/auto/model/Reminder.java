@@ -30,13 +30,19 @@ public class Reminder {
             this.id = id;
     }
 
-    public void setDate( Date date ){
+    public void setDate( Date date ) throws IllegalArgumentException{
+        if( date == null )
+            throw new IllegalArgumentException("Date of Reminder can not be null.");
+        if( date.before(new Date()) )
+            throw  new IllegalArgumentException("Date of Reminder can not be in the Past.");
+
         this.date = date;
     }
 
-    public void setCalendarID( Integer calendarID ){
-        if( calendarID != null )
-            this.calendarID = calendarID;
+    public void setCalendarID( Integer calendarID ) throws IllegalArgumentException{
+        if( calendarID != null && calendarID < 0 )
+            throw new IllegalArgumentException("Calendar id can not be less than zero");
+        this.calendarID = calendarID;
     }
 
 //==================================================================================================
