@@ -16,9 +16,24 @@ public abstract class Cost {
         this.setId(id);
     }
 
+    public Cost(Long id, Float amount){
+        this.setId(id);
+        this.setAmount(amount);
+        this.setNotes(null);
+    }
+
 //==================================================================================================
 // SETTER
 //==================================================================================================
+    public void setId(Long id) throws IllegalArgumentException{
+        if( id == null )
+            this.id = Const.NO_DB_ID_SET;
+        else if( id < Const.NO_DB_ID_SET )
+            throw new IllegalArgumentException("ID of Cost can not be less then "+Const.NO_DB_ID_SET);
+        else
+            this.id = id;
+    }
+
     public void setAmount(Float amount) throws IllegalArgumentException{
         if( amount == null )
             throw new IllegalArgumentException("Amount of Cost can not be null.");
@@ -34,23 +49,14 @@ public abstract class Cost {
             this.notes = notes;
     }
 
-    public void setId(Long id) throws IllegalArgumentException{
-        if( id == null )
-            this.id = Const.NO_DB_ID_SET;
-        else if( id < Const.NO_DB_ID_SET )
-            throw new IllegalArgumentException("ID of Cost can not be less then "+Const.NO_DB_ID_SET);
-        else
-            this.id = id;
-    }
-
 //==================================================================================================
 // SETTER
 //==================================================================================================
+    public Long getId(){ return this.id; }
+
     public Float getAmount() { return amount; }
 
     public String getNotes() { return notes; }
-
-    public Long getId(){ return this.id; }
 
 //==================================================================================================
 //  INNER CLASS
