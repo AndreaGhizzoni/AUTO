@@ -13,7 +13,14 @@ public class VehicleTest extends TestCase {
 
     // TODO add description
     public void testVehicleCreation(){
-        Vehicle tmp = new Vehicle("someName", "XXX123", new Date(), Const.NO_DB_ID_SET);
+        Vehicle tmp = new Vehicle(
+                "someName",
+                "XXX123",
+                Vehicle.Fuel.GAS,
+                new Date(),
+                Const.NO_DB_ID_SET
+        );
+
         try{
             tmp.setId(null);
             boolean cond = tmp.getId().equals(Const.NO_DB_ID_SET);
@@ -42,6 +49,11 @@ public class VehicleTest extends TestCase {
         try{
             tmp.setPlate("");
             fail("I can set empty plate.");
+        }catch (IllegalArgumentException ex){}
+
+        try{
+            tmp.setFuel(null);
+            fail("I can set null to fuel");
         }catch (IllegalArgumentException ex){}
 
         try{
