@@ -18,20 +18,15 @@ public class Place {
         this.setId(id);
     }
 
+    public Place( Long id, String address ){
+        this.setId(id);
+        this.setAddress(address);
+        this.setGeoTag(null);
+    }
+
 //==================================================================================================
 // SETTER
 //==================================================================================================
-    public void setGeoTag( Location geoTag ){
-        this.geoTag = geoTag;
-    }
-
-    public void setAddress( String address ) throws IllegalArgumentException{
-        if( address == null || address.isEmpty() )
-            throw new IllegalArgumentException("Address can not be null or empty string.");
-
-        this.address = address;
-    }
-
     public void setId( Long id ) throws IllegalArgumentException{
         if( id == null )
             this.id = Const.NO_DB_ID_SET;
@@ -41,14 +36,25 @@ public class Place {
             this.id = id;
     }
 
+    public void setAddress( String address ) throws IllegalArgumentException{
+        if( address == null || address.isEmpty() )
+            throw new IllegalArgumentException("Address can not be null or empty string.");
+
+        this.address = address;
+    }
+
+    public void setGeoTag( Location geoTag ){
+        this.geoTag = geoTag;
+    }
+
 //==================================================================================================
 // GETTER
 //==================================================================================================
     public Long getId(){ return id; }
 
-    public Location getGeoTag() { return geoTag; }
-
     public String getAddress() { return address; }
+
+    public Location getGeoTag() { return geoTag; }
 
 //==================================================================================================
 //  INNER CLASS
