@@ -1,15 +1,9 @@
 package it.science.unitn.lpsmt.auto.model;
 
 import android.location.Location;
-
 import junit.framework.TestCase;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-
 import it.science.unitn.lpsmt.auto.model.util.Const;
+import static it.science.unitn.lpsmt.auto.Generator.*;
 
 /**
  * TODO add doc
@@ -27,7 +21,7 @@ public class MaintenanceTest extends TestCase {
             "maintenance name",
             10f,
             p,
-            new Reminder(getReminderDate(), 1, Const.NO_DB_ID_SET ),
+            new Reminder(getDate("2015-12-01"), 1, Const.NO_DB_ID_SET ),
             "notes",
             Const.NO_DB_ID_SET
         );
@@ -77,17 +71,4 @@ public class MaintenanceTest extends TestCase {
             fail("Expecting that setReminder(null) will set reminder to null.");
         }
     }
-
-    private Date getReminderDate(){
-        SimpleDateFormat s = new SimpleDateFormat(
-            "yyyy-MM-dd",
-            Locale.getDefault()
-        );
-        try {
-            return s.parse("2015-12-01");
-        } catch (ParseException e) {
-            return null;
-        }
-    }
-
 }

@@ -2,13 +2,9 @@ package it.science.unitn.lpsmt.auto.model;
 
 import junit.framework.TestCase;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
-
 import it.science.unitn.lpsmt.auto.model.util.Const;
+import static it.science.unitn.lpsmt.auto.Generator.*;
 
 /**
  * TODO add doc
@@ -52,7 +48,7 @@ public class VehicleTest extends TestCase {
             tmp.setPurchaseDate(null);
             assertTrue("I can set null as purchase date.", tmp.getPurchaseDate() == null);
 
-            Date d = getPastDate();
+            Date d = getDate("1999-01-01");
             tmp.setPurchaseDate(d);
             assertTrue("I can set a passed date as purchase date.", tmp.getPurchaseDate().equals(d));
 
@@ -61,23 +57,5 @@ public class VehicleTest extends TestCase {
         }catch (IllegalArgumentException ex){}
 
         //TODO test cost
-    }
-
-//==================================================================================================
-//  METHOD
-//==================================================================================================
-    private Date getTomorrowDate(){
-        Calendar c = Calendar.getInstance();
-        c.add(Calendar.DAY_OF_YEAR, 1);
-        return c.getTime();
-    }
-
-    private Date getPastDate(){
-        SimpleDateFormat s = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-        try {
-            return s.parse("1999-12-01");
-        } catch (ParseException e) {
-            return null;
-        }
     }
 }
