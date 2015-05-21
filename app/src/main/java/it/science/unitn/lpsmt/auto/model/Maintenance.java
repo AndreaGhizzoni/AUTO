@@ -18,6 +18,14 @@ public class Maintenance extends Cost {
         this.setReminder(reminder);
     }
 
+    public Maintenance( Long id, Float amount, String name, Maintenance.Type type ){
+        super(id, amount);
+        this.setName(name);
+        this.setType(type);
+        this.setPlace(null);
+        this.setReminder(null);
+    }
+
 //==================================================================================================
 // SETTER
 //==================================================================================================
