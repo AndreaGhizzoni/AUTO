@@ -20,11 +20,13 @@ public class VehicleTest extends TestCase {
         Vehicle tmp = new Vehicle("someName", "XXX123", new Date(), Const.NO_DB_ID_SET);
         try{
             tmp.setId(null);
-            boolean cond = tmp.getId() == Const.NO_DB_ID_SET;
+            boolean cond = tmp.getId().equals(Const.NO_DB_ID_SET);
             assertTrue("passing null to setId() will be set to NO_DB_ID_SET", cond);
         }catch (IllegalArgumentException ex){
             fail("Expecting setId(null) will set id to NO_DB_ID_SET");
         }
+
+        //TODO add test tmp.setId( Const.NO_DB_ID_SET -1 )
 
         try{
             tmp.setName(null);
