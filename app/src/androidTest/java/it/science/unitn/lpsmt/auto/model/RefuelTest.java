@@ -41,8 +41,15 @@ public class RefuelTest extends TestCase{
 
         try{
             r.setNotes(null);
-            fail("I can not set a null note of Refuel.");
-        }catch (IllegalArgumentException ex){}
+            boolean c = r.getNotes().isEmpty();
+            assertTrue("passing null to setNotes() will be set to empty string.", c);
+
+            r.setNotes("");
+            c = r.getNotes().isEmpty();
+            assertTrue("passing empty string to setNotes() will be set to empty string.", c);
+        }catch (IllegalArgumentException ex){
+            fail("I can set a null or empty string notes of Refuel.");
+        }
 
         try{
             r.setNotes("");
