@@ -120,6 +120,7 @@ public class Vehicle {
 //==================================================================================================
     public enum Fuel{
         //TODO add some fuel
+        GAS
     }
 
     /**
@@ -134,6 +135,7 @@ public class Vehicle {
                 instance = new Vehicle(
                         "Default",
                         DEF_PLATE,
+                        Fuel.GAS,
                         null,
                         Const.NO_DB_ID_SET
                 );
