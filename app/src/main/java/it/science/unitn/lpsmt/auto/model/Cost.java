@@ -1,5 +1,7 @@
 package it.science.unitn.lpsmt.auto.model;
 
+import it.science.unitn.lpsmt.auto.model.util.Const;
+
 /**
  * TODO add description
  */
@@ -17,18 +19,27 @@ public abstract class Cost {
 //==================================================================================================
 // SETTER
 //==================================================================================================
-    public void setAmount(Float amount) {
-        if( amount != null && amount > 0 )
-            this.amount = amount;
+    public void setAmount(Float amount) throws IllegalArgumentException{
+        if( amount == null )
+            throw new IllegalArgumentException("Amount of Cost can not be null.");
+        if( amount < 1 )
+            throw new IllegalArgumentException("Amount of Cost can not be equal or less then zero.");
+        this.amount = amount;
     }
 
     public void setNotes(String notes) {
-        if( notes != null )
+        if( notes == null )
+            this.notes = "";
+        else
             this.notes = notes;
     }
 
-    public void setId( Long id ){
-        if( id != null && !id.equals(this.id) )
+    public void setId(Long id) throws IllegalArgumentException{
+        if( id == null )
+            this.id = Const.NO_DB_ID_SET;
+        else if( id < Const.NO_DB_ID_SET )
+            throw new IllegalArgumentException("ID of Cost can not be less then "+Const.NO_DB_ID_SET);
+        else
             this.id = id;
     }
 
