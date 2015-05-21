@@ -35,6 +35,7 @@ public final class Converter {
 //        c.put(Vehicle.SQLData.ID, v.getId());
         c.put(Vehicle.SQLData.NAME, v.getName());
         c.put(Vehicle.SQLData.PLATE, v.getPlate());
+        c.put(Vehicle.SQLData.FUEL, v.getFuel().toString());
         c.put(Vehicle.SQLData.PURCHASE_DATA, getStringFromDate(v.getPurchaseDate()));
         return c;
     }
@@ -51,8 +52,9 @@ public final class Converter {
         Long id = c.getLong(0);
         String name = c.getString(1);
         String plate = c.getString(2);
-        Date purchase_date = getDateFromString(c.getString(3));
-        return new Vehicle(name, plate, purchase_date, id);
+        Vehicle.Fuel fuel = Vehicle.Fuel.valueOf( c.getString(3) );
+        Date purchase_date = getDateFromString(c.getString(4));
+        return new Vehicle(name, plate, fuel, purchase_date, id);
     }
 
     /**
