@@ -50,53 +50,49 @@ public class Vehicle {
         if( id == null )
             this.id = Const.NO_DB_ID_SET;
         else if( id < Const.NO_DB_ID_SET )
-                throw new IllegalArgumentException("ID of vehicle can not be less then "+Const.NO_DB_ID_SET);
+            throw new IllegalArgumentException("ID of vehicle can not be less then "+Const.NO_DB_ID_SET);
         else
             this.id = id;
-    }
-
-    public void setPlate(String plate) throws IllegalArgumentException{
-        if( plate == null || plate.isEmpty() )
-            throw new IllegalArgumentException("Plate can not be null or empty string.");
-
-        this.plate = plate;
-    }
-
-    public void setPurchaseDate(Date purchaseDate) throws IllegalArgumentException{
-        if( purchaseDate != null && purchaseDate.after(new Date()) )
-            throw new IllegalArgumentException("Purchase Date can not be in the future.");
-
-        this.purchaseDate = purchaseDate;
     }
 
     public void setName(String name) throws IllegalArgumentException{
         if( name == null || name.isEmpty() )
             throw new IllegalArgumentException("Name of vehicle can not be null or empty string");
-
         this.name = name;
+    }
+
+    public void setPlate(String plate) throws IllegalArgumentException{
+        if( plate == null || plate.isEmpty() )
+            throw new IllegalArgumentException("Plate can not be null or empty string.");
+        this.plate = plate;
     }
 
     public void setFuel(Fuel fuel) throws IllegalArgumentException{
         if( fuel == null )
             throw new IllegalArgumentException("Fuel of vehicle can not be null.");
-
         this.fuel = fuel;
+    }
+
+    public void setPurchaseDate(Date purchaseDate) throws IllegalArgumentException{
+        if( purchaseDate != null && purchaseDate.after(new Date()) )
+            throw new IllegalArgumentException("Purchase Date can not be in the future.");
+        this.purchaseDate = purchaseDate;
     }
 
 //==================================================================================================
 // GETTER
 //==================================================================================================
-    public String getPlate() { return plate; }
-
-    public Date getPurchaseDate() { return purchaseDate; }
+    public Long getId(){ return this.id; }
 
     public String getName() { return name; }
 
-    public Long getId(){ return this.id; }
-
-    public ArrayList<Cost> getCosts(){ return this.costs; }
+    public String getPlate() { return plate; }
 
     public Fuel getFuel(){ return  this.fuel; }
+
+    public Date getPurchaseDate() { return purchaseDate; }
+
+    public ArrayList<Cost> getCosts(){ return this.costs; }
 
     public boolean isDefaultVehicle(){ return this.equals(Default.get()); }
 
