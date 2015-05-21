@@ -44,7 +44,13 @@ public class MaintenanceTest extends TestCase {
 
         try{
             m.setType(null);
-            fail("I can not set a null Maintenance.Type");
+            fail("I can not set a null Maintenance.Type.");
+        }catch (IllegalArgumentException ex){}
+
+        try{
+            Maintenance.Type t = Maintenance.Type.TAX;
+            m.setType(t);
+            assertTrue("I can set a valid Maintenance.Type.", m.getType().equals(t));
         }catch (IllegalArgumentException ex){}
 
         try{

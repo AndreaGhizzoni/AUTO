@@ -19,57 +19,26 @@ public class Maintenance extends Cost {
     }
 
 //==================================================================================================
-//  METHOD
-//==================================================================================================
-//    // not sure for these kind of methods
-//    public static Maintenance getOrdinaryMaintenance(String name, Float amount){
-//        Maintenance m = new Maintenance();
-//        m.setType(Type.ORDINARY);
-//        m.setName(name);
-//        m.setAmount(amount);
-//        // TODO maybe set with some place and reminder
-//        return m;
-//    }
-//
-//    public static Maintenance getExtraordinaryMaintenance(String name, Float amount){
-//        Maintenance m = new Maintenance();
-//        m.setType(Type.EXTRAORDINARY);
-//        m.setName(name);
-//        m.setAmount(amount);
-//        //TODO maybe set with some place and reminder
-//        return m;
-//    }
-//
-//    public static Maintenance getTaxMaintenance(String name, Float amount){
-//        Maintenance m = new Maintenance();
-//        m.setType(Type.TAX);
-//        m.setName(name);
-//        m.setAmount(amount);
-//        //TODO maybe set with some place and reminder
-//        return m;
-//    }
-
-//==================================================================================================
 // SETTER
 //==================================================================================================
-    public void setName(String name) {
-        if( name != null )
-            this.name = name;
+    public void setName(String name) throws IllegalArgumentException{
+        if( name == null || name.isEmpty() )
+            throw new IllegalArgumentException("Name can not be null or empty string.");
+        this.name = name;
     }
 
-    public void setType(Type type) {
-        if( type != null )
-            this.type = type;
+    public void setType(Type type) throws IllegalArgumentException{
+        if( type == null )
+            throw new IllegalArgumentException("Type can not be null");
+        this.type = type;
     }
 
     public void setPlace( Place place ){
-        if( place != null )
-            this.place = place;
+        this.place = place;
     }
 
     public void setReminder( Reminder reminder ){
-        if( reminder != null )
-            this.reminder = reminder;
+        this.reminder = reminder;
     }
 
 //==================================================================================================
