@@ -155,13 +155,14 @@ public class Vehicle {
         public static final String FUEL          = "fuel";
         public static final String PURCHASE_DATA = "purchase_data";
 
-        public static final String[] ALL_COLUMNS = {ID, NAME, PLATE, PURCHASE_DATA};
+        public static final String[] ALL_COLUMNS = {ID, NAME, PLATE, FUEL, PURCHASE_DATA};
 
         public static final String SQL_CREATE =
                 "create table "+TABLE_NAME+" ( "+
                     ID+" integer primary key autoincrement, "+
                     NAME+" text not null, "+
                     PLATE+" text not null, "+
+                    FUEL+" text not null, "+
                     PURCHASE_DATA+" datetime not null "+
                 ");";
     }
