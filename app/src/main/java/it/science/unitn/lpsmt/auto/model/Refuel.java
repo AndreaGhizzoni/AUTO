@@ -20,6 +20,15 @@ public class Refuel extends Cost {
         this.setPlace(place);
     }
 
+    public Refuel( Long id, Float amount, Float ppl, Date date, Integer km, Place place ){
+        super(id, amount);
+        this.setPricePerLiter(ppl);
+        this.setDate(date);
+        this.setKm(km);
+        this.setPlace(place);
+        this.setNotes(null);
+    }
+
 //==================================================================================================
 // SETTER
 //==================================================================================================
@@ -52,7 +61,7 @@ public class Refuel extends Cost {
 //==================================================================================================
 // GETTER
 //==================================================================================================
-    public float getPricePerLiter() { return pricePerLiter; }
+    public Float getPricePerLiter() { return pricePerLiter; }
 
     public Date getDate() { return date; }
 
