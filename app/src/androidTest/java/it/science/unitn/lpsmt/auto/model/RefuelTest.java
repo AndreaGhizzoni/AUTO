@@ -52,11 +52,6 @@ public class RefuelTest extends TestCase{
         }
 
         try{
-            r.setNotes("");
-            fail("I can not set a null note of Refuel.");
-        }catch (IllegalArgumentException ex){}
-
-        try{
             r.setId(null);
             boolean cond = r.getId().equals(Const.NO_DB_ID_SET);
             assertTrue("passing null to setId() will be set to NO_DB_ID_SET.", cond);
