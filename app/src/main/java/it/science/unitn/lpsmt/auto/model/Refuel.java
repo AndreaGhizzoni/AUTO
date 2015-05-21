@@ -23,24 +23,30 @@ public class Refuel extends Cost {
 //==================================================================================================
 // SETTER
 //==================================================================================================
-    public void setPricePerLiter(Float pricePerLiter) {
-        if(pricePerLiter != null)
-            this.pricePerLiter = pricePerLiter;
+    public void setPricePerLiter(Float ppl) throws IllegalArgumentException{
+        if( ppl == null )
+            throw new IllegalArgumentException( "Price per liter can not be null." );
+        if( ppl <= 0 )
+            throw new IllegalArgumentException( "Price per liter can not be <= then zero." );
+        this.pricePerLiter = ppl;
     }
 
-    public void setDate(Date date) {
-        if(date != null)
-            this.date = date;
+    public void setDate(Date date) throws IllegalArgumentException{
+        if( date == null )
+            throw new IllegalArgumentException( "Date can not be null." );
+        this.date = date;
     }
 
-    public void setKm(Integer km) {
-        if(km != null)
-            this.km = km;
+    public void setKm(Integer km) throws IllegalArgumentException{
+        if( km == null )
+            throw new IllegalArgumentException( "Km can not be null." );
+        if( km < 0 )
+            throw new IllegalArgumentException( "Km cab not be less then zero." );
+        this.km = km;
     }
 
     public void setPlace( Place location ){
-        if( location != null )
-            this.place = location;
+        this.place = location;
     }
 
 //==================================================================================================
