@@ -26,7 +26,7 @@ public class Place {
     }
 
     public void setAddress( String address ) throws IllegalArgumentException{
-        if( address == null || !address.isEmpty() )
+        if( address == null || address.isEmpty() )
             throw new IllegalArgumentException("Address can not be null or empty string.");
 
         this.address = address;
