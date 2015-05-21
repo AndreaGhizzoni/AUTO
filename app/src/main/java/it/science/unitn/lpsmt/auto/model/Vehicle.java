@@ -11,16 +11,20 @@ import it.science.unitn.lpsmt.auto.model.util.Const;
 public class Vehicle {
     private Long id;
     private String name;
-    private Date purchaseDate;
     private String plate;
+    private Fuel fuel;
 
+    private Date purchaseDate;
     private final ArrayList<Cost> costs = new ArrayList<>();
 
-    public Vehicle( String name, String plate, Date purchaseDate, Long id  ){
+    //TODO add simplify constructor
+
+    public Vehicle( String name, String plate, Fuel fuel, Date purchaseDate, Long id  ){
+        this.setId(id);
         this.setName(name);
         this.setPlate(plate);
+        this.setFuel(fuel);
         this.setPurchaseDate(purchaseDate);
-        this.setId(id);
     }
 
 //==================================================================================================
@@ -66,6 +70,13 @@ public class Vehicle {
         this.name = name;
     }
 
+    public void setFuel(Fuel fuel) throws IllegalArgumentException{
+        if( fuel == null )
+            throw new IllegalArgumentException("Fuel of vehicle can not be null.");
+
+        this.fuel = fuel;
+    }
+
 //==================================================================================================
 // GETTER
 //==================================================================================================
@@ -78,6 +89,8 @@ public class Vehicle {
     public Long getId(){ return this.id; }
 
     public ArrayList<Cost> getCosts(){ return this.costs; }
+
+    public Fuel getFuel(){ return  this.fuel; }
 
     public boolean isDefaultVehicle(){ return this.equals(Default.get()); }
 
@@ -105,6 +118,10 @@ public class Vehicle {
 //==================================================================================================
 //  INNER CLASS
 //==================================================================================================
+    public enum Fuel{
+        //TODO add some fuel
+    }
+
     /**
      * TODO add doc
      */
