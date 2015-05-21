@@ -151,8 +151,9 @@ public class Vehicle {
         public static final String TABLE_NAME    = Vehicle.class.getSimpleName().toLowerCase();
         public static final String ID            = "id";
         public static final String NAME          = "name";
-        public static final String PURCHASE_DATA = "purchase_data";
         public static final String PLATE         = "plate";
+        public static final String FUEL          = "fuel";
+        public static final String PURCHASE_DATA = "purchase_data";
 
         public static final String[] ALL_COLUMNS = {ID, NAME, PLATE, PURCHASE_DATA};
 
