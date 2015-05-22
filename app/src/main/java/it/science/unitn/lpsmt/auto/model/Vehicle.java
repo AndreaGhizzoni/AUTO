@@ -26,16 +26,17 @@ public class Vehicle {
     }
 
     public Vehicle( Long id, String name, String plate, Fuel fuel ){
-        this( id, name, plate, fuel, null );
+        this(id, name, plate, fuel, null);
     }
 
 //==================================================================================================
 // METHOD
 //==================================================================================================
     public void addCost( Cost c ) throws IllegalArgumentException{
+        if( this.isDefaultVehicle() )
+            return;
         if( c == null )
             throw new IllegalArgumentException("Cost to add can not be null.");
-
         this.costs.add(c);
     }
 
@@ -117,7 +118,7 @@ public class Vehicle {
 //  INNER CLASS
 //==================================================================================================
     /**
-     * TODO add doc
+     * TODO add dok
      */
     public enum Fuel{
         GASOLINE,    //diesel
@@ -132,16 +133,11 @@ public class Vehicle {
     public static class Default{
         public static Vehicle instance;
         private static String DEF_PLATE = "XX123XX";
+        private static String DEF_NAME  = "Default";
 
         public static Vehicle get(){
             if(instance == null){
-                instance = new Vehicle(
-                    "Default",
-                    DEF_PLATE,
-                    Fuel.GASOLINE,
-                    null,
-                    Const.NO_DB_ID_SET
-                );
+                instance = new Vehicle(Const.NO_DB_ID_SET, DEF_NAME, DEF_PLATE, Fuel.PETROL );
             }
             return instance;
         }
