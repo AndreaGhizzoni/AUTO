@@ -10,16 +10,14 @@ public abstract class Cost {
     private Float amount;
     private String notes;
 
-    public Cost(Float amount, String notes, Long id){
+    public Cost(Long id, Float amount, String notes){
+        this.setId(id);
         this.setAmount(amount);
         this.setNotes(notes);
-        this.setId(id);
     }
 
     public Cost(Long id, Float amount){
-        this.setId(id);
-        this.setAmount(amount);
-        this.setNotes(null);
+        this(id, amount, null);
     }
 
 //==================================================================================================

@@ -10,21 +10,17 @@ public class Maintenance extends Cost {
     private Place place;
     private Integer calendarID;
 
-    public Maintenance( Type type, String name, Float amount, Place place, Integer calendarID,
-                        String notes, Long id ) {
-        super(amount, notes, id);
-        this.setType(type);
+    public Maintenance( Long id, Float amount, String notes, String name, Maintenance.Type type,
+                        Place place, Integer calendarID){
+        super(id, amount, notes);
         this.setName(name);
+        this.setType(type);
         this.setPlace(place);
         this.setCalendarID(calendarID);
     }
 
     public Maintenance( Long id, Float amount, String name, Maintenance.Type type ){
-        super(id, amount);
-        this.setName(name);
-        this.setType(type);
-        this.setPlace(null);
-        this.setCalendarID(null);
+        this(id, amount, null, name, type, null, null);
     }
 
 //==================================================================================================
