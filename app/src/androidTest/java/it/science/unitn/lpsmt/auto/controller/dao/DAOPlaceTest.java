@@ -28,7 +28,7 @@ public class DAOPlaceTest extends AndroidTestCase{
     }
 
     public void testIODB(){
-        Location geoTag = new Location("test");
+        Location geoTag = new Location("db");
         geoTag.setLatitude(10);
         geoTag.setLongitude(10);
         String address = "myAddress";
@@ -55,7 +55,7 @@ public class DAOPlaceTest extends AndroidTestCase{
         this.daoPlace.delete(fromDB);
 
         // test if there isn't the place deleted before
-        Place nullPlace = this.daoPlace.get(fromDB.getId());
-        assertTrue("Try to get a invalid place from invalid id, returns null.", nullPlace == null);
+        Place nullPlace = this.daoPlace.get(toStore.getId());
+        assertTrue("Try to get a deleted place from DB, will returns null.", nullPlace == null);
     }
 }

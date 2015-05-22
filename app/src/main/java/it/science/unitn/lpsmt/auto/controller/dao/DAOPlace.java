@@ -89,6 +89,7 @@ public class DAOPlace implements PlaceDAO {
                 Place.SQLData.ID+" = ?",
                 new String[]{id.toString()}
             );
+            db.setTransactionSuccessful();
         }catch (Throwable t){
             Log.e(DAOPlace.class.getSimpleName(), t.getMessage());
         }finally {

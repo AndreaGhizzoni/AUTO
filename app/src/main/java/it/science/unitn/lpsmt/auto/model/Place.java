@@ -65,9 +65,7 @@ public class Place {
         Place place = (Place) o;
 
         if (!id.equals(place.id)) return false;
-        if (geoTag != null ? !geoTag.equals(place.geoTag) : place.geoTag != null) return false;
         return address.equals(place.address);
-
     }
 
     @Override
