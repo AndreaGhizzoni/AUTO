@@ -69,17 +69,17 @@ public final class Converter {
         if(o instanceof Refuel) {
             Refuel tmp = (Refuel) o;
             c.put(Cost.SQLData.CLASS, Refuel.class.getSimpleName().toLowerCase());
+            c.put(Cost.SQLData.PLACE_ID, tmp.getPlace().getId() );
             c.put(Cost.SQLData.PRICE_PER_LITER, tmp.getPricePerLiter());
             c.put(Cost.SQLData.DATE, getStringFromDate(tmp.getDate()));
             c.put(Cost.SQLData.AT_KM, tmp.getKm());
-            c.put(Cost.SQLData.PLACE_ID, tmp.getPlace().getId() );
         }else if(o instanceof Maintenance) {
             Maintenance tmp = (Maintenance) o;
             c.put(Cost.SQLData.CLASS, Maintenance.class.getSimpleName().toLowerCase());
+            c.put(Cost.SQLData.PLACE_ID, tmp.getPlace() != null ? tmp.getPlace().getId(): -1);
             c.put(Cost.SQLData.NAME, tmp.getName());
             c.put(Cost.SQLData.TYPE, tmp.getType().toString());
-            c.put(Cost.SQLData.PLACE_ID, tmp.getPlace() != null ? tmp.getPlace().getId(): -1);
-            c.put(Cost.SQLData.REMINDER_ID, tmp.getReminder() != null ? tmp.getReminder().getId(): -1 );
+            c.put(Cost.SQLData.CALENDAR_ID, tmp.getCalendarID());
         }
         return c;
     }
@@ -98,18 +98,18 @@ public final class Converter {
         Float amount = c.getFloat(1);
         String notes = c.getString(2);
         String clazz = c.getString(3);
-        Place place = new DAOPlace().get(c.getLong(7));
+        Place place = new DAOPlace().get(c.getLong(4));
 
         if(clazz.equals(Refuel.class.getSimpleName().toLowerCase())){
-            Float pricePerLiter = c.getFloat(4);
-            Date d = getDateFromString(c.getString(5));
-            Integer atKm = c.getInt(6);
+            Float pricePerLiter = c.getFloat(5);
+            Date d = getDateFromString(c.getString(6));
+            Integer atKm = c.getInt(7);
             cost = new Refuel(amount, pricePerLiter, atKm, place, d, notes, id);
         }else if(clazz.equals(Maintenance.class.getSimpleName().toLowerCase())){
-            String name = c.getString(7);
-            Maintenance.Type type = Maintenance.Type.valueOf(c.getString(8));
-            Reminder reminder = new DAOReminder().get(c.getLong(8));
-            cost = new Maintenance(type, name, amount, place, reminder, notes, id);
+            String name = c.getString(8);
+            Maintenance.Type type = Maintenance.Type.valueOf(c.getString(9));
+            Integer calendarID = c.getInt(10);
+            cost = new Maintenance(type, name, amount, place, calendarID, notes, id);
         }
         return cost;
     }
