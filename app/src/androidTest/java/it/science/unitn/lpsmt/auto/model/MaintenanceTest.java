@@ -24,7 +24,7 @@ public class MaintenanceTest extends TestCase {
             "someName",
             Maintenance.Type.EXTRAORDINARY,
             p,
-            100
+            null
         );
 
         try{
