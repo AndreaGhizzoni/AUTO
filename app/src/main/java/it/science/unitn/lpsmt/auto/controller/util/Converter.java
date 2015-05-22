@@ -3,16 +3,12 @@ package it.science.unitn.lpsmt.auto.controller.util;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.location.Location;
-
 import java.util.Date;
-
 import it.science.unitn.lpsmt.auto.controller.dao.DAOPlace;
-import it.science.unitn.lpsmt.auto.controller.dao.DAOReminder;
 import it.science.unitn.lpsmt.auto.model.Cost;
 import it.science.unitn.lpsmt.auto.model.Maintenance;
 import it.science.unitn.lpsmt.auto.model.Place;
 import it.science.unitn.lpsmt.auto.model.Refuel;
-import it.science.unitn.lpsmt.auto.model.Reminder;
 import it.science.unitn.lpsmt.auto.model.Vehicle;
 
 import static it.science.unitn.lpsmt.auto.controller.util.Date.getDateFromString;
@@ -55,37 +51,6 @@ public final class Converter {
         Vehicle.Fuel fuel = Vehicle.Fuel.valueOf( c.getString(3) );
         Date purchase_date = getDateFromString(c.getString(4));
         return new Vehicle(name, plate, fuel, purchase_date, id);
-    }
-
-    /**
-     * TODO add doc
-     * @param r
-     * @return
-     */
-    public static ContentValues reminderToContentValues( Reminder r ) {
-        if( r == null )
-            return null;
-
-        ContentValues c = new ContentValues();
-        c.put(Reminder.SQLData.ID, r.getId());
-        c.put(Reminder.SQLData.DATE, getStringFromDate(r.getDate()));
-        c.put(Reminder.SQLData.CALENDAR_ID, r.getCalendarID());
-        return c;
-    }
-
-    /**
-     * TODO add doc
-     * @param c
-     * @return
-     */
-    public static Reminder cursorToReminder( Cursor c ){
-        if( c == null )
-            return null;
-
-        Long id = c.getLong(0);
-        Date date = getDateFromString(c.getString(1));
-        Integer calendarID = c.getInt(2);
-        return new Reminder(date, calendarID, id);
     }
 
     /**
