@@ -80,7 +80,10 @@ public abstract class Cost {
         // if class == maintenance these fields are set
         public static final String NAME        = "name";
         public static final String TYPE        = "type";
-        public static final String REMINDER_ID = "reminder_id";
+        public static final String CALENDAR_ID = "calendar_id";
+
+        public static final String[] ALL_COLUMNS = {ID, AMOUNT, NOTES, CLASS, PLACE_ID,
+                PRICE_PER_LITER, DATE, AT_KM, NAME, TYPE, CALENDAR_ID};
 
         public static final String SQL_CREATE =
                 "create table "+TABLE_NAME+" ( "+
@@ -94,11 +97,9 @@ public abstract class Cost {
                     AT_KM+" integer, "+
                     NAME+" text, "+
                     TYPE+" text, "+
-                    REMINDER_ID+" integer, "+
+                    CALENDAR_ID+" integer, "+
                     "foreign key ("+PLACE_ID+") references " +
-                        Place.SQLData.TABLE_NAME+" ("+Place.SQLData.ID+"), "+
-                    "foreign key ("+REMINDER_ID+") references "+
-                        Reminder.SQLData.ID+" ("+Reminder.SQLData.ID+") "+
+                        Place.SQLData.TABLE_NAME+" ("+Place.SQLData.ID+") "+
                 ");";
     }
 }
