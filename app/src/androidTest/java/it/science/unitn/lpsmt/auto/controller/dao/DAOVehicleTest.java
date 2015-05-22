@@ -46,18 +46,18 @@ public class DAOVehicleTest extends AndroidTestCase {
         Long idFromDB = this.daoVehicle.save(toStore);
         assertTrue("Id from DB must be different from NO_DB_ID_SET", !idFromDB.equals(Const.NO_DB_ID_SET));
 
-        idFromDB = this.daoVehicle.save(Vehicle.Default.get());
-        assertTrue("I can not save default vehicle into DB", idFromDB.equals(Const.NO_DB_ID_SET));
-
         // test if there is at least one vehicle stored
         int vehicleStored = this.daoVehicle.getAll().size();
         assertTrue("There must be at least one Vehicle stored.", vehicleStored == 1);
-
 
         // set the id from db to actual vehicle and check if there is the same object into db.
         toStore.setId(idFromDB);
         Vehicle fromDb = this.daoVehicle.get(idFromDB);
         assertTrue("Vehicle from DB must be not null.", fromDb != null);
         assertTrue("Actual and stored Vehicle must be the same", toStore.equals(fromDb));
+
+        idFromDB = this.daoVehicle.save(Vehicle.Default.get());
+        assertTrue("I can not save default vehicle into DB", idFromDB.equals(Const.NO_DB_ID_SET));
+
     }
 }
