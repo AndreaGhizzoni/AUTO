@@ -11,22 +11,17 @@ public class Refuel extends Cost {
     private Integer km;
     private Place place;
 
-    public Refuel( Float amount, Float pricePerLiter, Integer km, Place place, Date date,
-                   String note, Long id ){
-        super(amount, note, id);
-        this.setPricePerLiter(pricePerLiter);
-        this.setKm(km);
-        this.setDate(date);
-        this.setPlace(place);
-    }
-
-    public Refuel( Long id, Float amount, Float ppl, Date date, Integer km, Place place ){
-        super(id, amount);
+    public Refuel( Long id, Float amount, String notes, Float ppl, Date date, Integer km,
+                   Place place ){
+        super(id, amount, notes);
         this.setPricePerLiter(ppl);
         this.setDate(date);
         this.setKm(km);
         this.setPlace(place);
-        this.setNotes(null);
+    }
+
+    public Refuel( Long id, Float amount, Float ppl, Date date, Integer km, Place place ){
+        this(id, amount, null, ppl, date, km, place);
     }
 
 //==================================================================================================
