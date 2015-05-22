@@ -96,7 +96,7 @@ public class DAOVehicle implements VehicleDAO{
 
     @Override
     public void delete(Vehicle v) {
-        if( v == null || v.getId().equals(Const.NO_DB_ID_SET) || v.isDefaultVehicle() )
+        if( v == null || v.isDefaultVehicle() )
             return;
         delete(v.getId());
     }
