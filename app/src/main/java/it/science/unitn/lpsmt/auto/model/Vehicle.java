@@ -17,7 +17,7 @@ public class Vehicle {
     private Date purchaseDate;
     private final ArrayList<Cost> costs = new ArrayList<>();
 
-    public Vehicle( String name, String plate, Fuel fuel, Date purchaseDate, Long id  ){
+    public Vehicle( Long id, String name, String plate, Fuel fuel, Date purchaseDate ){
         this.setId(id);
         this.setName(name);
         this.setPlate(plate);
@@ -26,11 +26,7 @@ public class Vehicle {
     }
 
     public Vehicle( Long id, String name, String plate, Fuel fuel ){
-        this.setId(id);
-        this.setName(name);
-        this.setPlate(plate);
-        this.setFuel(fuel);
-        this.setPurchaseDate( null );
+        this( id, name, plate, fuel, null );
     }
 
 //==================================================================================================
