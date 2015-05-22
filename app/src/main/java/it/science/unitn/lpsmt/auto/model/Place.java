@@ -12,16 +12,14 @@ public class Place {
     private Location geoTag;
     private String address;
 
-    public Place( Location geoTag, String address, Long id ){
-        this.setGeoTag(geoTag);
-        this.setAddress(address);
+    public Place( Long id, String address, Location geoTag ){
         this.setId(id);
+        this.setAddress(address);
+        this.setGeoTag(geoTag);
     }
 
     public Place( Long id, String address ){
-        this.setId(id);
-        this.setAddress(address);
-        this.setGeoTag(null);
+        this(id, address, null);
     }
 
 //==================================================================================================
