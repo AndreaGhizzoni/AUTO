@@ -58,12 +58,12 @@ public final class Converter {
      * @param o
      * @return
      */
-    public static ContentValues refuelToContentValues( Cost o ){
+    public static ContentValues costToContentValues(Cost o){
         if( o == null )
             return null;
 
         ContentValues c = new ContentValues();
-        c.put(Cost.SQLData.ID, o.getId());
+//        c.put(Cost.SQLData.ID, o.getId());
         c.put(Cost.SQLData.AMOUNT, o.getAmount());
         c.put(Cost.SQLData.NOTES, o.getNotes());
         if(o instanceof Refuel) {
