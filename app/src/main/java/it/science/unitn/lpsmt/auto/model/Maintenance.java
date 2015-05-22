@@ -6,16 +6,17 @@ package it.science.unitn.lpsmt.auto.model;
 public class Maintenance extends Cost {
     private String name;
     private Maintenance.Type type;
-    private Place place;
-    private Reminder reminder;
 
-    public Maintenance( Type type, String name, Float amount, Place place, Reminder reminder,
+    private Place place;
+    private Integer calendarID;
+
+    public Maintenance( Type type, String name, Float amount, Place place, Integer calendarID,
                         String notes, Long id ) {
         super(amount, notes, id);
         this.setType(type);
         this.setName(name);
         this.setPlace(place);
-        this.setReminder(reminder);
+        this.setCalendarID(calendarID);
     }
 
     public Maintenance( Long id, Float amount, String name, Maintenance.Type type ){
@@ -23,7 +24,7 @@ public class Maintenance extends Cost {
         this.setName(name);
         this.setType(type);
         this.setPlace(null);
-        this.setReminder(null);
+        this.setCalendarID(null);
     }
 
 //==================================================================================================
@@ -45,8 +46,10 @@ public class Maintenance extends Cost {
         this.place = place;
     }
 
-    public void setReminder( Reminder reminder ){
-        this.reminder = reminder;
+    public void setCalendarID( Integer id ) throws IllegalArgumentException{
+        if( id != null && id <= 0 )
+            throw new IllegalArgumentException("Calendar ID to set can not be <= then zero.");
+        this.calendarID = id;
     }
 
 //==================================================================================================
@@ -58,7 +61,7 @@ public class Maintenance extends Cost {
 
     public Place getPlace(){ return place; }
 
-    public Reminder getReminder(){ return reminder; }
+    public Integer getCalendarID(){ return this.calendarID; }
 
 //==================================================================================================
 // INNER CLASS
