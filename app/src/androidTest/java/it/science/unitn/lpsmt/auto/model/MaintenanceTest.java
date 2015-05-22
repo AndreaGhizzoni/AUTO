@@ -1,9 +1,10 @@
 package it.science.unitn.lpsmt.auto.model;
 
 import android.location.Location;
+
 import junit.framework.TestCase;
+
 import it.science.unitn.lpsmt.auto.model.util.Const;
-import static it.science.unitn.lpsmt.auto.Generator.*;
 
 /**
  * TODO add doc
@@ -21,7 +22,7 @@ public class MaintenanceTest extends TestCase {
             "maintenance name",
             10f,
             p,
-            new Reminder(getDate("2015-12-01"), 1, Const.NO_DB_ID_SET ),
+            null,
             "notes",
             Const.NO_DB_ID_SET
         );
@@ -64,11 +65,13 @@ public class MaintenanceTest extends TestCase {
         }
 
         try{
-            m.setReminder(null);
-            boolean c = m.getReminder() == null;
-            assertTrue("I can set a null reminder.", c);
+            assertTrue("I can set null to calendarID.", m.getCalendarID() == null);
+            Integer newCalendarID = 100;
+            m.setCalendarID(newCalendarID);
+            boolean c = m.getCalendarID().equals(newCalendarID);
+            assertTrue("I can set an arbitrary calendarID.", c);
         }catch (IllegalArgumentException ex){
-            fail("Expecting that setReminder(null) will set reminder to null.");
+            fail("Expecting that setCalendarID() will set reminder to a value.");
         }
     }
 }
