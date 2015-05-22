@@ -62,11 +62,15 @@ public class DAOVehicle implements VehicleDAO{
             new String[]{id.toString()},
             null, null, null
         );
-        c.moveToFirst();
-        Vehicle v = Converter.cursorToVehicle(c);
-        // TODO query the Cost table to populate the list's costs of this vehicle
-        c.close();
-        return v;
+        if( c.getCount() == 0 ) { // means that select returns no rows
+            return null;
+        }else{
+            c.moveToFirst();
+            Vehicle v = Converter.cursorToVehicle(c);
+            // TODO query the Cost table to populate the list's costs of this vehicle
+            c.close();
+            return v;
+        }
     }
 
     @Override
@@ -109,16 +113,16 @@ public class DAOVehicle implements VehicleDAO{
             Vehicle.SQLData.ALL_COLUMNS,
             null, null, null, null, null
         );
-
-        c.moveToFirst();
-        Vehicle tmp;
-        while( !c.isAfterLast() ){
-            tmp = Converter.cursorToVehicle(c);
-            list.add(tmp);
-            c.moveToNext();
+        if( c.getCount() != 0 ) {  // means that there are rows
+            c.moveToFirst();
+            Vehicle tmp;
+            while (!c.isAfterLast()) {
+                tmp = Converter.cursorToVehicle(c);
+                list.add(tmp);
+                c.moveToNext();
+            }
+            c.close();
         }
-        c.close();
-
         return list;
     }
 
