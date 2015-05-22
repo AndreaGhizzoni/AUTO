@@ -16,15 +16,15 @@ public class MaintenanceTest extends TestCase {
         Location l = new Location("asd");
         l.setLongitude(1);
         l.setLatitude(1);
-        Place p = new Place(l, "address", Const.NO_DB_ID_SET);
+        Place p = new Place(Const.NO_DB_ID_SET, "address", l);
         Maintenance m = new Maintenance(
+            Const.NO_DB_ID_SET,
+            15f,
+            "someNotes",
+            "someName",
             Maintenance.Type.EXTRAORDINARY,
-            "maintenance name",
-            10f,
             p,
-            null,
-            "notes",
-            Const.NO_DB_ID_SET
+            100
         );
 
         try{

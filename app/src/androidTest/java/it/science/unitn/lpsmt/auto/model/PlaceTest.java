@@ -17,14 +17,14 @@ public class PlaceTest extends TestCase {
             l.setLatitude(46);
             l.setLongitude(11);
 
-            new Place(l, "address", Const.NO_DB_ID_SET);
+            new Place(Const.NO_DB_ID_SET, "address", l);
         }catch (Exception e){
             fail(e.getMessage());
         }
     }
 
     public void testStress(){
-        Place p = new Place(null, "address", Const.NO_DB_ID_SET);
+        Place p = new Place(Const.NO_DB_ID_SET, "address", null);
 
         // test set id
         p.setId(null);

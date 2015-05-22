@@ -14,11 +14,11 @@ public class VehicleTest extends TestCase {
     // TODO add description
     public void testVehicleCreation(){
         Vehicle tmp = new Vehicle(
-                "someName",
-                "XXX123",
-                Vehicle.Fuel.GASOLINE,
-                new Date(),
-                Const.NO_DB_ID_SET
+            Const.NO_DB_ID_SET,
+            "someName",
+            "qwe123",
+            Vehicle.Fuel.GASOLINE,
+            new Date()
         );
 
         try{

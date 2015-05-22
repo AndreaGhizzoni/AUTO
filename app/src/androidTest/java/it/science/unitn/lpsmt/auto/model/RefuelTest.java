@@ -18,16 +18,8 @@ public class RefuelTest extends TestCase{
         Location l = new Location("asd");
         l.setLatitude(1);
         l.setLongitude(1);
-        Place p = new Place(l, "my address", Const.NO_DB_ID_SET);
-        Refuel r = new Refuel(
-                15.00f,
-                1.15f,
-                1500,
-                p,
-                new Date(),
-                "note",
-                Const.NO_DB_ID_SET
-        );
+        Place p = new Place(Const.NO_DB_ID_SET, "my address", l);
+        Refuel r = new Refuel(Const.NO_DB_ID_SET, 15f, "someNotes", 1.2f, new Date(), 1000, p);
 
         try{
             r.setAmount(null);
