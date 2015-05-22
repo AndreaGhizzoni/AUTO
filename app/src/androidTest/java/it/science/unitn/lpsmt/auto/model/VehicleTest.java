@@ -29,7 +29,10 @@ public class VehicleTest extends TestCase {
             fail("Expecting setId(null) will set id to NO_DB_ID_SET");
         }
 
-        //TODO add test tmp.setId( Const.NO_DB_ID_SET -1 )
+        try{
+           tmp.setId(Const.NO_DB_ID_SET-1);
+           fail("I can not set a ID less then Const.NO_DB_ID_SET");
+        }catch (IllegalArgumentException ex){}
 
         try{
             tmp.setName(null);

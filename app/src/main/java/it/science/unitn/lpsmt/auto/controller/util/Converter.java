@@ -48,7 +48,7 @@ public final class Converter {
         Long id = c.getLong(0);
         String name = c.getString(1);
         String plate = c.getString(2);
-        Vehicle.Fuel fuel = Vehicle.Fuel.valueOf( c.getString(3) );
+        Vehicle.Fuel fuel = Vehicle.Fuel.valueOf(c.getString(3));
         Date purchase_date = getDateFromString(c.getString(4));
         return new Vehicle(id, name, plate, fuel, purchase_date);
     }
@@ -104,7 +104,7 @@ public final class Converter {
             Float pricePerLiter = c.getFloat(5);
             Date d = getDateFromString(c.getString(6));
             Integer atKm = c.getInt(7);
-            cost = new Refuel(id, amount, pricePerLiter, d, atKm, place);
+            cost = new Refuel(id, amount, notes, pricePerLiter, d, atKm, place);
         }else if(clazz.equals(Maintenance.class.getSimpleName().toLowerCase())){
             String name = c.getString(8);
             Maintenance.Type type = Maintenance.Type.valueOf(c.getString(9));
@@ -156,7 +156,6 @@ public final class Converter {
             l.setLongitude(lon);
         }
         String address = c.getString(3);
-
         return new Place(id, address, l);
     }
 }

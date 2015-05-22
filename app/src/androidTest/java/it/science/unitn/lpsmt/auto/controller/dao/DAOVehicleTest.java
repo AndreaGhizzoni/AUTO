@@ -37,12 +37,13 @@ public class DAOVehicleTest extends AndroidTestCase {
     public void testIODB(){
         // test the storing procedure.
         Vehicle toStore = new Vehicle(
-            "someName",
-            "XXX123",
+            Const.NO_DB_ID_SET,
+            "MyVehicle",
+            "qwe123",
             Vehicle.Fuel.GASOLINE,
-            new Date(),
-            Const.NO_DB_ID_SET
+            new Date()
         );
+
         Long idFromDB = this.daoVehicle.save(toStore);
         assertTrue("Id from DB must be different from NO_DB_ID_SET", !idFromDB.equals(Const.NO_DB_ID_SET));
 
