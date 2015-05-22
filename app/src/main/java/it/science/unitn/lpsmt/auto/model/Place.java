@@ -55,6 +55,30 @@ public class Place {
     public Location getGeoTag() { return geoTag; }
 
 //==================================================================================================
+//  OVERRIDE
+//==================================================================================================
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Place place = (Place) o;
+
+        if (!id.equals(place.id)) return false;
+        if (geoTag != null ? !geoTag.equals(place.geoTag) : place.geoTag != null) return false;
+        return address.equals(place.address);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id.hashCode();
+        result = 31 * result + (geoTag != null ? geoTag.hashCode() : 0);
+        result = 31 * result + address.hashCode();
+        return result;
+    }
+
+//==================================================================================================
 //  INNER CLASS
 //==================================================================================================
     /**
