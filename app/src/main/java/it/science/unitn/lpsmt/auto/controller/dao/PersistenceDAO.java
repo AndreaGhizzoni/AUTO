@@ -8,7 +8,6 @@ import android.util.Log;
 import it.science.unitn.lpsmt.auto.controller.util.Const;
 import it.science.unitn.lpsmt.auto.model.Cost;
 import it.science.unitn.lpsmt.auto.model.Place;
-import it.science.unitn.lpsmt.auto.model.Reminder;
 import it.science.unitn.lpsmt.auto.model.Vehicle;
 import it.science.unitn.lpsmt.auto.ui.MainActivity;
 
@@ -65,7 +64,6 @@ class PersistenceDAO extends SQLiteOpenHelper {
         db.beginTransaction();
         try {
             db.execSQL(Vehicle.SQLData.SQL_CREATE);
-            db.execSQL(Reminder.SQLData.SQL_CREATE);
             db.execSQL(Place.SQLData.SQL_CREATE);
             db.execSQL(Cost.SQLData.SQL_CREATE);
             db.setTransactionSuccessful();
