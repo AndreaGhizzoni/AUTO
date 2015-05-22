@@ -61,10 +61,15 @@ public class DAOPlace implements PlaceDAO {
             new String[]{id.toString()},
             null, null, null
         );
-        c.moveToFirst();
-        Place p = Converter.cursorToPlace(c);
-        c.close();
-        return p;
+
+        if( c.getCount() == 0 ) { // means that select returns no rows
+            return null;
+        } else {
+            c.moveToFirst();
+            Place p = Converter.cursorToPlace(c);
+            c.close();
+            return p;
+        }
     }
 
     @Override
@@ -106,16 +111,16 @@ public class DAOPlace implements PlaceDAO {
             Place.SQLData.ALL_COLUMNS,
             null, null, null, null, null
         );
-
-        c.moveToFirst();
-        Place tmp;
-        while( !c.isAfterLast() ){
-            tmp = Converter.cursorToPlace(c);
-            list.add(tmp);
-            c.moveToNext();
+        if( c.getCount() != 0 ) {  // means that there are rows
+            c.moveToFirst();
+            Place tmp;
+            while (!c.isAfterLast()) {
+                tmp = Converter.cursorToPlace(c);
+                list.add(tmp);
+                c.moveToNext();
+            }
+            c.close();
         }
-        c.close();
-
         return list;
     }
 

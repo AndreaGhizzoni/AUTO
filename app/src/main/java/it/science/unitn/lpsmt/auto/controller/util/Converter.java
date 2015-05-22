@@ -124,7 +124,7 @@ public final class Converter {
             return null;
 
         ContentValues c = new ContentValues();
-        c.put(Place.SQLData.ID, p.getId());
+//        c.put(Place.SQLData.ID, p.getId());
         if( p.getGeoTag() != null ) {
             c.put(Place.SQLData.LATITUDE, p.getGeoTag().getLatitude());
             c.put(Place.SQLData.LONGITUDE, p.getGeoTag().getLongitude());
