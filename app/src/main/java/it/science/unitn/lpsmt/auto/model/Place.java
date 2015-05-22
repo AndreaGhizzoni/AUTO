@@ -60,14 +60,18 @@ public class Place {
 //  INNER CLASS
 //==================================================================================================
     /**
-     * TODO add doc
+     * This is the representation of the Database Table.
+     * The fields name are in the same order as there are in the sql create statement.
+     * =============================== DO NOT MOVE UP OR DOWN! =====================================
      */
     public static final class SQLData{
-        public static final String TABLE_NAME = Place.class.getSimpleName().toLowerCase();
         public static final String ID         = "id";
         public static final String LATITUDE   = "latitude";
         public static final String LONGITUDE  = "longitude";
         public static final String ADDRESS    = "address";
+
+        public static final String TABLE_NAME = Place.class.getSimpleName().toLowerCase();
+        public static final String[] ALL_COLUMNS = {ID, LATITUDE, LONGITUDE, ADDRESS};
 
         public static final String SQL_CREATE =
                 "create table "+TABLE_NAME+" ( " +

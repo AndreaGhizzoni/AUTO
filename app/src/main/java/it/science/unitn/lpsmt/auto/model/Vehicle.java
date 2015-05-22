@@ -147,16 +147,18 @@ public class Vehicle {
     }
 
     /**
-     * TODO add doc
+     * This is the representation of the Database Table.
+     * The fields name are in the same order as there are in the sql create statement.
+     * =============================== DO NOT MOVE UP OR DOWN! =====================================
      */
     public static final class SQLData{
-        public static final String TABLE_NAME    = Vehicle.class.getSimpleName().toLowerCase();
         public static final String ID            = "id";
         public static final String NAME          = "name";
         public static final String PLATE         = "plate";
         public static final String FUEL          = "fuel";
         public static final String PURCHASE_DATA = "purchase_data";
 
+        public static final String TABLE_NAME    = Vehicle.class.getSimpleName().toLowerCase();
         public static final String[] ALL_COLUMNS = {ID, NAME, PLATE, FUEL, PURCHASE_DATA};
 
         public static final String SQL_CREATE =

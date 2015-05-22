@@ -62,10 +62,11 @@ public abstract class Cost {
 //  INNER CLASS
 //==================================================================================================
     /**
-     * TODO add doc
+     * This is the representation of the Database Table.
+     * The fields name are in the same order as there are in the sql create statement.
+     * =============================== DO NOT MOVE UP OR DOWN! =====================================
      */
     public static final class SQLData{
-        public static final String TABLE_NAME = Cost.class.getSimpleName().toLowerCase();
         public static final String ID         = "id" ;
         public static final String AMOUNT     = "amount";
         public static final String NOTES      = "notes";
@@ -82,6 +83,7 @@ public abstract class Cost {
         public static final String TYPE        = "type";
         public static final String CALENDAR_ID = "calendar_id";
 
+        public static final String TABLE_NAME = Cost.class.getSimpleName().toLowerCase();
         public static final String[] ALL_COLUMNS = {ID, AMOUNT, NOTES, CLASS, PLACE_ID,
                 PRICE_PER_LITER, DATE, AT_KM, NAME, TYPE, CALENDAR_ID};
 
