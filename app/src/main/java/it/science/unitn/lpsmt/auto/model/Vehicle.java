@@ -120,9 +120,14 @@ public class Vehicle {
 //==================================================================================================
 //  INNER CLASS
 //==================================================================================================
+    /**
+     * TODO add doc
+     */
     public enum Fuel{
-        //TODO add some fuel
-        GAS
+        GASOLINE,    //diesel
+        LPG,         //gpl
+        NATURAL_GAS, //metano
+        PETROL       //benzina
     }
 
     /**
@@ -135,11 +140,11 @@ public class Vehicle {
         public static Vehicle get(){
             if(instance == null){
                 instance = new Vehicle(
-                        "Default",
-                        DEF_PLATE,
-                        Fuel.GAS,
-                        null,
-                        Const.NO_DB_ID_SET
+                    "Default",
+                    DEF_PLATE,
+                    Fuel.GASOLINE,
+                    null,
+                    Const.NO_DB_ID_SET
                 );
             }
             return instance;

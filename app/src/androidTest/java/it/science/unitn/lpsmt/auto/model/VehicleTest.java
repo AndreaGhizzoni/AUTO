@@ -16,7 +16,7 @@ public class VehicleTest extends TestCase {
         Vehicle tmp = new Vehicle(
                 "someName",
                 "XXX123",
-                Vehicle.Fuel.GAS,
+                Vehicle.Fuel.GASOLINE,
                 new Date(),
                 Const.NO_DB_ID_SET
         );
