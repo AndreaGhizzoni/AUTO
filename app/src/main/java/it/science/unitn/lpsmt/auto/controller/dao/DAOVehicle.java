@@ -34,21 +34,24 @@ public class DAOVehicle implements VehicleDAO{
         if( v == null || v.isDefaultVehicle() )
             return Const.NO_DB_ID_SET;
 
-        Long id = Const.NO_DB_ID_SET;
-        db.beginTransaction();
-        try{
-            //TODO check if is already inserted ??
-            ContentValues cv = Converter.vehicleToContentValues(v);
-            id = db.insert( Vehicle.SQLData.TABLE_NAME, null, cv );
-            v.setId(id);
-            db.setTransactionSuccessful();
-        }catch ( Throwable t){
-            Log.e(DAOVehicle.class.getSimpleName(), t.getMessage());
-        }finally {
-            db.endTransaction();
+        Vehicle alreadySaved = get(v.getId()); // check if there is already a Place save with that id.
+        if( alreadySaved == null ) {
+            Long id = Const.NO_DB_ID_SET;
+            db.beginTransaction();
+            try {
+                ContentValues cv = Converter.vehicleToContentValues(v);
+                id = db.insert(Vehicle.SQLData.TABLE_NAME, null, cv);
+                v.setId(id);
+                db.setTransactionSuccessful();
+            } catch (Throwable t) {
+                Log.e(DAOVehicle.class.getSimpleName(), t.getMessage());
+            } finally {
+                db.endTransaction();
+            }
+            return id;
+        }else{
+            return alreadySaved.getId();
         }
-
-        return id;
     }
 
     @Override

@@ -35,20 +35,24 @@ public class DAOCost implements CostDAO {
         if( c == null )
             return Const.NO_DB_ID_SET;
 
-        Long id = Const.NO_DB_ID_SET;
-        db.beginTransaction();
-        try{
-            ContentValues cv = Converter.costToContentValues(c);
-            id = db.insert( Cost.SQLData.TABLE_NAME, null, cv );
-            c.setId(id);
-            db.setTransactionSuccessful();
-        }catch (Throwable t){
-            Log.e(DAOCost.class.getSimpleName(), t.getMessage());
-        }finally {
-            db.endTransaction();
+        Cost alreadySaved = get(c.getId()); // check if there is already a Place save with that id.
+        if( alreadySaved == null ) {
+            Long id = Const.NO_DB_ID_SET;
+            db.beginTransaction();
+            try {
+                ContentValues cv = Converter.costToContentValues(c);
+                id = db.insert(Cost.SQLData.TABLE_NAME, null, cv);
+                c.setId(id);
+                db.setTransactionSuccessful();
+            } catch (Throwable t) {
+                Log.e(DAOCost.class.getSimpleName(), t.getMessage());
+            } finally {
+                db.endTransaction();
+            }
+            return id;
+        }else{
+            return alreadySaved.getId();
         }
-
-        return id;
     }
 
     @Override
@@ -126,7 +130,5 @@ public class DAOCost implements CostDAO {
     }
 
     @Override
-    public void close(){
-        this.db.close();
-    }
+    public void close(){ this.db.close(); }
 }
