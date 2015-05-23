@@ -1,9 +1,10 @@
 package it.science.unitn.lpsmt.auto.model;
 
 import junit.framework.TestCase;
+
 import it.science.unitn.lpsmt.auto.model.util.Const;
 
-import static it.science.unitn.lpsmt.auto.Generator.*;
+import static it.science.unitn.lpsmt.auto.Generator.getRefuelInstance;
 
 /**
  * TODO add doc
@@ -13,6 +14,19 @@ public class RefuelTest extends TestCase{
     //TODO add description
     public void testRefuelCreation(){
         Refuel r = getRefuelInstance();
+
+        try{
+            r.setId(null);
+            boolean cond = r.getId().equals(Const.NO_DB_ID_SET);
+            assertTrue("passing null to setId() will be set to NO_DB_ID_SET.", cond);
+        }catch (IllegalArgumentException ex){
+            fail("Expecting setId(null) will set id to NO_DB_ID_SET.");
+        }
+
+        try{
+            r.setId(Const.NO_DB_ID_SET - 1);
+            fail("I can not set a id less then Const.NO_DB_ID_SET.");
+        }catch (IllegalArgumentException ex){}
 
         try{
             r.setAmount(null);
@@ -35,19 +49,6 @@ public class RefuelTest extends TestCase{
         }catch (IllegalArgumentException ex){
             fail("I can set a null or empty string notes of Refuel.");
         }
-
-        try{
-            r.setId(null);
-            boolean cond = r.getId().equals(Const.NO_DB_ID_SET);
-            assertTrue("passing null to setId() will be set to NO_DB_ID_SET.", cond);
-        }catch (IllegalArgumentException ex){
-            fail("Expecting setId(null) will set id to NO_DB_ID_SET.");
-        }
-
-        try{
-            r.setId(Const.NO_DB_ID_SET - 1);
-            fail("I can not set a id less then Const.NO_DB_ID_SET.");
-        }catch (IllegalArgumentException ex){}
 
         try{
             r.setPricePerLiter(null);
