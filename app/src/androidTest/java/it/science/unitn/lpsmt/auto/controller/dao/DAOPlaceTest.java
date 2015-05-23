@@ -45,6 +45,11 @@ public class DAOPlaceTest extends AndroidTestCase{
         assertTrue("Place from DB must be not null.", fromDB != null);
         assertTrue("Actual and stored Place must be the same.", toStore.equals(fromDB));
 
+        // check if not save the same object
+        this.daoPlace.save(toStore);
+        int newPlacesStored = this.daoPlace.getAll().size();
+        assertTrue("I can not save the same object twice.", placeStored == newPlacesStored);
+
         // test the deleting procedure
         this.daoPlace.delete(fromDB);
 

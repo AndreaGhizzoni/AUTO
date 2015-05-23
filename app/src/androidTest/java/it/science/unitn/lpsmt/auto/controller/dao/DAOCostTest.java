@@ -49,6 +49,11 @@ public class DAOCostTest extends AndroidTestCase {
         assertTrue("Cost from DB must be not null.", fromDB != null);
         assertTrue("Actual and stored Refuel must be the same.", fromDB.equals(toStore));
 
+        // check if not save the same object
+        this.daoCost.save(toStore);
+        int newCostStored = this.daoCost.getAll().size();
+        assertTrue("I can not save the same object twice.", costStored == newCostStored);
+
         // testing the deleting procedure
         this.daoCost.delete(fromDB);
         Cost nullCost = this.daoCost.get(idFromDB);
@@ -73,6 +78,11 @@ public class DAOCostTest extends AndroidTestCase {
         Cost fromDB = this.daoCost.get(toStore.getId());
         assertTrue("Cost from DB must be not null.", fromDB != null);
         assertTrue("Actual and stored Maintenance must be the same.", fromDB.equals(toStore));
+
+        // check if not save the same object
+        this.daoCost.save(toStore);
+        int newCostStored = this.daoCost.getAll().size();
+        assertTrue("I can not save the same object twice.", costStored == newCostStored);
 
         // testing the deleting procedure
         this.daoCost.delete(fromDB);
