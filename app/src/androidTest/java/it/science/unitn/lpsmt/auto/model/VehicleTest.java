@@ -1,9 +1,9 @@
 package it.science.unitn.lpsmt.auto.model;
 
 import junit.framework.TestCase;
-
 import java.util.Date;
 import it.science.unitn.lpsmt.auto.model.util.Const;
+
 import static it.science.unitn.lpsmt.auto.Generator.*;
 
 /**
@@ -13,13 +13,7 @@ public class VehicleTest extends TestCase {
 
     // TODO add description
     public void testVehicleCreation(){
-        Vehicle tmp = new Vehicle(
-            Const.NO_DB_ID_SET,
-            "someName",
-            "qwe123",
-            Vehicle.Fuel.GASOLINE,
-            new Date()
-        );
+        Vehicle tmp = getVehicleInstance();
 
         try{
             tmp.setId(null);

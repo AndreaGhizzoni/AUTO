@@ -15,6 +15,7 @@ import it.science.unitn.lpsmt.auto.model.Vehicle;
 
 import static it.science.unitn.lpsmt.auto.controller.util.Date.getDateFromString;
 import static it.science.unitn.lpsmt.auto.controller.util.Date.getStringFromDate;
+import static it.science.unitn.lpsmt.auto.controller.util.Const.LOCATION_PROVIDER;
 
 /**
  * TODO add doc
@@ -170,7 +171,7 @@ public final class Converter {
         double lat = c.getDouble(1);
         double lon = c.getDouble(2);
         if( lat != -1 && lon != -1 ){
-            l = new Location("db");
+            l = new Location(LOCATION_PROVIDER);
             l.setLatitude(lat);
             l.setLongitude(lon);
         }

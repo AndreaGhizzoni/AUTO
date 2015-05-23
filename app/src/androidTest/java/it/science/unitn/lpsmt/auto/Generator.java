@@ -14,6 +14,8 @@ import it.science.unitn.lpsmt.auto.model.Refuel;
 import it.science.unitn.lpsmt.auto.model.Vehicle;
 import it.science.unitn.lpsmt.auto.model.util.Const;
 
+import static it.science.unitn.lpsmt.auto.controller.util.Const.LOCATION_PROVIDER;
+
 public final class Generator {
     private Generator(){}
 
@@ -36,7 +38,7 @@ public final class Generator {
     }
 
     public static Location getLocationInstance(){
-        Location l = new Location("db");
+        Location l = new Location(LOCATION_PROVIDER);
         l.setLongitude(10);
         l.setLatitude(10);
         return l;

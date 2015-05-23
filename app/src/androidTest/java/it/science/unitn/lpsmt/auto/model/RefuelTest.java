@@ -1,12 +1,9 @@
 package it.science.unitn.lpsmt.auto.model;
 
-import android.location.Location;
-
 import junit.framework.TestCase;
-
-import java.util.Date;
-
 import it.science.unitn.lpsmt.auto.model.util.Const;
+
+import static it.science.unitn.lpsmt.auto.Generator.*;
 
 /**
  * TODO add doc
@@ -15,11 +12,7 @@ public class RefuelTest extends TestCase{
 
     //TODO add description
     public void testRefuelCreation(){
-        Location l = new Location("asd");
-        l.setLatitude(1);
-        l.setLongitude(1);
-        Place p = new Place(Const.NO_DB_ID_SET, "my address", l);
-        Refuel r = new Refuel(Const.NO_DB_ID_SET, 15f, "someNotes", 1.2f, new Date(), 1000, p);
+        Refuel r = getRefuelInstance();
 
         try{
             r.setAmount(null);
