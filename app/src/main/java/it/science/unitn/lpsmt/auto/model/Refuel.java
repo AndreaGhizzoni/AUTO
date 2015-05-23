@@ -76,9 +76,10 @@ public class Refuel extends Cost {
         Refuel refuel = (Refuel) o;
 
         if (!pricePerLiter.equals(refuel.pricePerLiter)) return false;
-        if (!date.equals(refuel.date)) return false;
+        if (!date.toString().equals(refuel.date.toString())) return false;
         if (!km.equals(refuel.km)) return false;
         return place.equals(refuel.place);
+
     }
 
     @Override

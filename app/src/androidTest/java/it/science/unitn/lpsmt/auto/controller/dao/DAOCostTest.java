@@ -1,12 +1,14 @@
 package it.science.unitn.lpsmt.auto.controller.dao;
 
 import android.test.AndroidTestCase;
+
 import it.science.unitn.lpsmt.auto.model.Cost;
 import it.science.unitn.lpsmt.auto.model.Maintenance;
 import it.science.unitn.lpsmt.auto.model.Refuel;
 import it.science.unitn.lpsmt.auto.model.util.Const;
 
-import static it.science.unitn.lpsmt.auto.Generator.*;
+import static it.science.unitn.lpsmt.auto.Generator.getMaintenanceInstance;
+import static it.science.unitn.lpsmt.auto.Generator.getRefuelInstance;
 
 /**
  * TODO add doc
@@ -34,8 +36,8 @@ public class DAOCostTest extends AndroidTestCase {
         // testing the storing procedure
         Long idFromDB = this.daoCost.save(toStore);
         assertTrue(
-            "Id from DB must be different from NO_DB_ID_SET.",
-            !idFromDB.equals(Const.NO_DB_ID_SET)
+                "Id from DB must be different from NO_DB_ID_SET.",
+                !idFromDB.equals(Const.NO_DB_ID_SET)
         );
 
         // test if there is at least one Cost stored
@@ -46,7 +48,7 @@ public class DAOCostTest extends AndroidTestCase {
         toStore.setId(idFromDB);
         Cost fromDB = this.daoCost.get(idFromDB);
         assertTrue("Cost from DB must be not null.", fromDB != null);
-        //TODO add check when equals and hashCode are implemented
+        assertTrue("Actual and stored Refuel must be the same.", fromDB.equals(toStore));
 
         // testing the deleting procedure
         this.daoCost.delete(fromDB);
@@ -72,7 +74,7 @@ public class DAOCostTest extends AndroidTestCase {
         toStore.setId(idFromDB);
         Cost fromDB = this.daoCost.get(idFromDB);
         assertTrue("Cost from DB must be not null.", fromDB != null);
-        //TODO add check when equals and hashCode are implemented
+        assertTrue("Actual and stored Maintenance must be the same.", fromDB.equals(toStore));
 
         // testing the deleting procedure
         this.daoCost.delete(fromDB);

@@ -3,7 +3,9 @@ package it.science.unitn.lpsmt.auto.controller.util;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.location.Location;
+
 import java.util.Date;
+
 import it.science.unitn.lpsmt.auto.controller.dao.DAOPlace;
 import it.science.unitn.lpsmt.auto.model.Cost;
 import it.science.unitn.lpsmt.auto.model.Maintenance;
@@ -101,7 +103,7 @@ public final class Converter {
         Place place = new DAOPlace().get(c.getLong(4));
 
         if(clazz.equals(Refuel.class.getSimpleName().toLowerCase())){
-            Float pricePerLiter = c.getFloat(5);
+            Float pricePerLiter = Float.valueOf( c.getString(5) );
             Date d = getDateFromString(c.getString(6));
             Integer atKm = c.getInt(7);
             cost = new Refuel(id, amount, notes, pricePerLiter, d, atKm, place);

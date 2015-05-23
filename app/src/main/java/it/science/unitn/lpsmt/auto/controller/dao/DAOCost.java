@@ -12,6 +12,8 @@ import java.util.List;
 import it.science.unitn.lpsmt.auto.controller.CostDAO;
 import it.science.unitn.lpsmt.auto.controller.util.Converter;
 import it.science.unitn.lpsmt.auto.model.Cost;
+import it.science.unitn.lpsmt.auto.model.Maintenance;
+import it.science.unitn.lpsmt.auto.model.Refuel;
 import it.science.unitn.lpsmt.auto.model.util.Const;
 
 /**
@@ -20,14 +22,17 @@ import it.science.unitn.lpsmt.auto.model.util.Const;
 
 //https://stackoverflow.com/questions/8147440/android-database-transaction
 public class DAOCost implements CostDAO {
+//    private final Context context;
     private final SQLiteDatabase db;
 
     public DAOCost(){
         db = PersistenceDAO.getInstance().getWritableDatabase();
+//        context = MainActivity.getAppContext();
     }
 
     public DAOCost( Context testContext ){
         db = new PersistenceDAO(testContext).getWritableDatabase();
+//        context = testContext;
     }
 
     @Override
@@ -38,6 +43,20 @@ public class DAOCost implements CostDAO {
         Long id = Const.NO_DB_ID_SET;
         db.beginTransaction();
         try{
+            if( c instanceof Refuel ) {
+                Refuel tmp = (Refuel)c;
+                if( tmp.getPlace() != null ) {
+                    Long i = new DAOPlace().save(tmp.getPlace());
+                    tmp.getPlace().setId(i);
+                }
+            }else{
+                Maintenance tmp = (Maintenance)c;
+                if( tmp.getPlace() != null ) {
+                    Long i = new DAOPlace().save(tmp.getPlace());
+                    tmp.getPlace().setId(i);
+                }
+            }
+
             ContentValues cv = Converter.costToContentValues(c);
             id = db.insert( Cost.SQLData.TABLE_NAME, null, cv );
             db.setTransactionSuccessful();
