@@ -67,9 +67,7 @@ public class DAOPlace implements PlaceDAO {
             return null;
         } else {
             c.moveToFirst();
-            Place p = Converter.cursorToPlace(c);
-            c.close();
-            return p;
+            return Converter.cursorToPlace(c, true);
         }
     }
 
@@ -117,7 +115,7 @@ public class DAOPlace implements PlaceDAO {
             c.moveToFirst();
             Place tmp;
             while (!c.isAfterLast()) {
-                tmp = Converter.cursorToPlace(c);
+                tmp = Converter.cursorToPlace(c, false);
                 list.add(tmp);
                 c.moveToNext();
             }

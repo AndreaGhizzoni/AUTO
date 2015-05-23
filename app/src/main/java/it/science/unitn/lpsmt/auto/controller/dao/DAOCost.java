@@ -68,9 +68,7 @@ public class DAOCost implements CostDAO {
             return null;
         }else{
             c.moveToFirst();
-            Cost cost = Converter.cursorToCost(c);
-            c.close();
-            return cost;
+            return Converter.cursorToCost(c, true);
         }
     }
 
@@ -118,7 +116,7 @@ public class DAOCost implements CostDAO {
             c.moveToFirst();
             Cost tmp;
             while( !c.isAfterLast() ){
-                tmp = Converter.cursorToCost(c);
+                tmp = Converter.cursorToCost(c, false);
                 list.add(tmp);
                 c.moveToNext();
             }

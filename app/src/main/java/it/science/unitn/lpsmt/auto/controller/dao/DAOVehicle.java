@@ -67,10 +67,8 @@ public class DAOVehicle implements VehicleDAO{
             return null;
         }else{
             c.moveToFirst();
-            Vehicle v = Converter.cursorToVehicle(c);
             // TODO query the Cost table to populate the list's costs of this vehicle
-            c.close();
-            return v;
+            return Converter.cursorToVehicle(c, true);
         }
     }
 
@@ -118,7 +116,7 @@ public class DAOVehicle implements VehicleDAO{
             c.moveToFirst();
             Vehicle tmp;
             while (!c.isAfterLast()) {
-                tmp = Converter.cursorToVehicle(c);
+                tmp = Converter.cursorToVehicle(c, false);
                 list.add(tmp);
                 c.moveToNext();
             }

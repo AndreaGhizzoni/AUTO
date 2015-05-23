@@ -31,7 +31,6 @@ public final class Converter {
             return null;
 
         ContentValues c = new ContentValues();
-//        c.put(Vehicle.SQLData.ID, v.getId());
         c.put(Vehicle.SQLData.NAME, v.getName());
         c.put(Vehicle.SQLData.PLATE, v.getPlate());
         c.put(Vehicle.SQLData.FUEL, v.getFuel().toString());
@@ -44,7 +43,7 @@ public final class Converter {
      * @param c
      * @return
      */
-    public static Vehicle cursorToVehicle( Cursor c ){
+    public static Vehicle cursorToVehicle( Cursor c, boolean forceClose ){
         if( c == null )
             return null;
 
@@ -53,6 +52,8 @@ public final class Converter {
         String plate = c.getString(2);
         Vehicle.Fuel fuel = Vehicle.Fuel.valueOf(c.getString(3));
         Date purchase_date = getDateFromString(c.getString(4));
+
+        if(forceClose) c.close();
         return new Vehicle(id, name, plate, fuel, purchase_date);
     }
 
@@ -66,7 +67,6 @@ public final class Converter {
             return null;
 
         ContentValues c = new ContentValues();
-//        c.put(Cost.SQLData.ID, o.getId());
         c.put(Cost.SQLData.AMOUNT, o.getAmount());
         c.put(Cost.SQLData.NOTES, o.getNotes());
 
@@ -77,7 +77,6 @@ public final class Converter {
             // this is because in Cost table there is a foreign key to Place
             Place p = tmp.getPlace();
             new DAOPlace().save(p);
-//            p.setId(id);
             c.put(Cost.SQLData.PLACE_ID, p.getId() );
 
             c.put(Cost.SQLData.PRICE_PER_LITER, tmp.getPricePerLiter());
@@ -93,7 +92,6 @@ public final class Converter {
                 c.put(Cost.SQLData.PLACE_ID, -1);
             }else{
                 new DAOPlace().save(p);
-//                p.setId(id);
                 c.put(Cost.SQLData.PLACE_ID, p.getId() );
             }
 
@@ -109,7 +107,7 @@ public final class Converter {
      * @param c
      * @return
      */
-    public static Cost cursorToCost( Cursor c ){
+    public static Cost cursorToCost( Cursor c, boolean forceClose ){
         if( c == null )
             return null;
 
@@ -131,6 +129,8 @@ public final class Converter {
             Integer calendarID = c.getInt(10);
             cost = new Maintenance(id, amount, notes, name, type, place, calendarID);
         }
+
+        if( forceClose ) c.close();
         return cost;
     }
 
@@ -144,7 +144,6 @@ public final class Converter {
             return null;
 
         ContentValues c = new ContentValues();
-//        c.put(Place.SQLData.ID, p.getId());
         if( p.getGeoTag() != null ) {
             c.put(Place.SQLData.LATITUDE, p.getGeoTag().getLatitude());
             c.put(Place.SQLData.LONGITUDE, p.getGeoTag().getLongitude());
@@ -162,7 +161,7 @@ public final class Converter {
      * @param c
      * @return
      */
-    public static Place cursorToPlace( Cursor c ){
+    public static Place cursorToPlace( Cursor c, boolean forceClose ){
         if( c == null )
             return null;
 
@@ -176,6 +175,8 @@ public final class Converter {
             l.setLongitude(lon);
         }
         String address = c.getString(3);
+
+        if( forceClose ) c.close();
         return new Place(id, address, l);
     }
 }

@@ -51,7 +51,9 @@ public class MaintenanceTest extends TestCase {
         }
 
         try{
+            m.setCalendarID(null);
             assertTrue("I can set null to calendarID.", m.getCalendarID() == null);
+
             Integer newCalendarID = 100;
             m.setCalendarID(newCalendarID);
             boolean c = m.getCalendarID().equals(newCalendarID);
