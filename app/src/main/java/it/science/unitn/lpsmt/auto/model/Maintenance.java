@@ -60,6 +60,33 @@ public class Maintenance extends Cost {
     public Integer getCalendarID(){ return this.calendarID; }
 
 //==================================================================================================
+// OVERRIDE
+//==================================================================================================
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+
+        Maintenance that = (Maintenance) o;
+
+        if (!name.equals(that.name)) return false;
+        if (type != that.type) return false;
+        if (place != null ? !place.equals(that.place) : that.place != null) return false;
+        return !(calendarID != null ? !calendarID.equals(that.calendarID) : that.calendarID != null);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + name.hashCode();
+        result = 31 * result + type.hashCode();
+        result = 31 * result + (place != null ? place.hashCode() : 0);
+        result = 31 * result + (calendarID != null ? calendarID.hashCode() : 0);
+        return result;
+    }
+
+//==================================================================================================
 // INNER CLASS
 //==================================================================================================
     /**

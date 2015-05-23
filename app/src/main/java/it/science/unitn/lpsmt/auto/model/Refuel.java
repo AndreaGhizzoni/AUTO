@@ -25,7 +25,7 @@ public class Refuel extends Cost {
     }
 
 //==================================================================================================
-// SETTER
+//  SETTER
 //==================================================================================================
     public void setPricePerLiter(Float ppl) throws IllegalArgumentException{
         if( ppl == null )
@@ -54,7 +54,7 @@ public class Refuel extends Cost {
     }
 
 //==================================================================================================
-// GETTER
+//  GETTER
 //==================================================================================================
     public Float getPricePerLiter() { return pricePerLiter; }
 
@@ -63,4 +63,31 @@ public class Refuel extends Cost {
     public Integer getKm() { return km; }
 
     public Place getPlace(){ return place; }
+
+//==================================================================================================
+//  OVERRIDE
+//==================================================================================================
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+
+        Refuel refuel = (Refuel) o;
+
+        if (!pricePerLiter.equals(refuel.pricePerLiter)) return false;
+        if (!date.equals(refuel.date)) return false;
+        if (!km.equals(refuel.km)) return false;
+        return place.equals(refuel.place);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + pricePerLiter.hashCode();
+        result = 31 * result + date.hashCode();
+        result = 31 * result + km.hashCode();
+        result = 31 * result + place.hashCode();
+        return result;
+    }
 }
