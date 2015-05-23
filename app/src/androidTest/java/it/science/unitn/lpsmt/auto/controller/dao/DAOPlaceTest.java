@@ -1,10 +1,10 @@
 package it.science.unitn.lpsmt.auto.controller.dao;
 
-import android.location.Location;
 import android.test.AndroidTestCase;
-
 import it.science.unitn.lpsmt.auto.model.Place;
 import it.science.unitn.lpsmt.auto.model.util.Const;
+
+import static it.science.unitn.lpsmt.auto.Generator.*;
 
 /**
  * TODO add doc
@@ -18,7 +18,6 @@ public class DAOPlaceTest extends AndroidTestCase{
         // >>>>> NB <<<<< remember to uninstall the test application
         // from the device before run this test
         this.daoPlace = new DAOPlace(getContext());
-
     }
 
     @Override
@@ -28,11 +27,7 @@ public class DAOPlaceTest extends AndroidTestCase{
     }
 
     public void testIODB(){
-        Location geoTag = new Location("db");
-        geoTag.setLatitude(10);
-        geoTag.setLongitude(10);
-        String address = "myAddress";
-        Place toStore = new Place(Const.NO_DB_ID_SET, address, geoTag );
+        Place toStore = getPlaceInstance();
 
         // testing the storing procedure
         Long idFromDB = this.daoPlace.save(toStore);
@@ -46,7 +41,6 @@ public class DAOPlaceTest extends AndroidTestCase{
         assertTrue("There must be at least one Place stored.", placeStored != 0);
 
         // check if there is the same object into db.
-//        toStore.setId(idFromDB);
         Place fromDB = this.daoPlace.get(toStore.getId());
         assertTrue("Place from DB must be not null.", fromDB != null);
         assertTrue("Actual and stored Place must be the same.", toStore.equals(fromDB));

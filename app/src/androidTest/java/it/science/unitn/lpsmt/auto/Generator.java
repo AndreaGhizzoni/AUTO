@@ -11,6 +11,7 @@ import java.util.Locale;
 import it.science.unitn.lpsmt.auto.model.Maintenance;
 import it.science.unitn.lpsmt.auto.model.Place;
 import it.science.unitn.lpsmt.auto.model.Refuel;
+import it.science.unitn.lpsmt.auto.model.Vehicle;
 import it.science.unitn.lpsmt.auto.model.util.Const;
 
 public final class Generator {
@@ -34,20 +35,47 @@ public final class Generator {
         }
     }
 
-    public static Refuel getRefuelInstance(){
+    public static Location getLocationInstance(){
         Location l = new Location("db");
         l.setLongitude(10);
         l.setLatitude(10);
-        Place p = new Place(Const.NO_DB_ID_SET, "address", l);
-        return new Refuel(Const.NO_DB_ID_SET, 10f, "notes", 1.4f, new Date(), 1000, p);
+        return l;
+    }
+
+    public static Refuel getRefuelInstance(){
+        return new Refuel(
+            Const.NO_DB_ID_SET,
+            10f, "notes",
+            1.4f,
+            new Date(),
+            1000,
+            getPlaceInstance()
+        );
     }
 
     public static Maintenance getMaintenanceInstance(){
-        Location l = new Location("db");
-        l.setLongitude(10);
-        l.setLatitude(10);
-        Place p = new Place(Const.NO_DB_ID_SET, "address", l);
-        return new Maintenance(Const.NO_DB_ID_SET, 100f, "notes", "name",
-                Maintenance.Type.EXTRAORDINARY, p, 10);
+        return new Maintenance(
+            Const.NO_DB_ID_SET,
+            100f,
+            "notes",
+            "name",
+            Maintenance.Type.EXTRAORDINARY,
+            getPlaceInstance(),
+            10
+        );
+    }
+
+    public static Vehicle getVehicleInstance(){
+        return new Vehicle(
+            Const.NO_DB_ID_SET,
+            "MyVehicle",
+            "qwe123",
+            Vehicle.Fuel.GASOLINE,
+            new Date()
+        );
+    }
+
+    public static Place getPlaceInstance(){
+        return new Place(Const.NO_DB_ID_SET, "address", getLocationInstance());
     }
 }

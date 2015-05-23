@@ -1,24 +1,17 @@
 package it.science.unitn.lpsmt.auto.controller.dao;
 
 import android.test.AndroidTestCase;
-
-import java.util.Date;
-
 import it.science.unitn.lpsmt.auto.model.Vehicle;
 import it.science.unitn.lpsmt.auto.model.util.Const;
+
+import static it.science.unitn.lpsmt.auto.Generator.getVehicleInstance;
+
 
 /**
  * TODO add doc
  */
 public class DAOVehicleTest extends AndroidTestCase {
     private DAOVehicle daoVehicle;
-
-    // default value for local vehicle
-    private Long id = Const.NO_DB_ID_SET;
-    private String name = "someName";
-    private Date purchaseDate = new Date();
-    private String plate = "XXX123";
-
 
     @Override
     public void setUp() throws Exception {
@@ -36,13 +29,7 @@ public class DAOVehicleTest extends AndroidTestCase {
 
     public void testIODB(){
         // test the storing procedure.
-        Vehicle toStore = new Vehicle(
-            Const.NO_DB_ID_SET,
-            "MyVehicle",
-            "qwe123",
-            Vehicle.Fuel.GASOLINE,
-            new Date()
-        );
+        Vehicle toStore = getVehicleInstance();
 
         Long idFromDB = this.daoVehicle.save(toStore);
         assertTrue("Id from DB must be different from NO_DB_ID_SET", !idFromDB.equals(Const.NO_DB_ID_SET));
@@ -52,7 +39,6 @@ public class DAOVehicleTest extends AndroidTestCase {
         assertTrue("There must be at least one Vehicle stored.", vehicleStored == 1);
 
         // check if there is the same object into db.
-//        toStore.setId(idFromDB);
         Vehicle fromDb = this.daoVehicle.get(toStore.getId());
         assertTrue("Vehicle from DB must be not null.", fromDb != null);
         assertTrue("Actual and stored Vehicle must be the same", toStore.equals(fromDb));
