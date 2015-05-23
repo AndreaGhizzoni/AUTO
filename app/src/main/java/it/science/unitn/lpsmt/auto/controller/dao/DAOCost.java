@@ -40,6 +40,7 @@ public class DAOCost implements CostDAO {
         try{
             ContentValues cv = Converter.costToContentValues(c);
             id = db.insert( Cost.SQLData.TABLE_NAME, null, cv );
+            c.setId(id);
             db.setTransactionSuccessful();
         }catch (Throwable t){
             Log.e(DAOCost.class.getSimpleName(), t.getMessage());

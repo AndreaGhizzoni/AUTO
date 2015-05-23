@@ -37,17 +37,17 @@ public class DAOPlaceTest extends AndroidTestCase{
         // testing the storing procedure
         Long idFromDB = this.daoPlace.save(toStore);
         assertTrue(
-                "Id from DB must be different from NO_DB_ID_SET",
-                !idFromDB.equals(Const.NO_DB_ID_SET)
+            "Id from DB must be different from NO_DB_ID_SET",
+            !idFromDB.equals(Const.NO_DB_ID_SET)
         );
 
         // test if there is at least one place stored
         int placeStored = this.daoPlace.getAll().size();
         assertTrue("There must be at least one Place stored.", placeStored != 0);
 
-        // set the id from db to actual place and check if there is the same object into db.
-        toStore.setId(idFromDB);
-        Place fromDB = this.daoPlace.get(idFromDB);
+        // check if there is the same object into db.
+//        toStore.setId(idFromDB);
+        Place fromDB = this.daoPlace.get(toStore.getId());
         assertTrue("Place from DB must be not null.", fromDB != null);
         assertTrue("Actual and stored Place must be the same.", toStore.equals(fromDB));
 

@@ -39,6 +39,7 @@ public class DAOPlace implements PlaceDAO {
         try{
             ContentValues cv = Converter.placeToContentValues(p);
             id = db.insert( Place.SQLData.TABLE_NAME, null, cv );
+            p.setId(id);
             db.setTransactionSuccessful();
         }catch (Throwable t){
             Log.e(DAOPlace.class.getSimpleName(), t.getMessage());

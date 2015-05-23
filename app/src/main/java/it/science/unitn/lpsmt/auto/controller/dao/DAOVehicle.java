@@ -40,6 +40,7 @@ public class DAOVehicle implements VehicleDAO{
             //TODO check if is already inserted ??
             ContentValues cv = Converter.vehicleToContentValues(v);
             id = db.insert( Vehicle.SQLData.TABLE_NAME, null, cv );
+            v.setId(id);
             db.setTransactionSuccessful();
         }catch ( Throwable t){
             Log.e(DAOVehicle.class.getSimpleName(), t.getMessage());

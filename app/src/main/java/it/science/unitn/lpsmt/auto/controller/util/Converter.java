@@ -75,8 +75,8 @@ public final class Converter {
 
             // this is because in Cost table there is a foreign key to Place
             Place p = tmp.getPlace();
-            Long id = new DAOPlace().save(p);
-            p.setId(id);
+            new DAOPlace().save(p);
+//            p.setId(id);
             c.put(Cost.SQLData.PLACE_ID, p.getId() );
 
             c.put(Cost.SQLData.PRICE_PER_LITER, tmp.getPricePerLiter());
@@ -91,8 +91,8 @@ public final class Converter {
             if( p == null ){ // no place set for this maintenance
                 c.put(Cost.SQLData.PLACE_ID, -1);
             }else{
-                Long id = new DAOPlace().save(p);
-                p.setId(id);
+                new DAOPlace().save(p);
+//                p.setId(id);
                 c.put(Cost.SQLData.PLACE_ID, p.getId() );
             }
 

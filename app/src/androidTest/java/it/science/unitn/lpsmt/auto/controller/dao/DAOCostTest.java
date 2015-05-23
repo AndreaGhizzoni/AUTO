@@ -44,9 +44,9 @@ public class DAOCostTest extends AndroidTestCase {
         int costStored = this.daoCost.getAll().size();
         assertTrue("There must be at least on Cost stored.", costStored != 0);
 
-        // set the id from db to actual cost and if there are the same object into db.
-        toStore.setId(idFromDB);
-        Cost fromDB = this.daoCost.get(idFromDB);
+        // check if there are the same object into db.
+//        toStore.setId(idFromDB);
+        Cost fromDB = this.daoCost.get(toStore.getId());
         assertTrue("Cost from DB must be not null.", fromDB != null);
         assertTrue("Actual and stored Refuel must be the same.", fromDB.equals(toStore));
 
@@ -70,9 +70,9 @@ public class DAOCostTest extends AndroidTestCase {
         int costStored = this.daoCost.getAll().size();
         assertTrue("There must be at least on Cost stored.", costStored != 0);
 
-        // set the id from db to actual cost and if there are the same object into db.
-        toStore.setId(idFromDB);
-        Cost fromDB = this.daoCost.get(idFromDB);
+        // check if there are the same object into db.
+//        toStore.setId(idFromDB);
+        Cost fromDB = this.daoCost.get(toStore.getId());
         assertTrue("Cost from DB must be not null.", fromDB != null);
         assertTrue("Actual and stored Maintenance must be the same.", fromDB.equals(toStore));
 
