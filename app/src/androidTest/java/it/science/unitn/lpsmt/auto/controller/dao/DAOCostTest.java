@@ -36,8 +36,8 @@ public class DAOCostTest extends AndroidTestCase {
         // testing the storing procedure
         Long idFromDB = this.daoCost.save(toStore);
         assertTrue(
-                "Id from DB must be different from NO_DB_ID_SET.",
-                !idFromDB.equals(Const.NO_DB_ID_SET)
+            "Id from DB must be different from NO_DB_ID_SET.",
+            !idFromDB.equals(Const.NO_DB_ID_SET)
         );
 
         // test if there is at least one Cost stored

@@ -68,17 +68,34 @@ public final class Converter {
 //        c.put(Cost.SQLData.ID, o.getId());
         c.put(Cost.SQLData.AMOUNT, o.getAmount());
         c.put(Cost.SQLData.NOTES, o.getNotes());
+
         if(o instanceof Refuel) {
             Refuel tmp = (Refuel) o;
             c.put(Cost.SQLData.CLASS, Refuel.class.getSimpleName().toLowerCase());
-            c.put(Cost.SQLData.PLACE_ID, tmp.getPlace().getId() );
+
+            // this is because in Cost table there is a foreign key to Place
+            Place p = tmp.getPlace();
+            Long id = new DAOPlace().save(p);
+            p.setId(id);
+            c.put(Cost.SQLData.PLACE_ID, p.getId() );
+
             c.put(Cost.SQLData.PRICE_PER_LITER, tmp.getPricePerLiter());
             c.put(Cost.SQLData.DATE, getStringFromDate(tmp.getDate()));
             c.put(Cost.SQLData.AT_KM, tmp.getKm());
         }else if(o instanceof Maintenance) {
             Maintenance tmp = (Maintenance) o;
             c.put(Cost.SQLData.CLASS, Maintenance.class.getSimpleName().toLowerCase());
-            c.put(Cost.SQLData.PLACE_ID, tmp.getPlace() != null ? tmp.getPlace().getId(): -1);
+
+            // this is because in Cost table there is a foreign key to Place
+            Place p = tmp.getPlace();
+            if( p == null ){ // no place set for this maintenance
+                c.put(Cost.SQLData.PLACE_ID, -1);
+            }else{
+                Long id = new DAOPlace().save(p);
+                p.setId(id);
+                c.put(Cost.SQLData.PLACE_ID, p.getId() );
+            }
+
             c.put(Cost.SQLData.NAME, tmp.getName());
             c.put(Cost.SQLData.TYPE, tmp.getType().toString());
             c.put(Cost.SQLData.CALENDAR_ID, tmp.getCalendarID());
