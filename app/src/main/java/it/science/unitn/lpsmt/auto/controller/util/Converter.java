@@ -3,7 +3,9 @@ package it.science.unitn.lpsmt.auto.controller.util;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.location.Location;
+
 import java.util.Date;
+
 import it.science.unitn.lpsmt.auto.controller.dao.DAOPlace;
 import it.science.unitn.lpsmt.auto.model.Cost;
 import it.science.unitn.lpsmt.auto.model.Maintenance;
@@ -13,6 +15,7 @@ import it.science.unitn.lpsmt.auto.model.Vehicle;
 
 import static it.science.unitn.lpsmt.auto.controller.util.Date.getDateFromString;
 import static it.science.unitn.lpsmt.auto.controller.util.Date.getStringFromDate;
+import static it.science.unitn.lpsmt.auto.controller.util.Const.LOCATION_PROVIDER;
 
 /**
  * TODO add doc
@@ -28,7 +31,6 @@ public final class Converter {
             return null;
 
         ContentValues c = new ContentValues();
-//        c.put(Vehicle.SQLData.ID, v.getId());
         c.put(Vehicle.SQLData.NAME, v.getName());
         c.put(Vehicle.SQLData.PLATE, v.getPlate());
         c.put(Vehicle.SQLData.FUEL, v.getFuel().toString());
@@ -41,7 +43,7 @@ public final class Converter {
      * @param c
      * @return
      */
-    public static Vehicle cursorToVehicle( Cursor c ){
+    public static Vehicle cursorToVehicle( Cursor c, boolean forceClose ){
         if( c == null )
             return null;
 
@@ -50,6 +52,8 @@ public final class Converter {
         String plate = c.getString(2);
         Vehicle.Fuel fuel = Vehicle.Fuel.valueOf(c.getString(3));
         Date purchase_date = getDateFromString(c.getString(4));
+
+        if(forceClose) c.close();
         return new Vehicle(id, name, plate, fuel, purchase_date);
     }
 
@@ -58,25 +62,39 @@ public final class Converter {
      * @param o
      * @return
      */
-    public static ContentValues refuelToContentValues( Cost o ){
+    public static ContentValues costToContentValues(Cost o){
         if( o == null )
             return null;
 
         ContentValues c = new ContentValues();
-        c.put(Cost.SQLData.ID, o.getId());
         c.put(Cost.SQLData.AMOUNT, o.getAmount());
         c.put(Cost.SQLData.NOTES, o.getNotes());
+
         if(o instanceof Refuel) {
             Refuel tmp = (Refuel) o;
             c.put(Cost.SQLData.CLASS, Refuel.class.getSimpleName().toLowerCase());
-            c.put(Cost.SQLData.PLACE_ID, tmp.getPlace().getId() );
+
+            // this is because in Cost table there is a foreign key to Place
+            Place p = tmp.getPlace();
+            new DAOPlace().save(p);
+            c.put(Cost.SQLData.PLACE_ID, p.getId() );
+
             c.put(Cost.SQLData.PRICE_PER_LITER, tmp.getPricePerLiter());
             c.put(Cost.SQLData.DATE, getStringFromDate(tmp.getDate()));
             c.put(Cost.SQLData.AT_KM, tmp.getKm());
         }else if(o instanceof Maintenance) {
             Maintenance tmp = (Maintenance) o;
             c.put(Cost.SQLData.CLASS, Maintenance.class.getSimpleName().toLowerCase());
-            c.put(Cost.SQLData.PLACE_ID, tmp.getPlace() != null ? tmp.getPlace().getId(): -1);
+
+            // this is because in Cost table there is a foreign key to Place
+            Place p = tmp.getPlace();
+            if( p == null ){ // no place set for this maintenance
+                c.put(Cost.SQLData.PLACE_ID, -1);
+            }else{
+                new DAOPlace().save(p);
+                c.put(Cost.SQLData.PLACE_ID, p.getId() );
+            }
+
             c.put(Cost.SQLData.NAME, tmp.getName());
             c.put(Cost.SQLData.TYPE, tmp.getType().toString());
             c.put(Cost.SQLData.CALENDAR_ID, tmp.getCalendarID());
@@ -89,7 +107,7 @@ public final class Converter {
      * @param c
      * @return
      */
-    public static Cost cursorToCost( Cursor c ){
+    public static Cost cursorToCost( Cursor c, boolean forceClose ){
         if( c == null )
             return null;
 
@@ -101,7 +119,7 @@ public final class Converter {
         Place place = new DAOPlace().get(c.getLong(4));
 
         if(clazz.equals(Refuel.class.getSimpleName().toLowerCase())){
-            Float pricePerLiter = c.getFloat(5);
+            Float pricePerLiter = Float.valueOf( c.getString(5) );
             Date d = getDateFromString(c.getString(6));
             Integer atKm = c.getInt(7);
             cost = new Refuel(id, amount, notes, pricePerLiter, d, atKm, place);
@@ -111,6 +129,8 @@ public final class Converter {
             Integer calendarID = c.getInt(10);
             cost = new Maintenance(id, amount, notes, name, type, place, calendarID);
         }
+
+        if( forceClose ) c.close();
         return cost;
     }
 
@@ -124,7 +144,6 @@ public final class Converter {
             return null;
 
         ContentValues c = new ContentValues();
-        c.put(Place.SQLData.ID, p.getId());
         if( p.getGeoTag() != null ) {
             c.put(Place.SQLData.LATITUDE, p.getGeoTag().getLatitude());
             c.put(Place.SQLData.LONGITUDE, p.getGeoTag().getLongitude());
@@ -142,7 +161,7 @@ public final class Converter {
      * @param c
      * @return
      */
-    public static Place cursorToPlace( Cursor c ){
+    public static Place cursorToPlace( Cursor c, boolean forceClose ){
         if( c == null )
             return null;
 
@@ -151,11 +170,13 @@ public final class Converter {
         double lat = c.getDouble(1);
         double lon = c.getDouble(2);
         if( lat != -1 && lon != -1 ){
-            l = new Location("db");
+            l = new Location(LOCATION_PROVIDER);
             l.setLatitude(lat);
             l.setLongitude(lon);
         }
         String address = c.getString(3);
+
+        if( forceClose ) c.close();
         return new Place(id, address, l);
     }
 }

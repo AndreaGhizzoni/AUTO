@@ -34,20 +34,24 @@ public class DAOVehicle implements VehicleDAO{
         if( v == null || v.isDefaultVehicle() )
             return Const.NO_DB_ID_SET;
 
-        Long id = Const.NO_DB_ID_SET;
-        db.beginTransaction();
-        try{
-            //TODO check if is already inserted ??
-            ContentValues cv = Converter.vehicleToContentValues(v);
-            id = db.insert( Vehicle.SQLData.TABLE_NAME, null, cv );
-            db.setTransactionSuccessful();
-        }catch ( Throwable t){
-            Log.e(DAOVehicle.class.getSimpleName(), t.getMessage());
-        }finally {
-            db.endTransaction();
+        Vehicle alreadySaved = get(v.getId()); // check if there is already a Place save with that id.
+        if( alreadySaved == null ) {
+            Long id = Const.NO_DB_ID_SET;
+            db.beginTransaction();
+            try {
+                ContentValues cv = Converter.vehicleToContentValues(v);
+                id = db.insert(Vehicle.SQLData.TABLE_NAME, null, cv);
+                v.setId(id);
+                db.setTransactionSuccessful();
+            } catch (Throwable t) {
+                Log.e(DAOVehicle.class.getSimpleName(), t.getMessage());
+            } finally {
+                db.endTransaction();
+            }
+            return id;
+        }else{
+            return alreadySaved.getId();
         }
-
-        return id;
     }
 
     @Override
@@ -62,11 +66,13 @@ public class DAOVehicle implements VehicleDAO{
             new String[]{id.toString()},
             null, null, null
         );
-        c.moveToFirst();
-        Vehicle v = Converter.cursorToVehicle(c);
-        // TODO query the Cost table to populate the list's costs of this vehicle
-        c.close();
-        return v;
+        if( c.getCount() == 0 ) { // means that select returns no rows
+            return null;
+        }else{
+            c.moveToFirst();
+            // TODO query the Cost table to populate the list's costs of this vehicle
+            return Converter.cursorToVehicle(c, true);
+        }
     }
 
     @Override
@@ -96,7 +102,7 @@ public class DAOVehicle implements VehicleDAO{
 
     @Override
     public void delete(Vehicle v) {
-        if( v == null || v.getId().equals(Const.NO_DB_ID_SET) || v.isDefaultVehicle() )
+        if( v == null || v.isDefaultVehicle() )
             return;
         delete(v.getId());
     }
@@ -109,16 +115,16 @@ public class DAOVehicle implements VehicleDAO{
             Vehicle.SQLData.ALL_COLUMNS,
             null, null, null, null, null
         );
-
-        c.moveToFirst();
-        Vehicle tmp;
-        while( !c.isAfterLast() ){
-            tmp = Converter.cursorToVehicle(c);
-            list.add(tmp);
-            c.moveToNext();
+        if( c.getCount() != 0 ) {  // means that there are rows
+            c.moveToFirst();
+            Vehicle tmp;
+            while (!c.isAfterLast()) {
+                tmp = Converter.cursorToVehicle(c, false);
+                list.add(tmp);
+                c.moveToNext();
+            }
+            c.close();
         }
-        c.close();
-
         return list;
     }
 

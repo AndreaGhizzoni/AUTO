@@ -1,10 +1,8 @@
 package it.science.unitn.lpsmt.auto.model;
 
-import android.location.Location;
-
 import junit.framework.TestCase;
 
-import it.science.unitn.lpsmt.auto.model.util.Const;
+import static it.science.unitn.lpsmt.auto.Generator.*;
 
 /**
  * TODO add doc
@@ -13,19 +11,7 @@ public class MaintenanceTest extends TestCase {
 
     //TODO add description
     public void testMaintenanceCreation(){
-        Location l = new Location("asd");
-        l.setLongitude(1);
-        l.setLatitude(1);
-        Place p = new Place(Const.NO_DB_ID_SET, "address", l);
-        Maintenance m = new Maintenance(
-            Const.NO_DB_ID_SET,
-            15f,
-            "someNotes",
-            "someName",
-            Maintenance.Type.EXTRAORDINARY,
-            p,
-            null
-        );
+        Maintenance m = getMaintenanceInstance();
 
         try{
             m.setName(null);
@@ -65,7 +51,9 @@ public class MaintenanceTest extends TestCase {
         }
 
         try{
+            m.setCalendarID(null);
             assertTrue("I can set null to calendarID.", m.getCalendarID() == null);
+
             Integer newCalendarID = 100;
             m.setCalendarID(newCalendarID);
             boolean c = m.getCalendarID().equals(newCalendarID);

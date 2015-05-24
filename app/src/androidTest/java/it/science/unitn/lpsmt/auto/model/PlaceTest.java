@@ -1,30 +1,19 @@
 package it.science.unitn.lpsmt.auto.model;
 
-import android.location.Location;
-
 import junit.framework.TestCase;
 
 import it.science.unitn.lpsmt.auto.model.util.Const;
+
+import static it.science.unitn.lpsmt.auto.Generator.*;
 
 /**
  * TODO add doc
  */
 public class PlaceTest extends TestCase {
+
     //TODO add description
-    public void testPlace(){
-        try{
-            Location l = new Location("provider");
-            l.setLatitude(46);
-            l.setLongitude(11);
-
-            new Place(Const.NO_DB_ID_SET, "address", l);
-        }catch (Exception e){
-            fail(e.getMessage());
-        }
-    }
-
     public void testStress(){
-        Place p = new Place(Const.NO_DB_ID_SET, "address", null);
+        Place p = getPlaceInstance();
 
         // test set id
         p.setId(null);
