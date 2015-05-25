@@ -127,7 +127,7 @@ public final class Converter {
         Place place = new DAOPlace().get(c.getLong(5));
 
         if(clazz.equals(Refuel.class.getSimpleName().toLowerCase())){
-            Float pricePerLiter = Float.valueOf( c.getString(6) );
+            Float pricePerLiter = c.getFloat(6);
             Date d = getDateFromString(c.getString(7));
             Integer atKm = c.getInt(8);
             cost = new Refuel(id, vehicle, amount, notes, pricePerLiter, d, atKm, place);

@@ -37,8 +37,8 @@ public class DAOCostTest extends AndroidTestCase {
         // testing the storing procedure
         Long idFromDB = this.daoCost.save(toStore);
         assertTrue(
-            "Id from DB must be different from NO_DB_ID_SET.",
-            !idFromDB.equals(Const.NO_DB_ID_SET)
+                "Id from DB must be different from NO_DB_ID_SET.",
+                !idFromDB.equals(Const.NO_DB_ID_SET)
         );
 
         // test if there is at least one Cost stored
@@ -59,8 +59,6 @@ public class DAOCostTest extends AndroidTestCase {
         this.daoCost.delete(fromDB);
         Cost nullCost = this.daoCost.get(idFromDB);
         assertTrue("Try to get a deleted cost from DB, will returns null.", nullCost == null );
-
-        this.daoCost.deleteAll();
     }
 
     public void testMaintenanceIODB(){
@@ -91,7 +89,5 @@ public class DAOCostTest extends AndroidTestCase {
         this.daoCost.delete(fromDB);
         Cost nullCost = this.daoCost.get(idFromDB);
         assertTrue("Try to get a deleted cost from DB, will returns null.", nullCost == null );
-
-        this.daoCost.deleteAll();
     }
 }
