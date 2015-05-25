@@ -87,6 +87,16 @@ public class Maintenance extends Cost {
         return result;
     }
 
+    @Override
+    public String toString() {
+        return "Maintenance{" +
+                "name='" + name + '\'' +
+                ", type=" + type +
+                ", place=" + place +
+                ", calendarID=" + calendarID +
+                "} " + super.toString();
+    }
+
 //==================================================================================================
 // INNER CLASS
 //==================================================================================================

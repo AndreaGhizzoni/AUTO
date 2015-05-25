@@ -92,6 +92,16 @@ public abstract class Cost {
         return result;
     }
 
+    @Override
+    public String toString() {
+        return "Cost{" +
+                "id=" + id +
+                ", vehicle=" + vehicle +
+                ", amount=" + amount +
+                ", notes='" + notes + '\'' +
+                '}';
+    }
+
 //==================================================================================================
 //  INNER CLASS
 //==================================================================================================

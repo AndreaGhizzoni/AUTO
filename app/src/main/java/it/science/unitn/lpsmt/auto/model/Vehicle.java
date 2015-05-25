@@ -114,6 +114,18 @@ public class Vehicle {
         return result;
     }
 
+    @Override
+    public String toString() {
+        return "Vehicle{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", plate='" + plate + '\'' +
+                ", fuel=" + fuel +
+                ", purchaseDate=" + purchaseDate +
+                ", costs=" + costs +
+                '}';
+    }
+
 //==================================================================================================
 //  INNER CLASS
 //==================================================================================================

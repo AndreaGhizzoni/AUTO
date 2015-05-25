@@ -92,4 +92,14 @@ public class Refuel extends Cost {
         result = 31 * result + place.hashCode();
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "Refuel{" +
+                "pricePerLiter=" + pricePerLiter +
+                ", date=" + date +
+                ", km=" + km +
+                ", place=" + place +
+                "} " + super.toString();
+    }
 }
