@@ -61,11 +61,11 @@ public class DAOVehicle implements VehicleDAO{
             return null;
 
         Cursor c = db.query(               // select from
-                Vehicle.SQLData.TABLE_NAME,
-                Vehicle.SQLData.ALL_COLUMNS,   // where
-                Vehicle.SQLData.ID + " = ?",
-                new String[]{id.toString()},
-                null, null, null
+            Vehicle.SQLData.TABLE_NAME,
+            Vehicle.SQLData.ALL_COLUMNS,   // where
+            Vehicle.SQLData.ID + " = ?",
+            new String[]{id.toString()},
+            null, null, null
         );
         if( c.getCount() == 0 ) { // means that select returns no rows
             return null;
@@ -87,6 +87,10 @@ public class DAOVehicle implements VehicleDAO{
 
         db.beginTransaction();
         try{
+            CostDAO costDAO = new DAOCost();
+            costDAO.deleteAllWhereVehicleID(id);
+            costDAO.close();
+
             db.delete(
                 Vehicle.SQLData.TABLE_NAME,
                 Vehicle.SQLData.ID+" = ?",
@@ -117,6 +121,7 @@ public class DAOVehicle implements VehicleDAO{
             for( Vehicle v : this.getAll() ){
                 costDAO.deleteAllWhereVehicleID(v.getId());
             }
+            costDAO.close();
 
             // deleting all the vehicle
             db.delete(
@@ -155,7 +160,7 @@ public class DAOVehicle implements VehicleDAO{
 
     @Override
     public int countObject(){
-        Cursor c = db.rawQuery("select count(*) from "+Vehicle.SQLData.TABLE_NAME, null);
+        Cursor c = db.rawQuery("select count(*) from " + Vehicle.SQLData.TABLE_NAME, null);
         c.moveToFirst();
         int counter = c.getInt(0);
         c.close();

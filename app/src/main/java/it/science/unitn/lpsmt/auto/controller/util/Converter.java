@@ -6,6 +6,8 @@ import android.location.Location;
 
 import java.util.Date;
 
+import it.science.unitn.lpsmt.auto.controller.PlaceDAO;
+import it.science.unitn.lpsmt.auto.controller.VehicleDAO;
 import it.science.unitn.lpsmt.auto.controller.dao.DAOPlace;
 import it.science.unitn.lpsmt.auto.controller.dao.DAOVehicle;
 import it.science.unitn.lpsmt.auto.model.Cost;
@@ -67,11 +69,13 @@ public final class Converter {
         if( o == null )
             return null;
 
+        VehicleDAO vehicleDAO = new DAOVehicle();
+        PlaceDAO placeDAO = new DAOPlace();
         ContentValues c = new ContentValues();
 
         // this is because in Cost table there is a foreign key to Vehicle
         Vehicle v = o.getVehicle();
-        new DAOVehicle().save(v);
+        vehicleDAO.save(v);
         c.put(Cost.SQLData.VEHICLE_ID, v.getId());
 
         c.put(Cost.SQLData.AMOUNT, o.getAmount());
@@ -83,7 +87,7 @@ public final class Converter {
 
             // this is because in Cost table there is a foreign key to Place
             Place p = tmp.getPlace();
-            new DAOPlace().save(p);
+            placeDAO.save(p);
             c.put(Cost.SQLData.PLACE_ID, p.getId() );
 
             c.put(Cost.SQLData.PRICE_PER_LITER, tmp.getPricePerLiter());
@@ -98,7 +102,7 @@ public final class Converter {
             if( p == null ){ // no place set for this maintenance
                 c.put(Cost.SQLData.PLACE_ID, -1);
             }else{
-                new DAOPlace().save(p);
+                placeDAO.save(p);
                 c.put(Cost.SQLData.PLACE_ID, p.getId() );
             }
 
@@ -106,6 +110,9 @@ public final class Converter {
             c.put(Cost.SQLData.TYPE, tmp.getType().toString());
             c.put(Cost.SQLData.CALENDAR_ID, tmp.getCalendarID());
         }
+
+        vehicleDAO.close();
+        placeDAO.close();
         return c;
     }
 
@@ -118,13 +125,16 @@ public final class Converter {
         if( c == null )
             return null;
 
+        VehicleDAO vehicleDAO = new DAOVehicle();
+        PlaceDAO placeDAO = new DAOPlace();
+
         Cost cost = null;
         Long id = c.getLong(0);
-        Vehicle vehicle = new DAOVehicle().get(c.getLong(1));
+        Vehicle vehicle = vehicleDAO.get(c.getLong(1));
         Float amount = c.getFloat(2);
         String notes = c.getString(3);
         String clazz = c.getString(4);
-        Place place = new DAOPlace().get(c.getLong(5));
+        Place place = placeDAO.get(c.getLong(5));
 
         if(clazz.equals(Refuel.class.getSimpleName().toLowerCase())){
             Float pricePerLiter = c.getFloat(6);
@@ -138,6 +148,8 @@ public final class Converter {
             cost = new Maintenance(id, vehicle, amount, notes, name, type, place, calendarID);
         }
 
+        vehicleDAO.close();
+        placeDAO.close();
         if( forceClose ) c.close();
         return cost;
     }
