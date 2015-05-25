@@ -43,12 +43,17 @@ public class DAOVehicleTest extends AndroidTestCase {
         assertTrue("Vehicle from DB must be not null.", fromDb != null);
         assertTrue("Actual and stored Vehicle must be the same", toStore.equals(fromDb));
 
-        // check if not save the same object
+        // check if can not save the same object
         this.daoVehicle.save(toStore);
         int newVehicleStored = this.daoVehicle.getAll().size();
         assertTrue("I can not save the same object twice.", vehicleStored == newVehicleStored );
 
+        // check if  can not save the default vehicle object
         idFromDB = this.daoVehicle.save(Vehicle.Default.get());
         assertTrue("I can not save default vehicle into DB", idFromDB.equals(Const.NO_DB_ID_SET));
+
+        // test the deleting procedure
+        this.daoVehicle.delete(fromDb);
+        assertTrue( "Deleting the only vehicle into db, the getAll() will return 0.", this.daoVehicle.getAll().size() == 0 );
     }
 }
