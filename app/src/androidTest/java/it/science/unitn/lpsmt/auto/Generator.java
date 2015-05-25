@@ -47,6 +47,7 @@ public final class Generator {
     public static Refuel getRefuelInstance(){
         return new Refuel(
             Const.NO_DB_ID_SET,
+            getVehicleInstance(),
             10f, "notes",
             1.4f,
             new Date(),
@@ -58,6 +59,7 @@ public final class Generator {
     public static Maintenance getMaintenanceInstance(){
         return new Maintenance(
             Const.NO_DB_ID_SET,
+            getVehicleInstance(),
             100f,
             "notes",
             "name",

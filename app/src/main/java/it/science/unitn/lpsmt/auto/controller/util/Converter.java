@@ -7,6 +7,7 @@ import android.location.Location;
 import java.util.Date;
 
 import it.science.unitn.lpsmt.auto.controller.dao.DAOPlace;
+import it.science.unitn.lpsmt.auto.controller.dao.DAOVehicle;
 import it.science.unitn.lpsmt.auto.model.Cost;
 import it.science.unitn.lpsmt.auto.model.Maintenance;
 import it.science.unitn.lpsmt.auto.model.Place;
@@ -67,6 +68,12 @@ public final class Converter {
             return null;
 
         ContentValues c = new ContentValues();
+
+        // this is because in Cost table there is a foreign key to Vehicle
+        Vehicle v = o.getVehicle();
+        new DAOVehicle().save(v);
+        c.put(Cost.SQLData.VEHICLE_ID, v.getId());
+
         c.put(Cost.SQLData.AMOUNT, o.getAmount());
         c.put(Cost.SQLData.NOTES, o.getNotes());
 
@@ -113,21 +120,22 @@ public final class Converter {
 
         Cost cost = null;
         Long id = c.getLong(0);
-        Float amount = c.getFloat(1);
-        String notes = c.getString(2);
-        String clazz = c.getString(3);
-        Place place = new DAOPlace().get(c.getLong(4));
+        Vehicle vehicle = new DAOVehicle().get(c.getLong(1));
+        Float amount = c.getFloat(2);
+        String notes = c.getString(3);
+        String clazz = c.getString(4);
+        Place place = new DAOPlace().get(c.getLong(5));
 
         if(clazz.equals(Refuel.class.getSimpleName().toLowerCase())){
-            Float pricePerLiter = Float.valueOf( c.getString(5) );
-            Date d = getDateFromString(c.getString(6));
-            Integer atKm = c.getInt(7);
-            cost = new Refuel(id, amount, notes, pricePerLiter, d, atKm, place);
+            Float pricePerLiter = Float.valueOf( c.getString(6) );
+            Date d = getDateFromString(c.getString(7));
+            Integer atKm = c.getInt(8);
+            cost = new Refuel(id, vehicle, amount, notes, pricePerLiter, d, atKm, place);
         }else if(clazz.equals(Maintenance.class.getSimpleName().toLowerCase())){
-            String name = c.getString(8);
-            Maintenance.Type type = Maintenance.Type.valueOf(c.getString(9));
-            Integer calendarID = c.getInt(10);
-            cost = new Maintenance(id, amount, notes, name, type, place, calendarID);
+            String name = c.getString(9);
+            Maintenance.Type type = Maintenance.Type.valueOf(c.getString(10));
+            Integer calendarID = c.getInt(11);
+            cost = new Maintenance(id, vehicle, amount, notes, name, type, place, calendarID);
         }
 
         if( forceClose ) c.close();
