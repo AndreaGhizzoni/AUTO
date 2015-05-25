@@ -2,6 +2,7 @@ package it.science.unitn.lpsmt.auto.controller.dao;
 
 import android.test.AndroidTestCase;
 
+import it.science.unitn.lpsmt.auto.controller.CostDAO;
 import it.science.unitn.lpsmt.auto.model.Cost;
 import it.science.unitn.lpsmt.auto.model.Maintenance;
 import it.science.unitn.lpsmt.auto.model.Refuel;
@@ -14,7 +15,7 @@ import static it.science.unitn.lpsmt.auto.Generator.getRefuelInstance;
  * TODO add doc
  */
 public class DAOCostTest extends AndroidTestCase {
-    private DAOCost daoCost;
+    private CostDAO daoCost;
 
     @Override
     public void setUp() throws Exception{
@@ -41,7 +42,7 @@ public class DAOCostTest extends AndroidTestCase {
         );
 
         // test if there is at least one Cost stored
-        int costStored = this.daoCost.getAll().size();
+        int costStored = this.daoCost.countObject();
         assertTrue("There must be at least on Cost stored.", costStored != 0);
 
         // check if there are the same object into db.
@@ -51,13 +52,15 @@ public class DAOCostTest extends AndroidTestCase {
 
         // check if not save the same object
         this.daoCost.save(toStore);
-        int newCostStored = this.daoCost.getAll().size();
+        int newCostStored = this.daoCost.countObject();
         assertTrue("I can not save the same object twice.", costStored == newCostStored);
 
         // testing the deleting procedure
         this.daoCost.delete(fromDB);
         Cost nullCost = this.daoCost.get(idFromDB);
         assertTrue("Try to get a deleted cost from DB, will returns null.", nullCost == null );
+
+        this.daoCost.deleteAll();
     }
 
     public void testMaintenanceIODB(){
@@ -71,7 +74,7 @@ public class DAOCostTest extends AndroidTestCase {
         );
 
         // test if there is at least one Cost stored
-        int costStored = this.daoCost.getAll().size();
+        int costStored = this.daoCost.countObject();
         assertTrue("There must be at least on Cost stored.", costStored != 0);
 
         // check if there are the same object into db.
@@ -81,12 +84,14 @@ public class DAOCostTest extends AndroidTestCase {
 
         // check if not save the same object
         this.daoCost.save(toStore);
-        int newCostStored = this.daoCost.getAll().size();
+        int newCostStored = this.daoCost.countObject();
         assertTrue("I can not save the same object twice.", costStored == newCostStored);
 
         // testing the deleting procedure
         this.daoCost.delete(fromDB);
         Cost nullCost = this.daoCost.get(idFromDB);
         assertTrue("Try to get a deleted cost from DB, will returns null.", nullCost == null );
+
+        this.daoCost.deleteAll();
     }
 }

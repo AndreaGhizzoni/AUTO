@@ -48,7 +48,24 @@ public interface CostDAO {
 
     /**
      * TODO add doc
+     */
+    void deleteAll();
+
+    /**
+     * TODO add doc
+     * @param id
+     */
+    void deleteAllWhereVehicleID( Long id );
+
+    /**
+     * TODO add doc
      * @return
      */
     List<Cost> getAll();
+
+    /**
+     * TODO add doc
+     * @return
+     */
+    int countObject();
 }

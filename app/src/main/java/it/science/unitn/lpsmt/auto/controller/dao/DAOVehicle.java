@@ -9,6 +9,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
+import it.science.unitn.lpsmt.auto.controller.CostDAO;
 import it.science.unitn.lpsmt.auto.controller.VehicleDAO;
 import it.science.unitn.lpsmt.auto.controller.util.Converter;
 import it.science.unitn.lpsmt.auto.model.Vehicle;
@@ -60,17 +61,16 @@ public class DAOVehicle implements VehicleDAO{
             return null;
 
         Cursor c = db.query(               // select from
-            Vehicle.SQLData.TABLE_NAME,
-            Vehicle.SQLData.ALL_COLUMNS,   // where
-            Vehicle.SQLData.ID+" = ?",
-            new String[]{id.toString()},
-            null, null, null
+                Vehicle.SQLData.TABLE_NAME,
+                Vehicle.SQLData.ALL_COLUMNS,   // where
+                Vehicle.SQLData.ID + " = ?",
+                new String[]{id.toString()},
+                null, null, null
         );
         if( c.getCount() == 0 ) { // means that select returns no rows
             return null;
         }else{
             c.moveToFirst();
-            // TODO query the Cost table to populate the list's costs of this vehicle
             return Converter.cursorToVehicle(c, true);
         }
     }
@@ -108,6 +108,31 @@ public class DAOVehicle implements VehicleDAO{
     }
 
     @Override
+    public void deleteAll(){
+        // deleting all vehicles cause deleting all costs associated.
+        db.beginTransaction();
+        try{
+            // deleting all the cost associated at a vehicle
+            CostDAO costDAO = new DAOCost();
+            for( Vehicle v : this.getAll() ){
+                costDAO.deleteAllWhereVehicleID(v.getId());
+            }
+
+            // deleting all the vehicle
+            db.delete(
+                Vehicle.SQLData.TABLE_NAME,
+                null,
+                null
+            );
+            db.setTransactionSuccessful();
+        }catch (Throwable t){
+            Log.e(DAOVehicle.class.getSimpleName(), t.getMessage());
+        }finally {
+            db.endTransaction();
+        }
+    }
+
+    @Override
     public List<Vehicle> getAll() {
         ArrayList<Vehicle> list = new ArrayList<>();
         Cursor c = db.query(
@@ -126,6 +151,15 @@ public class DAOVehicle implements VehicleDAO{
             c.close();
         }
         return list;
+    }
+
+    @Override
+    public int countObject(){
+        Cursor c = db.rawQuery("select count(*) from "+Vehicle.SQLData.TABLE_NAME, null);
+        c.moveToFirst();
+        int counter = c.getInt(0);
+        c.close();
+        return counter;
     }
 
     @Override

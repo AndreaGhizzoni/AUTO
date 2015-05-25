@@ -48,7 +48,18 @@ public interface VehicleDAO {
 
     /**
      * TODO add doc
+     */
+    void deleteAll();
+
+    /**
+     * TODO add doc
      * @return
      */
     List<Vehicle> getAll();
+
+    /**
+     * TODO add doc
+     * @return
+     */
+    int countObject();
 }

@@ -61,11 +61,11 @@ public class DAOCost implements CostDAO {
             return null;
 
         Cursor c = db.query(
-            Cost.SQLData.TABLE_NAME,
-            Cost.SQLData.ALL_COLUMNS,
-            Cost.SQLData.ID+" = ?",
-            new String[]{id.toString()},
-            null, null, null
+                Cost.SQLData.TABLE_NAME,
+                Cost.SQLData.ALL_COLUMNS,
+                Cost.SQLData.ID + " = ?",
+                new String[]{id.toString()},
+                null, null, null
         );
 
         if( c.getCount() == 0 ) { // means that select returns no rows
@@ -109,6 +109,37 @@ public class DAOCost implements CostDAO {
     }
 
     @Override
+    public void deleteAllWhereVehicleID( Long id ){
+        // pass null to delete all the entry
+        String where = null;
+        String[] whereArgs = null;
+        if( id != null ){
+            where = Cost.SQLData.VEHICLE_ID+" = ?";
+            whereArgs = new String[]{id.toString()};
+        }
+
+        db.beginTransaction();
+        try{
+            db.delete(
+                Cost.SQLData.TABLE_NAME,
+                where,
+                whereArgs
+            );
+            db.setTransactionSuccessful();
+        }catch (Throwable t){
+            Log.e(DAOCost.class.getSimpleName(), t.getMessage());
+        }finally {
+            db.endTransaction();
+        }
+    }
+
+    @Override
+    public void deleteAll(){
+        // null means 'skip'. In other words delete all the cost.
+        this.deleteAllWhereVehicleID(null);
+    }
+
+    @Override
     public List<Cost> getAll() {
         ArrayList<Cost> list = new ArrayList<>();
         Cursor c = db.query(
@@ -127,6 +158,15 @@ public class DAOCost implements CostDAO {
             c.close();
         }
         return list;
+    }
+
+    @Override
+    public int countObject(){
+        Cursor c = db.rawQuery("select count(*) from "+Cost.SQLData.TABLE_NAME, null);
+        c.moveToFirst();
+        int counter = c.getInt(0);
+        c.close();
+        return counter;
     }
 
     @Override

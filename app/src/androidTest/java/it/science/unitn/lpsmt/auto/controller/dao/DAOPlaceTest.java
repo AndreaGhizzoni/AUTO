@@ -1,6 +1,8 @@
 package it.science.unitn.lpsmt.auto.controller.dao;
 
 import android.test.AndroidTestCase;
+
+import it.science.unitn.lpsmt.auto.controller.PlaceDAO;
 import it.science.unitn.lpsmt.auto.model.Place;
 import it.science.unitn.lpsmt.auto.model.util.Const;
 
@@ -10,7 +12,7 @@ import static it.science.unitn.lpsmt.auto.Generator.*;
  * TODO add doc
  */
 public class DAOPlaceTest extends AndroidTestCase{
-    private DAOPlace daoPlace;
+    private PlaceDAO daoPlace;
 
     @Override
     public void setUp() throws Exception{
@@ -22,6 +24,7 @@ public class DAOPlaceTest extends AndroidTestCase{
 
     @Override
     public void tearDown() throws Exception{
+        this.daoPlace.deleteAll();
         this.daoPlace.close();
         super.tearDown();
     }
@@ -37,7 +40,7 @@ public class DAOPlaceTest extends AndroidTestCase{
         );
 
         // test if there is at least one place stored
-        int placeStored = this.daoPlace.getAll().size();
+        int placeStored = this.daoPlace.countObject();
         assertTrue("There must be at least one Place stored.", placeStored != 0);
 
         // check if there is the same object into db.
@@ -47,7 +50,7 @@ public class DAOPlaceTest extends AndroidTestCase{
 
         // check if not save the same object
         this.daoPlace.save(toStore);
-        int newPlacesStored = this.daoPlace.getAll().size();
+        int newPlacesStored = this.daoPlace.countObject();
         assertTrue("I can not save the same object twice.", placeStored == newPlacesStored);
 
         // test the deleting procedure
