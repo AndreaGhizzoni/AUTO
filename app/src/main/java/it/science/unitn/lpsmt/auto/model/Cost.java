@@ -7,17 +7,19 @@ import it.science.unitn.lpsmt.auto.model.util.Const;
  */
 public abstract class Cost {
     private Long id;
+    private Vehicle vehicle;
     private Float amount;
     private String notes;
 
-    public Cost(Long id, Float amount, String notes){
+    public Cost(Long id, Vehicle vehicle, Float amount, String notes){
         this.setId(id);
+        this.setVehicle(vehicle);
         this.setAmount(amount);
         this.setNotes(notes);
     }
 
-    public Cost(Long id, Float amount){
-        this(id, amount, null);
+    public Cost(Long id, Vehicle vehicle, Float amount){
+        this(id, vehicle, amount, null);
     }
 
 //==================================================================================================
@@ -30,6 +32,14 @@ public abstract class Cost {
             throw new IllegalArgumentException("ID of Cost can not be less then "+Const.NO_DB_ID_SET);
         else
             this.id = id;
+    }
+
+    public void setVehicle( Vehicle vehicle ) throws IllegalArgumentException{
+        if( vehicle == null )
+            throw new IllegalArgumentException("Vehicle associated can not be null.");
+        if( vehicle.isDefaultVehicle() )
+            throw new IllegalArgumentException("Vehicle associated can not be the Default Vehicle.");
+        this.vehicle = vehicle;
     }
 
     public void setAmount(Float amount) throws IllegalArgumentException{
@@ -52,6 +62,8 @@ public abstract class Cost {
 //==================================================================================================
     public Long getId(){ return this.id; }
 
+    public Vehicle getVehicle(){ return this.vehicle; }
+
     public Float getAmount() { return amount; }
 
     public String getNotes() { return notes; }
@@ -67,12 +79,15 @@ public abstract class Cost {
         Cost cost = (Cost) o;
 
         if (!id.equals(cost.id)) return false;
+        if (!vehicle.equals(cost.vehicle)) return false;
         return amount.equals(cost.amount);
+
     }
 
     @Override
     public int hashCode() {
         int result = id.hashCode();
+        result = 31 * result + vehicle.hashCode();
         result = 31 * result + amount.hashCode();
         return result;
     }
@@ -87,6 +102,7 @@ public abstract class Cost {
      */
     public static final class SQLData{
         public static final String ID         = "id" ;
+        public static final String VEHICLE_ID = "vehicle_id";
         public static final String AMOUNT     = "amount";
         public static final String NOTES      = "notes";
         public static final String CLASS      = "class"; // subclass of Cost
@@ -103,12 +119,13 @@ public abstract class Cost {
         public static final String CALENDAR_ID = "calendar_id";
 
         public static final String TABLE_NAME = Cost.class.getSimpleName().toLowerCase();
-        public static final String[] ALL_COLUMNS = {ID, AMOUNT, NOTES, CLASS, PLACE_ID,
+        public static final String[] ALL_COLUMNS = {ID, VEHICLE_ID, AMOUNT, NOTES, CLASS, PLACE_ID,
                 PRICE_PER_LITER, DATE, AT_KM, NAME, TYPE, CALENDAR_ID};
 
         public static final String SQL_CREATE =
                 "create table "+TABLE_NAME+" ( "+
                     ID+" integer primary key autoincrement, "+
+                    VEHICLE_ID+" integer, "+
                     AMOUNT+" real not null, "+
                     NOTES+" text, "+
                     CLASS+" text not null, "+
@@ -120,7 +137,9 @@ public abstract class Cost {
                     TYPE+" text, "+
                     CALENDAR_ID+" integer, "+
                     "foreign key ("+PLACE_ID+") references " +
-                        Place.SQLData.TABLE_NAME+" ("+Place.SQLData.ID+") "+
+                        Place.SQLData.TABLE_NAME+" ("+Place.SQLData.ID+"), " +
+                    "foreign key ("+VEHICLE_ID+") references "+
+                        Vehicle.SQLData.TABLE_NAME+" ("+Vehicle.SQLData.ID+") "+
                 ");";
     }
 }
