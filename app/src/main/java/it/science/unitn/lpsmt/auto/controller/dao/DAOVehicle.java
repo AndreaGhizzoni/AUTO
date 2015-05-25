@@ -87,9 +87,7 @@ public class DAOVehicle implements VehicleDAO{
 
         db.beginTransaction();
         try{
-            CostDAO costDAO = new DAOCost();
-            costDAO.deleteAllWhereVehicleID(id);
-            costDAO.close();
+            new DAOCost().deleteAllWhereVehicleID(id);
 
             db.delete(
                 Vehicle.SQLData.TABLE_NAME,
@@ -121,7 +119,6 @@ public class DAOVehicle implements VehicleDAO{
             for( Vehicle v : this.getAll() ){
                 costDAO.deleteAllWhereVehicleID(v.getId());
             }
-            costDAO.close();
 
             // deleting all the vehicle
             db.delete(
