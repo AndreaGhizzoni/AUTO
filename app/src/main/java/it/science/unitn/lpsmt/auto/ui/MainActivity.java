@@ -8,13 +8,17 @@ import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import it.science.unitn.lpsmt.auto.ui.fragment.MainFragment;
 import lpsmt.science.unitn.it.auto.R;
@@ -38,24 +42,25 @@ public class MainActivity extends ActionBarActivity{
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerRelativeLayout = (LinearLayout) findViewById(R.id.left_drawer);
         ListView mDrawerList = (ListView) findViewById(R.id.drawer_list);
-        mDrawerList.setAdapter( new ArrayAdapter<>(
+        mDrawerList.setAdapter(new DrawerAdapter(
             this,
-            R.layout.adapter_drawer_list,
-            getResources().getStringArray(R.array.drawer_items)
-        ));
+            getResources().getStringArray(R.array.drawer_items))
+        );
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
         // enable ActionBar app icon to behave as action to toggle nav drawer
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
+        try {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeButtonEnabled(true);
+        }catch (NullPointerException ignored){}
 
         // ActionBarDrawerToggle ties together the the proper interactions
         // between the sliding drawer and the action bar app icon
         mDrawerToggle = new ActionBarDrawerToggle(
                 this,                  /* host Activity */
                 mDrawerLayout,         /* DrawerLayout object */
-                R.string.drawer_open,  /* "open drawer" description for accessibility */
-                R.string.drawer_close  /* "close drawer" description for accessibility */
+                R.string.content_descriptor_drawer_open,
+                R.string.content_descriptor_drawer_close
         ){
             public void onDrawerClosed(View view) {
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
@@ -166,6 +171,52 @@ public class MainActivity extends ActionBarActivity{
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             selectFragment(position);
+        }
+    }
+
+    private class DrawerAdapter extends ArrayAdapter<String> {
+        public DrawerAdapter(Context context, String[]data) {
+            super(context, 0, data);
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            View row = convertView;
+            DrawerItemHolder holder;
+
+            // Check if an existing view is being reused, otherwise inflate the view
+            if (row == null) {
+                row = LayoutInflater.from(getContext()).inflate(
+                    R.layout.adapter_drawer_list,
+                    parent,
+                    false
+                );
+
+                holder = new DrawerItemHolder();
+                holder.text = (TextView) row.findViewById(R.id.adapter_drawer_item_text);
+                holder.icon = (ImageView) row.findViewById(R.id.adapter_drawer_item_icon);
+            }else{
+                holder = (DrawerItemHolder)row.getTag();
+            }
+
+            holder.text.setText(getItem(position));
+            holder.icon.setImageResource(getIcon(position));
+            return row;
+        }
+
+        private int getIcon( int position ){
+            switch (position){
+                case 0:{
+                    return R.drawable.ic_local_gas_station_black_24dp; // STUB
+                }
+
+                default: return -1;
+            }
+        }
+
+        class DrawerItemHolder{
+            ImageView icon;
+            TextView text;
         }
     }
 }

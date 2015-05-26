@@ -3,6 +3,7 @@
         <item>Questo e\' un test</item>
     </string-array>
 
-    <string name="drawer_open">Apri Drawer</string>
-    <string name="drawer_close">Chiudi Drawer</string>
+    <string name="content_descriptor_drawer_open">Apri il Drawer</string>
+    <string name="content_descriptor_drawer_close">Chiudi il Drawer</string>
+    <string name="content_descriptor_drawer_item_icon">Icona del Drawer</string>
 </resources>
