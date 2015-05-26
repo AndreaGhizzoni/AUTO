@@ -1,22 +1,30 @@
 package it.science.unitn.lpsmt.auto.ui;
 
 import android.app.Activity;
+import android.app.FragmentManager;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import lpsmt.science.unitn.it.auto.R;
 
-
+// TODO maybe implements method to save the app instance when is put onPause
 public class MainActivity extends Activity {
+    private static final String TAG = MainActivity.class.getSimpleName();
     private static MainActivity instance;
 
+    private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
-
+    private LinearLayout mDrawerRelativeLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,18 +34,18 @@ public class MainActivity extends Activity {
 
         // set up the drawer's list view with items and click listener
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerRelativeLayout = (LinearLayout) findViewById(R.id.left_drawer);
         ListView mDrawerList = (ListView) findViewById(R.id.drawer_list);
         mDrawerList.setAdapter( new ArrayAdapter<>(
-                this,
-                R.layout.adapter_drawer_list,
-                getResources().getStringArray(R.array.drawer_items)
-            )
-        );
-        // TODO mDrawerList set OnClickActionListener
+            this,
+            R.layout.adapter_drawer_list,
+            getResources().getStringArray(R.array.drawer_items)
+        ));
+        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
         // ActionBarDrawerToggle ties together the the proper interactions
         // between the sliding drawer and the action bar app icon
-        ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(
+        mDrawerToggle = new ActionBarDrawerToggle(
                 this,                  /* host Activity */
                 mDrawerLayout,         /* DrawerLayout object */
                 R.string.drawer_open,  /* "open drawer" description for accessibility */
@@ -52,10 +60,94 @@ public class MainActivity extends Activity {
             }
         };
         mDrawerLayout.setDrawerListener(mDrawerToggle);
+
+        if(savedInstanceState == null)
+            selectFragment(0);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Pass the event to ActionBarDrawerToggle, if it returns
+        // true, then it has handled the app icon touch event
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        // Handle your other action bar items...
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        mDrawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public void onBackPressed(){
+        // Catch back action and pops from back stack
+        // (if you called previously to addToBackStack() in your transaction)
+        FragmentManager fm = getFragmentManager();
+        if( fm.getBackStackEntryCount() > 1){
+            fm.popBackStackImmediate();
+        }else{
+            // Default action on back pressed
+            super.onBackPressed();
+        }
+    }
+
+//==================================================================================================
+//  METHOD
+//==================================================================================================
+    private void selectFragment( int position ){
+        Bundle b = new Bundle();
+        b.putInt("position", position);
+        b.putString("title", getResources().getStringArray(R.array.drawer_items)[position]);
+        mDrawerLayout.closeDrawer(mDrawerRelativeLayout);
+
+        FragmentManager m = getFragmentManager();
+        switch (position){
+            case 0:{
+//                Fragment f = m.findFragmentById();
+//                if( f == null ){
+                    // instance the new Fragment
+//                    f.setArguments(b);
+//                }
+
+                break;
+            }
+
+            default:
+                Log.e(TAG, "position of select fragment get an incorrect value.");
+        }
     }
 
 
+//==================================================================================================
+//  GETTER
+//==================================================================================================
+    /**
+     * Trick to get the application context for class PersistenceDAO.
+     * @return Context the App context.
+     */
     public static Context getAppContext(){
         return instance.getApplicationContext();
+    }
+
+//==================================================================================================
+//  INNER CLASS
+//==================================================================================================
+    /* The click listener for ListView in the navigation drawer */
+    private class DrawerItemClickListener implements ListView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            selectFragment(position);
+        }
     }
 }
