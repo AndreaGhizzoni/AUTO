@@ -1,13 +1,15 @@
 package it.science.unitn.lpsmt.auto.ui;
 
-import android.app.Activity;
+import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -15,10 +17,11 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
+import it.science.unitn.lpsmt.auto.ui.fragment.MainFragment;
 import lpsmt.science.unitn.it.auto.R;
 
 // TODO maybe implements method to save the app instance when is put onPause
-public class MainActivity extends Activity {
+public class MainActivity extends ActionBarActivity{
     private static final String TAG = MainActivity.class.getSimpleName();
     private static MainActivity instance;
 
@@ -43,6 +46,10 @@ public class MainActivity extends Activity {
         ));
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
+        // enable ActionBar app icon to behave as action to toggle nav drawer
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+
         // ActionBarDrawerToggle ties together the the proper interactions
         // between the sliding drawer and the action bar app icon
         mDrawerToggle = new ActionBarDrawerToggle(
@@ -66,6 +73,14 @@ public class MainActivity extends Activity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu items for use in the action bar
+//        MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.menu.main_activity_actions, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Pass the event to ActionBarDrawerToggle, if it returns
         // true, then it has handled the app icon touch event
@@ -80,7 +95,9 @@ public class MainActivity extends Activity {
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         // Sync the toggle state after onRestoreInstanceState has occurred.
-        mDrawerToggle.syncState();
+        try { // sometime rise a null point.. mah..
+            mDrawerToggle.syncState();
+        }catch (NullPointerException ignored){}
     }
 
     @Override
@@ -112,20 +129,24 @@ public class MainActivity extends Activity {
         mDrawerLayout.closeDrawer(mDrawerRelativeLayout);
 
         FragmentManager m = getFragmentManager();
+        Fragment f = null;
         switch (position){
             case 0:{
-//                Fragment f = m.findFragmentById();
-//                if( f == null ){
-                    // instance the new Fragment
-//                    f.setArguments(b);
-//                }
-
+                f = m.findFragmentById(R.id.frag_main);
+                if( f == null ){
+                    f = new MainFragment();
+                    f.setArguments(b);
+                }
                 break;
             }
 
-            default:
-                Log.e(TAG, "position of select fragment get an incorrect value.");
+            default: Log.e(TAG, "position of select fragment get an incorrect value.");
         }
+
+        m.beginTransaction()
+            .replace(R.id.content, f)
+            .addToBackStack(MainFragment.TAG)
+            .commit();
     }
 
 

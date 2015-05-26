@@ -1,0 +1,35 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/frag_main"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- content of frag main goes here -->
+
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
+        android:id="@+id/btnFab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="false"
+        android:layout_marginRight="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="25dp"
+        fab:fab_addButtonColorNormal="@color/primary"
+        fab:fab_addButtonColorPressed="@color/primary"
+        fab:fab_addButtonPlusIconColor="@color/textColorWhite">
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btnAddRefuel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_icon="@drawable/ic_local_gas_station_black_24dp"
+            fab:fab_size="mini"
+            fab:fab_colorNormal="@color/textColorWhite"
+            fab:fab_colorPressed="@color/textColorWhite" />
+
+
+    </com.getbase.floatingactionbutton.FloatingActionsMenu>
+</RelativeLayout>
