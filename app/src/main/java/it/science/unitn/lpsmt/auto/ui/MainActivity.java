@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -139,8 +138,6 @@ public class MainActivity extends ActionBarActivity{
                 }
                 break;
             }
-
-            default: Log.e(TAG, "position of select fragment get an incorrect value.");
         }
 
         m.beginTransaction()
