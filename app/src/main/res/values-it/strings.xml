@@ -1,4 +1,8 @@
 <resources>
-    <!--<string name="test">questa e\' una string in italiano</string>-->
+    <string-array name="drawer_items">
+        <item>Questo e\' un test</item>
+    </string-array>
 
+    <string name="drawer_open">Apri Drawer</string>
+    <string name="drawer_close">Chiudi Drawer</string>
 </resources>

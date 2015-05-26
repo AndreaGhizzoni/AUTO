@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">AUTO</string>
+    <string name="drawer_image_content_description">AUTO</string>
 </resources>
