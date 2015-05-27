@@ -2,6 +2,9 @@ package it.science.unitn.lpsmt.auto.ui.fragment;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,14 +26,14 @@ public class MainFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.frag_main, container, false);
-        this.populate(v);
+        this.initFAB(v);
+        this.initRecycleView(v);
         return v;
     }
 
-    private void populate( View v ){
+    private void initFAB(View v){
         // get the instanced one for onClick method: avoiding null references
         fab = (FloatingActionsMenu)v.findViewById(R.id.btnFab);
-
         FloatingActionButton bntAddRefuel = (FloatingActionButton)v.findViewById(R.id.btnAddRefuel);
         FloatingActionButton bntAddCost   = (FloatingActionButton)v.findViewById(R.id.btnAddCost);
         FloatingActionButton bntAddVehicle= (FloatingActionButton)v.findViewById(R.id.btnAddVehicle);
@@ -40,9 +43,20 @@ public class MainFragment extends Fragment {
         bntAddVehicle.setOnClickListener(fabal);
     }
 
-//==================================================================================================
-//  GETTER
-//==================================================================================================
+    private void initRecycleView( View v ){
+        RecyclerView vehicleInserted = (RecyclerView) v.findViewById(R.id.frag_main_vehicle_inserted_view);
+        vehicleInserted.setLayoutManager( new LinearLayoutManager(v.getContext()) );
+        vehicleInserted.setItemAnimator( new DefaultItemAnimator() );
+
+        RecyclerView lastRefuel = (RecyclerView) v.findViewById(R.id.frag_main_last_refuel);
+        lastRefuel.setLayoutManager( new LinearLayoutManager(v.getContext()) );
+        lastRefuel.setItemAnimator( new DefaultItemAnimator() );
+
+        RecyclerView deadlines = (RecyclerView) v.findViewById(R.id.frag_main_deadlines);
+        deadlines.setLayoutManager( new LinearLayoutManager(v.getContext()) );
+        deadlines.setItemAnimator( new DefaultItemAnimator() );
+
+    }
 
 //==================================================================================================
 //  GETTER
