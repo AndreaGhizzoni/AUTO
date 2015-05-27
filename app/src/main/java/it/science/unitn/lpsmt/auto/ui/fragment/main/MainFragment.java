@@ -1,4 +1,4 @@
-package it.science.unitn.lpsmt.auto.ui.fragment;
+package it.science.unitn.lpsmt.auto.ui.fragment.main;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -20,6 +20,7 @@ import lpsmt.science.unitn.it.auto.R;
 public class MainFragment extends Fragment {
     public static final String TAG = MainFragment.class.getSimpleName();
     private FloatingActionsMenu fab;
+    private VehicleInsertedCardViewAdapter vehicleInsertedAdapter;
 
     public MainFragment(){}
 
@@ -45,16 +46,19 @@ public class MainFragment extends Fragment {
 
     private void initRecycleView( View v ){
         RecyclerView vehicleInserted = (RecyclerView) v.findViewById(R.id.frag_main_vehicle_inserted_view);
-        vehicleInserted.setLayoutManager( new LinearLayoutManager(v.getContext()) );
-        vehicleInserted.setItemAnimator( new DefaultItemAnimator() );
+        vehicleInserted.setLayoutManager(new LinearLayoutManager(v.getContext()));
+        vehicleInserted.setItemAnimator(new DefaultItemAnimator());
+        this.vehicleInsertedAdapter = new VehicleInsertedCardViewAdapter(v.getContext(),
+                R.layout.adapter_frag_main_vehicle_inserted);
+        vehicleInserted.setAdapter(this.vehicleInsertedAdapter);
 
         RecyclerView lastRefuel = (RecyclerView) v.findViewById(R.id.frag_main_last_refuel);
-        lastRefuel.setLayoutManager( new LinearLayoutManager(v.getContext()) );
-        lastRefuel.setItemAnimator( new DefaultItemAnimator() );
+        lastRefuel.setLayoutManager(new LinearLayoutManager(v.getContext()));
+        lastRefuel.setItemAnimator(new DefaultItemAnimator());
 
         RecyclerView deadlines = (RecyclerView) v.findViewById(R.id.frag_main_deadlines);
-        deadlines.setLayoutManager( new LinearLayoutManager(v.getContext()) );
-        deadlines.setItemAnimator( new DefaultItemAnimator() );
+        deadlines.setLayoutManager(new LinearLayoutManager(v.getContext()));
+        deadlines.setItemAnimator(new DefaultItemAnimator());
 
     }
 

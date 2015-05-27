@@ -20,7 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import it.science.unitn.lpsmt.auto.ui.fragment.MainFragment;
+import it.science.unitn.lpsmt.auto.ui.fragment.main.MainFragment;
 import lpsmt.science.unitn.it.auto.R;
 
 // TODO maybe implements method to save the app instance when is put onPause
