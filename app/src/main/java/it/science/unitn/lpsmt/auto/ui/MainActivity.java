@@ -41,12 +41,13 @@ public class MainActivity extends ActionBarActivity{
         // set up the drawer's list view with items and click listener
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerRelativeLayout = (LinearLayout) findViewById(R.id.left_drawer);
-        ListView mDrawerList = (ListView) findViewById(R.id.drawer_list);
-        mDrawerList.setAdapter(new DrawerAdapter(
-            this,
-            getResources().getStringArray(R.array.drawer_items))
-        );
-        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+
+        ListView drawerList = (ListView) findViewById(R.id.drawer_list_nav);
+        drawerList.setAdapter(new DrawerAdapter(
+                this,
+                getResources().getStringArray(R.array.drawer_items)
+        ));
+        drawerList.setOnItemClickListener(new DrawerItemClickListener());
 
         // enable ActionBar app icon to behave as action to toggle nav drawer
         try {
@@ -127,19 +128,15 @@ public class MainActivity extends ActionBarActivity{
 //  METHOD
 //==================================================================================================
     private void selectFragment( int position ){
-        Bundle b = new Bundle();
-        b.putInt("position", position);
-        b.putString("title", getResources().getStringArray(R.array.drawer_items)[position]);
         mDrawerLayout.closeDrawer(mDrawerRelativeLayout);
 
         FragmentManager m = getFragmentManager();
         Fragment f = null;
         switch (position){
-            case 0:{
+            default:{
                 f = m.findFragmentById(R.id.frag_main);
                 if( f == null ){
                     f = new MainFragment();
-                    f.setArguments(b);
                 }
                 break;
             }
@@ -150,7 +147,6 @@ public class MainActivity extends ActionBarActivity{
             .addToBackStack(MainFragment.TAG)
             .commit();
     }
-
 
 //==================================================================================================
 //  GETTER
@@ -175,7 +171,7 @@ public class MainActivity extends ActionBarActivity{
     }
 
     private class DrawerAdapter extends ArrayAdapter<String> {
-        public DrawerAdapter(Context context, String[]data) {
+        public DrawerAdapter(Context context, String[] data) {
             super(context, 0, data);
         }
 
@@ -206,10 +202,6 @@ public class MainActivity extends ActionBarActivity{
 
         private int getIcon( int position ){
             switch (position){
-//                case 0:{
-//                    return R.drawable.ic_local_gas_station_black_24dp; // STUB
-//                }
-
                 default: return R.drawable.ic_local_gas_station_black_24dp; // STUB
             }
         }

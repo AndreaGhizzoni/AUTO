@@ -16,16 +16,12 @@ import lpsmt.science.unitn.it.auto.R;
  */
 public class MainFragment extends Fragment {
     public static final String TAG = MainFragment.class.getSimpleName();
-    private String title;
-    private Integer pos;
     private FloatingActionsMenu fab;
 
     public MainFragment(){}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        title = (String)getArguments().get("title");
-        pos = (Integer)getArguments().get("position");
         View v = inflater.inflate(R.layout.frag_main, container, false);
         this.populate(v);
         return v;
@@ -47,9 +43,6 @@ public class MainFragment extends Fragment {
 //==================================================================================================
 //  GETTER
 //==================================================================================================
-    public String getTitle(){ return this.title; }
-
-    public int getPos(){ return this.pos; }
 
 //==================================================================================================
 //  GETTER

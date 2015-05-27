@@ -25,13 +25,40 @@
         />
 
         <ListView
-            android:id="@+id/drawer_list"
+            android:id="@+id/drawer_list_nav"
             android:layout_width="260dp"
             android:layout_height="match_parent"
             android:choiceMode="singleChoice"
             android:divider="@android:color/transparent"
             android:dividerHeight="0dp"
             android:background="@color/background"/>
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"/>
+
+        <ListView
+            android:id="@+id/drawer_list_add"
+            android:layout_width="260dp"
+            android:layout_height="match_parent"
+            android:choiceMode="singleChoice"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="0dp"
+            android:background="@color/background"/>
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"/>
+
+        <ListView
+            android:id="@+id/drawer_list_sum"
+            android:layout_width="260dp"
+            android:layout_height="match_parent"
+            android:choiceMode="singleChoice"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="0dp"
+            android:background="@color/background"/>
+
     </LinearLayout>
 
 </android.support.v4.widget.DrawerLayout>

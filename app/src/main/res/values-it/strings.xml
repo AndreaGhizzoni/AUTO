@@ -2,9 +2,8 @@
     <string-array name="drawer_items">
         <item>Principale</item>
         <item>Aggiungi Veicolo</item>
-        <item>Nuovo Rifornimento</item>
+        <item>Nuovo Riformimento</item>
         <item>Nuovo Costo</item>
-        <item>Veicoli</item>
         <item>Visualizza Costi</item>
         <item>Esporta</item>
     </string-array>
