@@ -21,11 +21,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="15dp"
                 android:textStyle="bold"
-                android:text="@string/frag_main_vehicle_inserted"/>
+                android:text="@string/frag_main_vehicle_inserted">
+            </TextView>
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/frag_main_vehicle_inserted_view"
+                android:layout_margin="20dp"
                 android:layout_width="match_parent"
-                android:layout_height="100dp">
+                android:layout_height="150dp">
             </android.support.v7.widget.RecyclerView>
         </RelativeLayout>
 
@@ -39,8 +41,9 @@
                 android:text="@string/frag_main_last_refuel"/>
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/frag_main_last_refuel"
+                android:layout_margin="20dp"
                 android:layout_width="match_parent"
-                android:layout_height="100dp">
+                android:layout_height="150dp">
             </android.support.v7.widget.RecyclerView>
         </RelativeLayout>
 
@@ -54,8 +57,9 @@
                 android:text="@string/frag_main_deadlines"/>
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/frag_main_deadlines"
+                android:layout_margin="20dp"
                 android:layout_width="match_parent"
-                android:layout_height="100dp">
+                android:layout_height="150dp">
             </android.support.v7.widget.RecyclerView>
         </RelativeLayout>
     </LinearLayout>

@@ -20,13 +20,11 @@ import lpsmt.science.unitn.it.auto.R;
  */
 public class VehicleInsertedCardViewAdapter extends RecyclerView.Adapter<VehicleInsertedCardViewAdapter.ViewHolder> {
     private Context context;
-    private int rowLayout;
 
     private ArrayList<Vehicle> vehicles = new ArrayList<>();
 
-    public VehicleInsertedCardViewAdapter( Context c, int rowLayout ){
+    public VehicleInsertedCardViewAdapter( Context c ){
         this.context = c;
-        this.rowLayout = rowLayout;
         this.populateVehicle();
     }
 
@@ -40,6 +38,7 @@ public class VehicleInsertedCardViewAdapter extends RecyclerView.Adapter<Vehicle
 //==================================================================================================
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        int rowLayout = R.layout.adapter_frag_main_vehicle_inserted;
         View v = LayoutInflater.from(parent.getContext()).inflate(rowLayout, parent, false);
         return new ViewHolder(v);
     }

@@ -48,8 +48,7 @@ public class MainFragment extends Fragment {
         RecyclerView vehicleInserted = (RecyclerView) v.findViewById(R.id.frag_main_vehicle_inserted_view);
         vehicleInserted.setLayoutManager(new LinearLayoutManager(v.getContext()));
         vehicleInserted.setItemAnimator(new DefaultItemAnimator());
-        this.vehicleInsertedAdapter = new VehicleInsertedCardViewAdapter(v.getContext(),
-                R.layout.adapter_frag_main_vehicle_inserted);
+        this.vehicleInsertedAdapter = new VehicleInsertedCardViewAdapter(v.getContext());
         vehicleInserted.setAdapter(this.vehicleInsertedAdapter);
 
         RecyclerView lastRefuel = (RecyclerView) v.findViewById(R.id.frag_main_last_refuel);
