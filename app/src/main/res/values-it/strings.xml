@@ -1,6 +1,12 @@
 <resources>
     <string-array name="drawer_items">
-        <item>Questo e\' un test</item>
+        <item>Principale</item>
+        <item>Aggiungi Veicolo</item>
+        <item>Nuovo Rifornimento</item>
+        <item>Nuovo Costo</item>
+        <item>Veicoli</item>
+        <item>Visualizza Costi</item>
+        <item>Esporta</item>
     </string-array>
 
     <string name="content_descriptor_drawer_open">Apri il Drawer</string>

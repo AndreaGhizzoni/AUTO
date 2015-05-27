@@ -28,6 +28,7 @@
             android:id="@+id/drawer_list"
             android:layout_width="260dp"
             android:layout_height="match_parent"
+            android:paddingTop="10dp"
             android:choiceMode="singleChoice"
             android:divider="@android:color/transparent"
             android:dividerHeight="0dp"

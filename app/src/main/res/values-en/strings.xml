@@ -1,6 +1,12 @@
 <resources>
     <string-array name="drawer_items">
-        <item>This is a test</item>
+        <item>Home</item>
+        <item>Add Vehicle</item>
+        <item>New Refuel</item>
+        <item>New Cost</item>
+        <item>Vehicles</item>
+        <item>View Costs</item>
+        <item>Export</item>
     </string-array>
 
     <string name="content_descriptor_drawer_open">Open Drawer</string>

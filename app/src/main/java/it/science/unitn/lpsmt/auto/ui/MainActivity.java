@@ -206,11 +206,11 @@ public class MainActivity extends ActionBarActivity{
 
         private int getIcon( int position ){
             switch (position){
-                case 0:{
-                    return R.drawable.ic_local_gas_station_black_24dp; // STUB
-                }
+//                case 0:{
+//                    return R.drawable.ic_local_gas_station_black_24dp; // STUB
+//                }
 
-                default: return -1;
+                default: return R.drawable.ic_local_gas_station_black_24dp; // STUB
             }
         }
 
