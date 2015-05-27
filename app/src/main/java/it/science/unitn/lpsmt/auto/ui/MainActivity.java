@@ -38,22 +38,29 @@ public class MainActivity extends ActionBarActivity{
         setContentView(R.layout.activity_main);
         instance = this;
 
-        // set up the drawer's list view with items and click listener
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerRelativeLayout = (LinearLayout) findViewById(R.id.left_drawer);
+        // enable ActionBar app icon to behave as action to toggle nav drawer
+        try {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeButtonEnabled(true);
+        }catch (NullPointerException ignored){}
 
-        ListView drawerList = (ListView) findViewById(R.id.drawer_list_nav);
+        this.initDrawer();
+
+        if(savedInstanceState == null)
+            selectFragment(0);
+    }
+
+    private void initDrawer(){
+        ListView drawerList = (ListView) findViewById(R.id.drawer_list);
         drawerList.setAdapter(new DrawerAdapter(
                 this,
                 getResources().getStringArray(R.array.drawer_items)
         ));
         drawerList.setOnItemClickListener(new DrawerItemClickListener());
 
-        // enable ActionBar app icon to behave as action to toggle nav drawer
-        try {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setHomeButtonEnabled(true);
-        }catch (NullPointerException ignored){}
+        // set up the drawer's list view with items and click listener
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerRelativeLayout = (LinearLayout) findViewById(R.id.left_drawer);
 
         // ActionBarDrawerToggle ties together the the proper interactions
         // between the sliding drawer and the action bar app icon
@@ -72,16 +79,11 @@ public class MainActivity extends ActionBarActivity{
             }
         };
         mDrawerLayout.setDrawerListener(mDrawerToggle);
-
-        if(savedInstanceState == null)
-            selectFragment(0);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu items for use in the action bar
-//        MenuInflater inflater = getMenuInflater();
-//        inflater.inflate(R.menu.main_activity_actions, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -133,7 +135,7 @@ public class MainActivity extends ActionBarActivity{
         FragmentManager m = getFragmentManager();
         Fragment f = null;
         switch (position){
-            default:{
+            case 0:{
                 f = m.findFragmentById(R.id.frag_main);
                 if( f == null ){
                     f = new MainFragment();
