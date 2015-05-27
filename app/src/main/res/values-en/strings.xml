@@ -13,6 +13,6 @@
     <string name="content_descriptor_drawer_item_icon">Drawer Icon</string>
 
     <string name="frag_main_vehicle_inserted">VEHICLE INSERTED</string>
-    <string name="frag_main_last_refuel">lAST REFUEL</string>
+    <string name="frag_main_last_refuel">LAST REFUEL</string>
     <string name="frag_main_deadlines">DEADLINES</string>
 </resources>

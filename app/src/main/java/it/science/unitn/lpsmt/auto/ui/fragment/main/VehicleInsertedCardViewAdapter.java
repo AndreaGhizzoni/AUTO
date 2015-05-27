@@ -31,6 +31,7 @@ public class VehicleInsertedCardViewAdapter extends RecyclerView.Adapter<Vehicle
     private void populateVehicle(){
         VehicleDAO dao = new DAOVehicle();
         this.vehicles.addAll(dao.getAll());
+        dao.close();
     }
 
 //==================================================================================================
@@ -47,7 +48,7 @@ public class VehicleInsertedCardViewAdapter extends RecyclerView.Adapter<Vehicle
     public void onBindViewHolder(ViewHolder holder, int position) {
         Vehicle v = this.vehicles.get(position);
         holder.name.setText( v.getName() );
-        holder.name.setText( v.getPlate() );
+        holder.data.setText( v.getPlate() );
     }
 
     @Override
