@@ -2,6 +2,7 @@ package it.science.unitn.lpsmt.auto.model;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import it.science.unitn.lpsmt.auto.model.util.Const;
 
@@ -74,6 +75,14 @@ public class Vehicle {
         if( purchaseDate != null && purchaseDate.after(new Date()) )
             throw new IllegalArgumentException("Purchase Date can not be in the future.");
         this.purchaseDate = purchaseDate;
+    }
+
+    public void setCosts( List<Cost> list ) throws IllegalArgumentException{
+        if( list == null )
+            throw new IllegalArgumentException("List of Cost to set can not be null.");
+
+        this.costs.clear();
+        this.costs.addAll(list);
     }
 
 //==================================================================================================

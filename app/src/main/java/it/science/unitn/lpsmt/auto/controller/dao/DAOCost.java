@@ -7,11 +7,16 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import it.science.unitn.lpsmt.auto.controller.CostDAO;
 import it.science.unitn.lpsmt.auto.controller.util.Converter;
 import it.science.unitn.lpsmt.auto.model.Cost;
+import it.science.unitn.lpsmt.auto.model.Maintenance;
+import it.science.unitn.lpsmt.auto.model.Place;
+import it.science.unitn.lpsmt.auto.model.Refuel;
+import it.science.unitn.lpsmt.auto.model.Vehicle;
 import it.science.unitn.lpsmt.auto.model.util.Const;
 
 /**
@@ -152,6 +157,52 @@ public class DAOCost implements CostDAO {
             Cost tmp;
             while( !c.isAfterLast() ){
                 tmp = Converter.cursorToCost(c, false);
+                list.add(tmp);
+                c.moveToNext();
+            }
+            c.close();
+        }
+        return list;
+    }
+
+    /**
+     * TODO add doc
+     * @param v
+     * @return
+     */
+    public List<Cost> getAllWhereVehicleIs(Vehicle v){
+        ArrayList<Cost> list = new ArrayList<>();
+        Cursor c = db.query(
+            Cost.SQLData.TABLE_NAME,
+            Cost.SQLData.ALL_COLUMNS_WITHOUT_VEHICLE_FK,
+            Cost.SQLData.VEHICLE_ID+" = ?",
+            new String[]{v.getId().toString()},
+            null, null, null, null
+        );
+
+        if( c.getCount() != 0 ){
+            c.moveToFirst();
+            Cost tmp = null;
+            while( !c.isAfterLast() ){
+                Long id = c.getLong(0);
+                Float amount = c.getFloat(1);
+                String notes = c.getString(2);
+                String clazz = c.getString(3);
+                Place place = new DAOPlace().get(c.getLong(4));
+
+                if(clazz.equals(Refuel.class.getSimpleName().toLowerCase())){
+                    Float pricePerLiter = c.getFloat(5);
+                    Date d = it.science.unitn.lpsmt.auto.controller.util.Date.
+                            getDateFromString(c.getString(6));
+                    Integer atKm = c.getInt(7);
+                    tmp = new Refuel(id, v, amount, notes, pricePerLiter, d, atKm, place);
+                }else if(clazz.equals(Maintenance.class.getSimpleName().toLowerCase())){
+                    String name = c.getString(8);
+                    Maintenance.Type type = Maintenance.Type.valueOf(c.getString(9));
+                    Integer calendarID = c.getInt(10);
+                    tmp = new Maintenance(id, v, amount, notes, name, type, place, calendarID);
+                }
+
                 list.add(tmp);
                 c.moveToNext();
             }

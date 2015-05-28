@@ -96,7 +96,7 @@ public abstract class Cost {
     public String toString() {
         return "Cost{" +
                 "id=" + id +
-                ", vehicle=" + vehicle +
+                ", vehicle=" + vehicle.getId() +
                 ", amount=" + amount +
                 ", notes='" + notes + '\'' +
                 '}';
@@ -130,6 +130,8 @@ public abstract class Cost {
 
         public static final String TABLE_NAME = Cost.class.getSimpleName().toLowerCase();
         public static final String[] ALL_COLUMNS = {ID, VEHICLE_ID, AMOUNT, NOTES, CLASS, PLACE_ID,
+                PRICE_PER_LITER, DATE, AT_KM, NAME, TYPE, CALENDAR_ID};
+        public static final String[] ALL_COLUMNS_WITHOUT_VEHICLE_FK = {ID, AMOUNT, NOTES, CLASS, PLACE_ID,
                 PRICE_PER_LITER, DATE, AT_KM, NAME, TYPE, CALENDAR_ID};
 
         public static final String SQL_CREATE =

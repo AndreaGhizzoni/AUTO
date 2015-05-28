@@ -5,8 +5,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -18,7 +18,7 @@ import lpsmt.science.unitn.it.auto.R;
 /**
  * This is the card adapter for the Recycle view of MainFragment.
  */
-public class VehicleInsertedCardViewAdapter extends RecyclerView.Adapter<VehicleInsertedCardViewAdapter.ViewHolder> {
+public class VehicleInsertedCardViewAdapter extends RecyclerView.Adapter<VehicleInsertedCardViewAdapter.ViewHolder>{
     private Context context;
 
     private ArrayList<Vehicle> vehicles = new ArrayList<>();
@@ -49,6 +49,7 @@ public class VehicleInsertedCardViewAdapter extends RecyclerView.Adapter<Vehicle
         Vehicle v = this.vehicles.get(position);
         holder.name.setText( v.getName() );
         holder.data.setText( v.getPlate() );
+        holder.associatedVehicle = v;
     }
 
     @Override
@@ -61,14 +62,20 @@ public class VehicleInsertedCardViewAdapter extends RecyclerView.Adapter<Vehicle
      *  Holder for card data
      */
     public static class ViewHolder extends RecyclerView.ViewHolder {
+        public Vehicle associatedVehicle;
         public TextView name;
         public TextView data;
-        public Button modify;
         public ViewHolder(View itemView) {
             super(itemView);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(view.getContext(), "Vehicle id: "+associatedVehicle.getId(),
+                            Toast.LENGTH_LONG).show();
+                }
+            });
             name = (TextView) itemView.findViewById(R.id.card_view_vehicle_name);
             data = (TextView) itemView.findViewById(R.id.card_view_vehicle_data);
-            modify = (Button) itemView.findViewById(R.id.btnCardViewModifyInsertedVehicle);
         }
     }
 }
