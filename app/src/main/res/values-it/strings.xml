@@ -8,6 +8,13 @@
         <item>Esporta</item>
     </string-array>
 
+    <string-array name="fuel">
+        <item>Diesel</item>
+        <item>GLP</item>
+        <item>Metano</item>
+        <item>Benzina</item>
+    </string-array>
+
     <string name="content_descriptor_drawer_open">Apri il Drawer</string>
     <string name="content_descriptor_drawer_close">Chiudi il Drawer</string>
     <string name="content_descriptor_drawer_item_icon">Icona del Drawer</string>

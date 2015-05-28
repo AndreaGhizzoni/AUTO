@@ -165,11 +165,7 @@ public class DAOCost implements CostDAO {
         return list;
     }
 
-    /**
-     * TODO add doc
-     * @param v
-     * @return
-     */
+    @Override
     public List<Cost> getAllWhereVehicleIs(Vehicle v){
         ArrayList<Cost> list = new ArrayList<>();
         Cursor c = db.query(

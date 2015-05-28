@@ -5,9 +5,7 @@ import android.database.Cursor;
 import android.location.Location;
 
 import java.util.Date;
-import java.util.List;
 
-import it.science.unitn.lpsmt.auto.controller.dao.DAOCost;
 import it.science.unitn.lpsmt.auto.controller.dao.DAOPlace;
 import it.science.unitn.lpsmt.auto.controller.dao.DAOVehicle;
 import it.science.unitn.lpsmt.auto.model.Cost;
@@ -16,9 +14,9 @@ import it.science.unitn.lpsmt.auto.model.Place;
 import it.science.unitn.lpsmt.auto.model.Refuel;
 import it.science.unitn.lpsmt.auto.model.Vehicle;
 
+import static it.science.unitn.lpsmt.auto.controller.util.Const.LOCATION_PROVIDER;
 import static it.science.unitn.lpsmt.auto.controller.util.Date.getDateFromString;
 import static it.science.unitn.lpsmt.auto.controller.util.Date.getStringFromDate;
-import static it.science.unitn.lpsmt.auto.controller.util.Const.LOCATION_PROVIDER;
 
 /**
  * TODO add doc
@@ -56,12 +54,8 @@ public final class Converter {
         Vehicle.Fuel fuel = Vehicle.Fuel.valueOf(c.getString(3));
         Date purchase_date = getDateFromString(c.getString(4));
 
-        Vehicle v = new Vehicle(id, name, plate, fuel, purchase_date);
-        List<Cost> costs = new DAOCost().getAllWhereVehicleIs(v);
-        v.setCosts(costs);
-
         if(forceClose) c.close();
-        return v;
+        return new Vehicle(id, name, plate, fuel, purchase_date);
     }
 
     /**

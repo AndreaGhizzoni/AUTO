@@ -8,7 +8,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import it.science.unitn.lpsmt.auto.controller.VehicleDAO;
 import it.science.unitn.lpsmt.auto.controller.dao.DAOVehicle;
@@ -47,9 +49,22 @@ public class VehicleInsertedCardViewAdapter extends RecyclerView.Adapter<Vehicle
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Vehicle v = this.vehicles.get(position);
-        holder.name.setText( v.getName() );
+        SimpleDateFormat s = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        holder.name.setText( v.getName()+"  "+getFuel(v.getFuel())+"  -  "+s.format(v.getPurchaseDate()) );
         holder.data.setText( v.getPlate() );
         holder.associatedVehicle = v;
+    }
+
+    public String getFuel( Vehicle.Fuel f ){
+        if( !Locale.getDefault().getDisplayLanguage().equals("it") ) {
+            switch (f){
+                case GASOLINE: return "Diesel";
+                case LPG: return "GPL";
+                case NATURAL_GAS: return "Metano";
+                case PETROL: return "Benzina";
+            }
+        }
+        return "";
     }
 
     @Override

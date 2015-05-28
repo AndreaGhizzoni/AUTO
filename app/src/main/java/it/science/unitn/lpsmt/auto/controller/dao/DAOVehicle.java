@@ -71,7 +71,9 @@ public class DAOVehicle implements VehicleDAO{
             return null;
         }else{
             c.moveToFirst();
-            return Converter.cursorToVehicle(c, true);
+            Vehicle v = Converter.cursorToVehicle(c, true);
+            v.setCosts( new DAOCost().getAllWhereVehicleIs(v) );
+            return v;
         }
     }
 
@@ -151,6 +153,10 @@ public class DAOVehicle implements VehicleDAO{
                 c.moveToNext();
             }
             c.close();
+
+            CostDAO costDAO = new DAOCost();
+            for( Vehicle v : list )
+                v.setCosts(costDAO.getAllWhereVehicleIs(v));
         }
         return list;
     }
