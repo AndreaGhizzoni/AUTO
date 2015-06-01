@@ -197,14 +197,18 @@ public class MainActivity extends ActionBarActivity{
                 holder = (DrawerItemHolder)row.getTag();
             }
 
-            holder.text.setText(getItem(position));
-            holder.icon.setImageResource(getIcon(position));
+            String item = getItem(position);
+            if(item != null) {
+                holder.text.setText(getItem(position));
+                holder.icon.setImageResource(getIcon(position));
+            }
             return row;
         }
 
         private int getIcon( int position ){
             switch (position){
-                default: return R.drawable.ic_local_gas_station_black_24dp; // STUB
+                case 0: return R.drawable.ic_action_home_48dp;
+                default: return R.drawable.ic_placeholder; // STUB
             }
         }
 

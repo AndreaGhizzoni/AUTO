@@ -19,7 +19,7 @@
             android:layout_margin="5dp"
             android:layout_height="35dp"
             android:layout_width="35dp"
-            android:background="@drawable/ic_mic_black_24dp"
+            android:background="@drawable/ic_placeholder"
             android:clickable="true"
             android:contentDescription="@string/content_descriptor_adapter_vehicle_inserted_icon" />
 
