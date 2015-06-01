@@ -28,6 +28,7 @@ public class MainFragment extends Fragment {
     public static final String TAG = MainFragment.class.getSimpleName();
     private FloatingActionsMenu fab;
     private VehicleInsertedCardViewAdapter vehicleInsertedAdapter;
+    private LastRefuelsCardViewAdapter lastRefuelAdapter;
 
     public MainFragment(){}
 
@@ -61,6 +62,8 @@ public class MainFragment extends Fragment {
         RecyclerView lastRefuel = (RecyclerView) v.findViewById(R.id.frag_main_last_refuel);
         lastRefuel.setLayoutManager(new LinearLayoutManager(v.getContext()));
         lastRefuel.setItemAnimator(new DefaultItemAnimator());
+        this.lastRefuelAdapter = new LastRefuelsCardViewAdapter(v.getContext());
+        lastRefuel.setAdapter(this.lastRefuelAdapter);
 
         RecyclerView deadlines = (RecyclerView) v.findViewById(R.id.frag_main_deadlines);
         deadlines.setLayoutManager(new LinearLayoutManager(v.getContext()));
