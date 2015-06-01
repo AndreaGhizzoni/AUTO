@@ -79,7 +79,7 @@
         android:layout_centerHorizontal="false"
         android:layout_marginRight="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="25dp"
+        android:layout_marginBottom="16dp"
         fab:fab_addButtonColorNormal="@color/primary"
         fab:fab_addButtonColorPressed="@color/primary"
         fab:fab_addButtonPlusIconColor="@color/textColorWhite">
