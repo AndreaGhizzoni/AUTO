@@ -19,6 +19,7 @@
     <string name="content_descriptor_drawer_close">Chiudi il Drawer</string>
     <string name="content_descriptor_drawer_item_icon">Icona del Drawer</string>
     <string name="content_descriptor_adapter_vehicle_inserted_icon">Icona del Vehicle</string>
+    <string name="content_descriptor_adapter_last_refuels_icon">Icona degli ultimi Rifornimenti</string>
 
     <string name="frag_main_vehicle_inserted">VEICOLI INSERITI</string>
     <string name="frag_main_last_refuel">ULTIMI RIFORNiMENTI</string>

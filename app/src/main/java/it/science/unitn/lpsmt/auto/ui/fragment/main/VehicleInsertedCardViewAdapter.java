@@ -32,8 +32,14 @@ public class VehicleInsertedCardViewAdapter extends RecyclerView.Adapter<Vehicle
 
     private void populateVehicle(){
         VehicleDAO dao = new DAOVehicle();
+        this.vehicles.clear();
         this.vehicles.addAll(dao.getAll());
         dao.close();
+    }
+
+    public void notifyVehiclesChanges(){
+        populateVehicle();
+        notifyDataSetChanged();
     }
 
 //==================================================================================================

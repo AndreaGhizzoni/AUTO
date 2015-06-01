@@ -8,10 +8,17 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
+import java.util.Date;
+
+import it.science.unitn.lpsmt.auto.controller.VehicleDAO;
+import it.science.unitn.lpsmt.auto.controller.dao.DAOVehicle;
+import it.science.unitn.lpsmt.auto.model.Vehicle;
+import it.science.unitn.lpsmt.auto.model.util.Const;
 import lpsmt.science.unitn.it.auto.R;
 
 /**
@@ -75,6 +82,11 @@ public class MainFragment extends Fragment {
                     break;
                 }
                 case R.id.btnAddVehicle: {
+                    VehicleDAO dao = new DAOVehicle();
+                    Vehicle v = new Vehicle(Const.NO_DB_ID_SET, "myVehicle", "XX123", Vehicle.Fuel.GASOLINE, new Date());
+                    dao.save(v);
+                    Toast.makeText(view.getContext(), "Vehicle saved.", Toast.LENGTH_LONG ).show();
+                    vehicleInsertedAdapter.notifyVehiclesChanges();
                     break;
                 }
             }
