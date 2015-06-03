@@ -28,13 +28,17 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/card_view_last_refuel"
+                android:id="@+id/card_view_last_refuel_address"
                 android:layout_width="match_parent"
-                android:layout_height="200dp" />
+                android:layout_height="20dp" />
             <TextView
-                android:id="@+id/card_view_last_refuel_data"
+                android:id="@+id/card_view_last_refuel_amount"
                 android:layout_width="match_parent"
-                android:layout_height="200dp" />
+                android:layout_height="20dp" />
+            <TextView
+                android:id="@+id/card_view_last_refuel_vehicle"
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
         </LinearLayout>
 
     </LinearLayout>

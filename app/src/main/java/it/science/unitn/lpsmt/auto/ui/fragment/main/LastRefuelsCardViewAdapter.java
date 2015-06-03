@@ -8,10 +8,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Locale;
+import java.util.List;
 
+import it.science.unitn.lpsmt.auto.controller.CostDAO;
+import it.science.unitn.lpsmt.auto.controller.dao.DAOCost;
 import it.science.unitn.lpsmt.auto.model.Refuel;
 import lpsmt.science.unitn.it.auto.R;
 
@@ -29,13 +30,21 @@ public class LastRefuelsCardViewAdapter extends RecyclerView.Adapter<LastRefuels
     }
 
     private void populateRefuel(){
-        // create dao
+        CostDAO dao = new DAOCost();
         this.refuels.clear();
-//        this.refuels.addAll(dao.get);
-        // dao.close();
+        List<Refuel> list = dao.getAllRefuel();
+        if(list.size() != 0){
+            if( list.size() == 1 )
+                this.refuels.add(list.get(0));
+            else if( list.size() == 2 )
+                this.refuels.addAll(list.subList(0,2));
+            else if( list.size() > 2 )
+                this.refuels.addAll(list.subList(0,3));
+        }
+        dao.close();
     }
 
-    private void notifyRefuelChanges(){
+    public void notifyRefuelChanges(){
         populateRefuel();
         notifyDataSetChanged();
     }
@@ -50,11 +59,10 @@ public class LastRefuelsCardViewAdapter extends RecyclerView.Adapter<LastRefuels
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Refuel r = this.refuels.get(position);
-        SimpleDateFormat s = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-        holder.data.setText( s.format(r.getDate()) );
-        holder.refuel.setText( r.getPlace().getAddress()+" "+r.getAmount()+" at "+r.getPricePerLiter()+" in "+
-                        r.getVehicle().getName());
         holder.refuelAssociated = r;
+        holder.address.setText( r.getPlace().getAddress() );
+        holder.amount.setText( r.getAmount()+" euro at "+r.getPricePerLiter()+" euro/liter");
+        holder.vehicle.setText( r.getVehicle().getName()+" - "+r.getVehicle().getPlate() );
     }
 
     @Override
@@ -65,8 +73,9 @@ public class LastRefuelsCardViewAdapter extends RecyclerView.Adapter<LastRefuels
 //==================================================================================================
     public static class ViewHolder extends RecyclerView.ViewHolder{
         public Refuel refuelAssociated;
-        public TextView refuel;
-        public TextView data;
+        public TextView address;
+        public TextView amount;
+        public TextView vehicle;
         public ViewHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -76,8 +85,9 @@ public class LastRefuelsCardViewAdapter extends RecyclerView.Adapter<LastRefuels
                             Toast.LENGTH_LONG).show();
                 }
             });
-            refuel = ( TextView ) itemView.findViewById(R.id.card_view_last_refuel);
-            data   = ( TextView ) itemView.findViewById(R.id.card_view_last_refuel_data);
+            address = (TextView) itemView.findViewById(R.id.card_view_last_refuel_address);
+            amount  = ( TextView ) itemView.findViewById(R.id.card_view_last_refuel_amount);
+            vehicle = ( TextView ) itemView.findViewById(R.id.card_view_last_refuel_vehicle);
         }
     }
 }

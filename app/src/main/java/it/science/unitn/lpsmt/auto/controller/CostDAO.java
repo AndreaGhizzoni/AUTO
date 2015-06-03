@@ -3,6 +3,8 @@ package it.science.unitn.lpsmt.auto.controller;
 import java.util.List;
 
 import it.science.unitn.lpsmt.auto.model.Cost;
+import it.science.unitn.lpsmt.auto.model.Maintenance;
+import it.science.unitn.lpsmt.auto.model.Refuel;
 import it.science.unitn.lpsmt.auto.model.Vehicle;
 
 /**
@@ -63,6 +65,18 @@ public interface CostDAO {
      * @return
      */
     List<Cost> getAll();
+
+    /**
+     * TODO add doc
+     * @return
+     */
+    List<Refuel> getAllRefuel();
+
+    /**
+     * TODO add doc
+     * @return
+     */
+    List<Maintenance> getAllMaintenance();
 
     /**
      * TODO add doc
