@@ -179,30 +179,24 @@ public class MainActivity extends ActionBarActivity{
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            View row = convertView;
-            DrawerItemHolder holder;
+            DrawerItemHolder holder = new DrawerItemHolder();
 
-            // Check if an existing view is being reused, otherwise inflate the view
-            if (row == null) {
-                row = LayoutInflater.from(getContext()).inflate(
+            if( convertView == null ){
+                convertView = LayoutInflater.from(getContext()).inflate(
                     R.layout.adapter_drawer_list,
                     parent,
                     false
                 );
-
-                holder = new DrawerItemHolder();
-                holder.text = (TextView) row.findViewById(R.id.adapter_drawer_item_text);
-                holder.icon = (ImageView) row.findViewById(R.id.adapter_drawer_item_icon);
-            }else{
-                holder = (DrawerItemHolder)row.getTag();
             }
+            holder.text = (TextView) convertView.findViewById(R.id.adapter_drawer_item_text);
+            holder.icon = (ImageView) convertView.findViewById(R.id.adapter_drawer_item_icon);
 
             String item = getItem(position);
-            if(item != null) {
-                holder.text.setText(getItem(position));
+            if(item != null){
+                holder.text.setText(item);
                 holder.icon.setImageResource(getIcon(position));
             }
-            return row;
+            return convertView;
         }
 
         private int getIcon( int position ){
@@ -212,9 +206,9 @@ public class MainActivity extends ActionBarActivity{
             }
         }
 
-        class DrawerItemHolder{
-            ImageView icon;
-            TextView text;
+        public class DrawerItemHolder{
+            public ImageView icon;
+            public TextView text;
         }
     }
 }
