@@ -12,16 +12,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:paddingTop="30dp"
         android:paddingStart="20dp"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:paddingEnd="20dp"
-        >
+        android:paddingEnd="20dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            >
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="15dp"
@@ -32,13 +32,15 @@
                 android:id="@+id/frag_main_vehicle_inserted_view"
                 android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
-                android:layout_height="150dp">
+                android:layout_height="100dp">
             </android.support.v7.widget.RecyclerView>
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            >
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="15dp"
@@ -48,13 +50,15 @@
                 android:id="@+id/frag_main_last_refuel"
                 android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
-                android:layout_height="150dp">
+                android:layout_height="100dp">
             </android.support.v7.widget.RecyclerView>
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            >
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="15dp"
@@ -64,7 +68,7 @@
                 android:id="@+id/frag_main_deadlines"
                 android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
-                android:layout_height="150dp">
+                android:layout_height="100dp">
             </android.support.v7.widget.RecyclerView>
         </RelativeLayout>
     </LinearLayout>
