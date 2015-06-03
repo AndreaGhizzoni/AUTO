@@ -200,7 +200,35 @@ public class DAOCost implements CostDAO {
 
     @Override
     public List<Maintenance> getAllMaintenance() {
-        return null;
+        ArrayList<Maintenance> list = new ArrayList<>();
+        Cursor c = db.query(
+            Cost.SQLData.TABLE_NAME,
+            Cost.SQLData.COLUMNS_MAINTENANCE,
+            Cost.SQLData.CLASS+" = ?",
+            new String[]{Maintenance.class.getSimpleName().toLowerCase()},
+            null, null,
+            Cost.SQLData.DATE
+        );
+        if( c.getCount() != 0 ){ //means that there are rows
+            c.moveToFirst();
+            Maintenance tmp;
+            while( !c.isAfterLast() ){
+                Long id = c.getLong(0);
+                Vehicle v = new DAOVehicle().get(c.getLong(1));
+                Float amount = c.getFloat(2);
+                String notes = c.getString(3);
+                Place place = new DAOPlace().get(c.getLong(4));
+                String name = c.getString(5);
+                Maintenance.Type type = Maintenance.Type.valueOf(c.getString(6));
+                Integer calendarID = c.getInt(7);
+
+                tmp = new Maintenance(id, v, amount, notes, name, type, place, calendarID);
+                list.add(tmp);
+                c.moveToNext();
+            }
+            c.close();
+        }
+        return list;
     }
 
     @Override
