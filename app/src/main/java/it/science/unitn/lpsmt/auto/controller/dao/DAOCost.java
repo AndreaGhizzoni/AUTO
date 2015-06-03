@@ -22,14 +22,11 @@ import it.science.unitn.lpsmt.auto.model.util.Const;
 /**
  * TODO add doc
  */
-
 //https://stackoverflow.com/questions/8147440/android-database-transaction
 public class DAOCost implements CostDAO {
     private final SQLiteDatabase db;
 
-    public DAOCost(){
-        db = PersistenceDAO.getInstance().getWritableDatabase();
-    }
+    public DAOCost(){ db = PersistenceDAO.getInstance().getWritableDatabase(); }
 
     public DAOCost( Context testContext ){
         db = new PersistenceDAO(testContext).getWritableDatabase();
@@ -66,11 +63,11 @@ public class DAOCost implements CostDAO {
             return null;
 
         Cursor c = db.query(
-                Cost.SQLData.TABLE_NAME,
-                Cost.SQLData.ALL_COLUMNS,
-                Cost.SQLData.ID + " = ?",
-                new String[]{id.toString()},
-                null, null, null
+            Cost.SQLData.TABLE_NAME,
+            Cost.SQLData.ALL_COLUMNS,
+            Cost.SQLData.ID + " = ?",
+            new String[]{id.toString()},
+            null, null, null
         );
 
         if( c.getCount() == 0 ) { // means that select returns no rows
@@ -170,7 +167,7 @@ public class DAOCost implements CostDAO {
         ArrayList<Refuel> list = new ArrayList<>();
         Cursor c = db.query(
             Cost.SQLData.TABLE_NAME,
-            Cost.SQLData.COLUMNS_REFUEL,
+            Cost.SQLData.ALL_COLUMNS,
             Cost.SQLData.CLASS+" = ?",
             new String[]{Refuel.class.getSimpleName().toLowerCase()},
             null, null,
@@ -180,16 +177,7 @@ public class DAOCost implements CostDAO {
             c.moveToFirst();
             Refuel tmp;
             while( !c.isAfterLast() ){
-                Long id = c.getLong(0);
-                Vehicle v = new DAOVehicle().get(c.getLong(1));
-                Float amount = c.getFloat(2);
-                String notes = c.getString(3);
-                Place place = new DAOPlace().get(c.getLong(4));
-                Float ppl = c.getFloat(5);
-                Date date = it.science.unitn.lpsmt.auto.controller.util.Date.getDateFromString(c.getString(6));
-                Integer km = c.getInt(7);
-
-                tmp = new Refuel(id, v, amount, notes, ppl, date, km, place);
+                tmp = (Refuel) Converter.cursorToCost(c, false);
                 list.add(tmp);
                 c.moveToNext();
             }
@@ -203,7 +191,7 @@ public class DAOCost implements CostDAO {
         ArrayList<Maintenance> list = new ArrayList<>();
         Cursor c = db.query(
             Cost.SQLData.TABLE_NAME,
-            Cost.SQLData.COLUMNS_MAINTENANCE,
+            Cost.SQLData.ALL_COLUMNS,
             Cost.SQLData.CLASS+" = ?",
             new String[]{Maintenance.class.getSimpleName().toLowerCase()},
             null, null, null
@@ -212,16 +200,7 @@ public class DAOCost implements CostDAO {
             c.moveToFirst();
             Maintenance tmp;
             while( !c.isAfterLast() ){
-                Long id = c.getLong(0);
-                Vehicle v = new DAOVehicle().get(c.getLong(1));
-                Float amount = c.getFloat(2);
-                String notes = c.getString(3);
-                Place place = new DAOPlace().get(c.getLong(4));
-                String name = c.getString(5);
-                Maintenance.Type type = Maintenance.Type.valueOf(c.getString(6));
-                Integer calendarID = c.getInt(7);
-
-                tmp = new Maintenance(id, v, amount, notes, name, type, place, calendarID);
+                tmp = (Maintenance) Converter.cursorToCost(c, false);
                 list.add(tmp);
                 c.moveToNext();
             }
@@ -235,7 +214,7 @@ public class DAOCost implements CostDAO {
         ArrayList<Maintenance> list = new ArrayList<>();
         Cursor c = db.query(
             Cost.SQLData.TABLE_NAME,
-            Cost.SQLData.COLUMNS_MAINTENANCE,
+            Cost.SQLData.ALL_COLUMNS,
             Cost.SQLData.CLASS+" = ? and "+Cost.SQLData.TYPE+" = ?",
             new String[]{Maintenance.class.getSimpleName().toLowerCase(), type.toString()},
             null, null, null
@@ -244,15 +223,7 @@ public class DAOCost implements CostDAO {
             c.moveToFirst();
             Maintenance tmp;
             while( !c.isAfterLast() ){
-                Long id = c.getLong(0);
-                Vehicle v = new DAOVehicle().get(c.getLong(1));
-                Float amount = c.getFloat(2);
-                String notes = c.getString(3);
-                Place place = new DAOPlace().get(c.getLong(4));
-                String name = c.getString(5);
-                Integer calendarID = c.getInt(7);// this index is right
-
-                tmp = new Maintenance(id, v, amount, notes, name, type, place, calendarID);
+                tmp = (Maintenance) Converter.cursorToCost(c, false);
                 list.add(tmp);
                 c.moveToNext();
             }

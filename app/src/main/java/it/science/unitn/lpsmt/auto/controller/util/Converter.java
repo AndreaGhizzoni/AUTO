@@ -22,6 +22,10 @@ import static it.science.unitn.lpsmt.auto.controller.util.Date.getStringFromDate
  * TODO add doc
  */
 public final class Converter {
+
+//==================================================================================================
+//  VEHICLE CONVERTER METHODS
+//==================================================================================================
     /**
      * TODO add doc
      * @param v
@@ -58,6 +62,9 @@ public final class Converter {
         return new Vehicle(id, name, plate, fuel, purchase_date);
     }
 
+//==================================================================================================
+//  COST CONVERTER METHODS
+//==================================================================================================
     /**
      * TODO add doc
      * @param o
@@ -142,6 +149,9 @@ public final class Converter {
         return cost;
     }
 
+//==================================================================================================
+//  PLACE CONVERTER METHODS
+//==================================================================================================
     /**
      * TODO add doc
      * @param p
