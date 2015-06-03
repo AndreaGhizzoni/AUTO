@@ -28,7 +28,7 @@ public class DeadLineCardViewAdapter extends RecyclerView.Adapter<DeadLineCardVi
         this.populateDeadLines();
     }
 
-    public void populateDeadLines(){
+    private void populateDeadLines(){
         CostDAO dao = new DAOCost();
         this.deadlines.clear();
         this.deadlines.addAll(dao.getAllMaintenanceWhereTypeIs(Maintenance.Type.TAX));

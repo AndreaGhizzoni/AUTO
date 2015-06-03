@@ -17,9 +17,11 @@ import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import java.util.Date;
 import java.util.List;
 
+import it.science.unitn.lpsmt.auto.controller.CostDAO;
 import it.science.unitn.lpsmt.auto.controller.VehicleDAO;
 import it.science.unitn.lpsmt.auto.controller.dao.DAOCost;
 import it.science.unitn.lpsmt.auto.controller.dao.DAOVehicle;
+import it.science.unitn.lpsmt.auto.model.Maintenance;
 import it.science.unitn.lpsmt.auto.model.Place;
 import it.science.unitn.lpsmt.auto.model.Refuel;
 import it.science.unitn.lpsmt.auto.model.Vehicle;
@@ -103,6 +105,23 @@ public class MainFragment extends Fragment {
                     break;
                 }
                 case R.id.btnAddCost:{
+                    List<Vehicle> list = new DAOVehicle().getAll();
+                    if( list.size() != 0 ){
+                        Vehicle v = list.get(0);
+                        Location l = new Location(it.science.unitn.lpsmt.auto.controller.util.Const.LOCATION_PROVIDER);
+                        Place p = new Place(Const.NO_DB_ID_SET, "MyAddress", l);
+                        Maintenance m = new Maintenance(Const.NO_DB_ID_SET, v, 150f, "notes",
+                                "SomeTax", Maintenance.Type.TAX, p, 100);
+
+                        CostDAO dao = new DAOCost();
+                        dao.save(m);
+                        Toast.makeText(view.getContext(), "Maintenance saved.",
+                                Toast.LENGTH_LONG ).show();
+                        deadLineCardViewAdapter.notifyDeadLinesChanges();
+                    }else{
+                        Toast.makeText(view.getContext(), "No Vehicle to save the refuel.",
+                                Toast.LENGTH_LONG ).show();
+                    }
                     break;
                 }
                 case R.id.btnAddVehicle: {
