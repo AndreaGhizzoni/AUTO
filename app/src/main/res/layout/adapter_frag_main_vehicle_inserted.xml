@@ -15,12 +15,10 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:id="@+id/btnCardViewModifyInsertedVehicle"
             android:layout_margin="10dp"
             android:layout_height="45dp"
             android:layout_width="45dp"
             android:background="@drawable/ic_placeholder"
-            android:clickable="true"
             android:contentDescription="@string/content_descriptor_adapter_vehicle_inserted_icon" />
 
         <LinearLayout
