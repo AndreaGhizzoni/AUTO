@@ -70,8 +70,16 @@ public class DeadLineCardViewAdapter extends RecyclerView.Adapter<DeadLineCardVi
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(view.getContext(), "Refuel id: " + maintenanceAssociated.getId(),
+                    Toast.makeText(view.getContext(), "Maintenance id: " + maintenanceAssociated.getId(),
                             Toast.LENGTH_LONG).show();
+                }
+            });
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    Toast.makeText(view.getContext(), "Long press on Maintenance id: " + maintenanceAssociated.getId(),
+                            Toast.LENGTH_LONG).show();
+                    return false;
                 }
             });
             name = (TextView) itemView.findViewById(R.id.card_view_deadlines_name);

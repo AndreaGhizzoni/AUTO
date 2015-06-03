@@ -85,6 +85,14 @@ public class LastRefuelsCardViewAdapter extends RecyclerView.Adapter<LastRefuels
                             Toast.LENGTH_LONG).show();
                 }
             });
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    Toast.makeText(view.getContext(), "Long press on Refuel id: " + refuelAssociated.getId(),
+                            Toast.LENGTH_LONG).show();
+                    return false;
+                }
+            });
             address = (TextView) itemView.findViewById(R.id.card_view_last_refuel_address);
             amount  = ( TextView ) itemView.findViewById(R.id.card_view_last_refuel_amount);
             vehicle = ( TextView ) itemView.findViewById(R.id.card_view_last_refuel_vehicle);

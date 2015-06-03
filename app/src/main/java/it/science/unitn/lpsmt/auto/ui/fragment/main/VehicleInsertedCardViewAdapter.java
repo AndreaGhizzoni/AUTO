@@ -95,6 +95,14 @@ public class VehicleInsertedCardViewAdapter extends RecyclerView.Adapter<Vehicle
                             Toast.LENGTH_LONG).show();
                 }
             });
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                     Toast.makeText(view.getContext(), "Long press on Vehicle id: "+associatedVehicle.getId(),
+                            Toast.LENGTH_LONG).show();
+                    return false;
+                }
+            });
             name = (TextView) itemView.findViewById(R.id.card_view_vehicle_name);
             data = (TextView) itemView.findViewById(R.id.card_view_vehicle_data);
         }
