@@ -51,7 +51,7 @@ public class LastRefuelsCardViewAdapter extends RecyclerView.Adapter<LastRefuels
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        int rowLayout = R.layout.adapter_feag_main_last_refuels;
+        int rowLayout = R.layout.adapter_frag_main_last_refuels;
         View v = LayoutInflater.from(parent.getContext()).inflate(rowLayout, parent, false);
         return new ViewHolder(v);
     }
@@ -81,7 +81,7 @@ public class LastRefuelsCardViewAdapter extends RecyclerView.Adapter<LastRefuels
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(view.getContext(), "Refuel id: "+refuelAssociated.getId(),
+                    Toast.makeText(view.getContext(), "Refuel id: " + refuelAssociated.getId(),
                             Toast.LENGTH_LONG).show();
                 }
             });

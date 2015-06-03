@@ -34,6 +34,7 @@ public class MainFragment extends Fragment {
     private FloatingActionsMenu fab;
     private VehicleInsertedCardViewAdapter vehicleInsertedAdapter;
     private LastRefuelsCardViewAdapter lastRefuelAdapter;
+    private DeadLineCardViewAdapter deadLineCardViewAdapter;
 
     public MainFragment(){}
 
@@ -73,7 +74,8 @@ public class MainFragment extends Fragment {
         RecyclerView deadlines = (RecyclerView) v.findViewById(R.id.frag_main_deadlines);
         deadlines.setLayoutManager(new LinearLayoutManager(v.getContext()));
         deadlines.setItemAnimator(new DefaultItemAnimator());
-
+        this.deadLineCardViewAdapter = new DeadLineCardViewAdapter(v.getContext());
+        deadlines.setAdapter(this.deadLineCardViewAdapter);
     }
 
 //==================================================================================================
