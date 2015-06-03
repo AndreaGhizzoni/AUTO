@@ -206,8 +206,7 @@ public class DAOCost implements CostDAO {
             Cost.SQLData.COLUMNS_MAINTENANCE,
             Cost.SQLData.CLASS+" = ?",
             new String[]{Maintenance.class.getSimpleName().toLowerCase()},
-            null, null,
-            Cost.SQLData.DATE
+            null, null, null
         );
         if( c.getCount() != 0 ){ //means that there are rows
             c.moveToFirst();
@@ -230,6 +229,38 @@ public class DAOCost implements CostDAO {
         }
         return list;
     }
+
+    @Override
+    public List<Maintenance> getAllMaintenanceWhereTypeIs(Maintenance.Type type) {
+        ArrayList<Maintenance> list = new ArrayList<>();
+        Cursor c = db.query(
+            Cost.SQLData.TABLE_NAME,
+            Cost.SQLData.COLUMNS_MAINTENANCE,
+            Cost.SQLData.CLASS+" = ? and "+Cost.SQLData.TYPE+" = ?",
+            new String[]{Maintenance.class.getSimpleName().toLowerCase(), type.toString()},
+            null, null, null
+        );
+        if( c.getCount() != 0 ){ //means that there are rows
+            c.moveToFirst();
+            Maintenance tmp;
+            while( !c.isAfterLast() ){
+                Long id = c.getLong(0);
+                Vehicle v = new DAOVehicle().get(c.getLong(1));
+                Float amount = c.getFloat(2);
+                String notes = c.getString(3);
+                Place place = new DAOPlace().get(c.getLong(4));
+                String name = c.getString(5);
+                Integer calendarID = c.getInt(7);// this index is right
+
+                tmp = new Maintenance(id, v, amount, notes, name, type, place, calendarID);
+                list.add(tmp);
+                c.moveToNext();
+            }
+            c.close();
+        }
+        return list;
+    }
+
 
     @Override
     public List<Cost> getAllWhereVehicleIs(Vehicle v){

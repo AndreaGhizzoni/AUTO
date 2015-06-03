@@ -80,6 +80,12 @@ public interface CostDAO {
 
     /**
      * TODO add doc
+     * @return
+     */
+    List<Maintenance> getAllMaintenanceWhereTypeIs(Maintenance.Type type);
+
+    /**
+     * TODO add doc
      * @param v
      * @return
      */
