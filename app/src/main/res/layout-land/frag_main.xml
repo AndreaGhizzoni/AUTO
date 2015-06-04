@@ -11,14 +11,14 @@
         android:id="@+id/frag_main_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:paddingStart="@dimen/frag_main_linear_layout_padding"
         android:paddingLeft="@dimen/frag_main_linear_layout_padding"
         android:paddingRight="@dimen/frag_main_linear_layout_padding"
         android:paddingEnd="@dimen/frag_main_linear_layout_padding">
 
         <RelativeLayout
-            android:layout_width="match_parent"
+            android:layout_width="285dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/frag_main_relative_layout_margin_top"
             >
@@ -31,32 +31,16 @@
                 android:id="@+id/frag_main_vehicle_inserted_view"
                 android:layout_marginTop="@dimen/frag_main_recycle_view_margin_top"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/frag_main_recycle_view_height">
+                android:layout_height="250dp">
             </android.support.v7.widget.RecyclerView>
         </RelativeLayout>
 
-        <!--<RelativeLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginTop="@dimen/frag_main_relative_layout_margin_top"-->
-            <!-->-->
-            <!--<TextView-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="@dimen/frag_main_title_recycle_view_height"-->
-                <!--android:textStyle="bold"-->
-                <!--android:text="@string/frag_main_last_refuel"/>-->
-            <!--<android.support.v7.widget.RecyclerView-->
-                <!--android:id="@+id/frag_main_last_refuel"-->
-                <!--android:layout_marginTop="@dimen/frag_main_recycle_view_margin_top"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="@dimen/frag_main_recycle_view_height">-->
-            <!--</android.support.v7.widget.RecyclerView>-->
-        <!--</RelativeLayout>-->
-
         <RelativeLayout
-            android:layout_width="match_parent"
+            android:layout_width="260dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/frag_main_relative_layout_margin_top"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             >
             <TextView
                 android:layout_width="match_parent"
@@ -67,7 +51,7 @@
                 android:id="@+id/frag_main_deadlines"
                 android:layout_marginTop="@dimen/frag_main_recycle_view_margin_top"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/frag_main_recycle_view_height">
+                android:layout_height="250dp">
             </android.support.v7.widget.RecyclerView>
         </RelativeLayout>
     </LinearLayout>

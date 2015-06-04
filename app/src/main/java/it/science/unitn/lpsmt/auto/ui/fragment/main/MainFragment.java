@@ -35,7 +35,7 @@ public class MainFragment extends Fragment {
     public static final String TAG = MainFragment.class.getSimpleName();
     private FloatingActionsMenu fab;
     private VehicleInsertedCardViewAdapter vehicleInsertedAdapter;
-    private LastRefuelsCardViewAdapter lastRefuelAdapter;
+//    private LastRefuelsCardViewAdapter lastRefuelAdapter;
     private DeadLineCardViewAdapter deadLineCardViewAdapter;
 
     public MainFragment(){}
@@ -67,11 +67,11 @@ public class MainFragment extends Fragment {
         this.vehicleInsertedAdapter = new VehicleInsertedCardViewAdapter(v.getContext());
         vehicleInserted.setAdapter(this.vehicleInsertedAdapter);
 
-        RecyclerView lastRefuel = (RecyclerView) v.findViewById(R.id.frag_main_last_refuel);
-        lastRefuel.setLayoutManager(new LinearLayoutManager(v.getContext()));
-        lastRefuel.setItemAnimator(new DefaultItemAnimator());
-        this.lastRefuelAdapter = new LastRefuelsCardViewAdapter(v.getContext());
-        lastRefuel.setAdapter(this.lastRefuelAdapter);
+//        RecyclerView lastRefuel = (RecyclerView) v.findViewById(R.id.frag_main_last_refuel);
+//        lastRefuel.setLayoutManager(new LinearLayoutManager(v.getContext()));
+//        lastRefuel.setItemAnimator(new DefaultItemAnimator());
+//        this.lastRefuelAdapter = new LastRefuelsCardViewAdapter(v.getContext());
+//        lastRefuel.setAdapter(this.lastRefuelAdapter);
 
         RecyclerView deadlines = (RecyclerView) v.findViewById(R.id.frag_main_deadlines);
         deadlines.setLayoutManager(new LinearLayoutManager(v.getContext()));
@@ -97,7 +97,7 @@ public class MainFragment extends Fragment {
                         DAOCost dao = new DAOCost();
                         dao.save(r);
                         Toast.makeText(view.getContext(), "Refuel saved.", Toast.LENGTH_LONG ).show();
-                        lastRefuelAdapter.notifyRefuelChanges();
+//                        lastRefuelAdapter.notifyRefuelChanges();
                     }else{
                         Toast.makeText(view.getContext(), "No Vehicle to save the refuel.",
                                 Toast.LENGTH_LONG ).show();
