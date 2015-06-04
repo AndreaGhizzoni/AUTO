@@ -18,7 +18,7 @@
         android:paddingEnd="@dimen/frag_main_linear_layout_padding">
 
         <RelativeLayout
-            android:layout_width="285dp"
+            android:layout_width="@dimen/land_frag_main_relative_layout_left_width"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/frag_main_relative_layout_margin_top"
             >
@@ -31,12 +31,12 @@
                 android:id="@+id/frag_main_vehicle_inserted_view"
                 android:layout_marginTop="@dimen/frag_main_recycle_view_margin_top"
                 android:layout_width="match_parent"
-                android:layout_height="250dp">
+                android:layout_height="@dimen/land_frag_main_recycle_view_height">
             </android.support.v7.widget.RecyclerView>
         </RelativeLayout>
 
         <RelativeLayout
-            android:layout_width="260dp"
+            android:layout_width="@dimen/land_frag_main_relative_layout_right_width"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/frag_main_relative_layout_margin_top"
             android:layout_marginLeft="10dp"
@@ -51,7 +51,7 @@
                 android:id="@+id/frag_main_deadlines"
                 android:layout_marginTop="@dimen/frag_main_recycle_view_margin_top"
                 android:layout_width="match_parent"
-                android:layout_height="250dp">
+                android:layout_height="@dimen/land_frag_main_recycle_view_height">
             </android.support.v7.widget.RecyclerView>
         </RelativeLayout>
     </LinearLayout>
