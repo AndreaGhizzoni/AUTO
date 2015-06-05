@@ -42,7 +42,10 @@ public class ViewCostsFragment extends Fragment {
 
     // init the spinner components
     private void initSpinner( View v ){
-        ArrayAdapter<CharSequence> spinnerAdapter = new ArrayAdapter<>(v.getContext(), android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> spinnerAdapter = new ArrayAdapter<>(
+            v.getContext(),
+            R.layout.frag_view_costs_spinner_item
+        );
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         if( new DAOVehicle().countObject() != 0 ) {
             spinnerAdapter.add("");
@@ -94,6 +97,7 @@ public class ViewCostsFragment extends Fragment {
         public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
             if( pos == 0 ) {
                 recyclerViewAdapter.setData(null);
+                getActivity().findViewById(R.id.frag_view_costs_no_cost).setVisibility(View.INVISIBLE);
             }else{
                 Vehicle i = vehicleList.get(pos-1);
                 List<Refuel> r = new DAOCost().getAllRefuelWhereVehicleIs(i);
