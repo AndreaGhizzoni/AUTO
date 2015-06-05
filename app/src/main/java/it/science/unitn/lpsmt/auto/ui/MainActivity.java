@@ -21,6 +21,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import it.science.unitn.lpsmt.auto.ui.fragment.main.MainFragment;
+import it.science.unitn.lpsmt.auto.ui.fragment.view.ViewCostsFragment;
 import lpsmt.science.unitn.it.auto.R;
 
 // TODO maybe implements method to save the app instance when is put onPause
@@ -133,21 +134,33 @@ public class MainActivity extends ActionBarActivity{
         mDrawerLayout.closeDrawer(mDrawerRelativeLayout);
 
         FragmentManager m = getFragmentManager();
-        Fragment f = null;
+        Fragment f;
         switch (position){
             case 0:{
                 f = m.findFragmentById(R.id.frag_main);
                 if( f == null ){
                     f = new MainFragment();
                 }
+                m.beginTransaction()
+                    .replace(R.id.content, f)
+                    .addToBackStack(MainFragment.TAG)
+                    .commit();
+                break;
+            }
+
+            case 4:{
+                f = m.findFragmentById(R.id.frag_view_costs);
+                if( f == null ){
+                    f = new ViewCostsFragment();
+                    // put the bundle
+                }
+                m.beginTransaction()
+                    .replace(R.id.content, f)
+                    .addToBackStack(ViewCostsFragment.TAG)
+                    .commit();
                 break;
             }
         }
-
-        m.beginTransaction()
-            .replace(R.id.content, f)
-            .addToBackStack(MainFragment.TAG)
-            .commit();
     }
 
 //==================================================================================================

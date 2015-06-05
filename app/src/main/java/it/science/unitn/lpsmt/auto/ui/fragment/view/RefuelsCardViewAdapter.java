@@ -1,4 +1,4 @@
-package it.science.unitn.lpsmt.auto.ui.fragment.main;
+package it.science.unitn.lpsmt.auto.ui.fragment.view;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -11,41 +11,33 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-import it.science.unitn.lpsmt.auto.controller.CostDAO;
-import it.science.unitn.lpsmt.auto.controller.dao.DAOCost;
 import it.science.unitn.lpsmt.auto.model.Refuel;
 import lpsmt.science.unitn.it.auto.R;
 
 /**
  * this is the card adapter for the Recycle view of MainFragment
  */
-public class LastRefuelsCardViewAdapter extends RecyclerView.Adapter<LastRefuelsCardViewAdapter.ViewHolder> {
+public class RefuelsCardViewAdapter extends RecyclerView.Adapter<RefuelsCardViewAdapter.ViewHolder> {
     private Context context;
 
     private ArrayList<Refuel> refuels = new ArrayList<>();
 
-    public LastRefuelsCardViewAdapter( Context c ){
+    /**
+     * TODO add doc
+     * @param c
+     */
+    public RefuelsCardViewAdapter(Context c){
         this.context = c;
-        this.populateRefuel();
     }
 
-    private void populateRefuel(){
-        CostDAO dao = new DAOCost();
+    /**
+     * TODO add doc
+     * @param refuels
+     */
+    public void setData( List<Refuel> refuels ){
         this.refuels.clear();
-        List<Refuel> list = dao.getAllRefuel();
-        if(list.size() != 0){
-            if( list.size() == 1 )
-                this.refuels.add(list.get(0));
-            else if( list.size() == 2 )
-                this.refuels.addAll(list.subList(0,2));
-            else if( list.size() > 2 )
-                this.refuels.addAll(list.subList(0,3));
-        }
-        dao.close();
-    }
-
-    public void notifyRefuelChanges(){
-        populateRefuel();
+        if(refuels != null)
+            this.refuels.addAll(refuels);
         notifyDataSetChanged();
     }
 

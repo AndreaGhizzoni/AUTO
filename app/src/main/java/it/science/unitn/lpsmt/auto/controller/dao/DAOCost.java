@@ -187,6 +187,30 @@ public class DAOCost implements CostDAO {
     }
 
     @Override
+    public List<Refuel> getAllRefuelWhereVehicleIs(Vehicle v) {
+        ArrayList<Refuel> list = new ArrayList<>();
+        Cursor c = db.query(
+            Cost.SQLData.TABLE_NAME,
+            Cost.SQLData.ALL_COLUMNS,
+            Cost.SQLData.CLASS+" = ? and "+Cost.SQLData.VEHICLE_ID+" = ?",
+            new String[]{Refuel.class.getSimpleName().toLowerCase(), v.getId()+""},
+            null, null,
+            Cost.SQLData.DATE
+        );
+        if( c.getCount() != 0 ){ //means that there are rows
+            c.moveToFirst();
+            Refuel tmp;
+            while( !c.isAfterLast() ){
+                tmp = (Refuel) Converter.cursorToCost(c, false);
+                list.add(tmp);
+                c.moveToNext();
+            }
+            c.close();
+        }
+        return list;
+    }
+
+    @Override
     public List<Maintenance> getAllMaintenance() {
         ArrayList<Maintenance> list = new ArrayList<>();
         Cursor c = db.query(

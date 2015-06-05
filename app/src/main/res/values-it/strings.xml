@@ -27,4 +27,6 @@
     <string name="frag_main_last_refuel">ULTIMI RIFORNIMENTI</string>
     <string name="frag_main_deadlines">SCADENZE</string>
     <string name="frag_main_no_deadlines">Nessuna Scadenza</string>
+
+    <string name="frag_view_costs_no_cost_associated">Nessun costo associato a questo Veicolo</string>
 </resources>

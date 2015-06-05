@@ -74,6 +74,13 @@ public interface CostDAO {
 
     /**
      * TODO add doc
+     * @param v
+     * @return
+     */
+    List<Refuel> getAllRefuelWhereVehicleIs(Vehicle v);
+
+    /**
+     * TODO add doc
      * @return
      */
     List<Maintenance> getAllMaintenance();
