@@ -40,6 +40,11 @@ public class DeadLineCardViewAdapter extends RecyclerView.Adapter<DeadLineCardVi
         notifyDataSetChanged();
     }
 
+    public boolean isAdapterEmpty(){ return this.deadlines.isEmpty(); }
+
+//==================================================================================================
+//  OVERRIDE
+//==================================================================================================
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         int rowLayout = R.layout.adapter_frag_main_deadlines;

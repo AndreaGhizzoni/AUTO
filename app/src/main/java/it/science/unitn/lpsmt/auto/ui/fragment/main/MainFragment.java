@@ -34,8 +34,12 @@ import lpsmt.science.unitn.it.auto.R;
 public class MainFragment extends Fragment {
     public static final String TAG = MainFragment.class.getSimpleName();
     private FloatingActionsMenu fab;
+    private RecyclerView vehicleInserted;
     private VehicleInsertedCardViewAdapter vehicleInsertedAdapter;
+
 //    private LastRefuelsCardViewAdapter lastRefuelAdapter;
+
+    private RecyclerView deadlines;
     private DeadLineCardViewAdapter deadLineCardViewAdapter;
 
     public MainFragment(){}
@@ -61,11 +65,18 @@ public class MainFragment extends Fragment {
     }
 
     private void initRecycleView( View v ){
-        RecyclerView vehicleInserted = (RecyclerView) v.findViewById(R.id.frag_main_vehicle_inserted_view);
+        vehicleInserted = (RecyclerView) v.findViewById(R.id.frag_main_vehicle_inserted_view);
         vehicleInserted.setLayoutManager(new LinearLayoutManager(v.getContext()));
         vehicleInserted.setItemAnimator(new DefaultItemAnimator());
         this.vehicleInsertedAdapter = new VehicleInsertedCardViewAdapter(v.getContext());
         vehicleInserted.setAdapter(this.vehicleInsertedAdapter);
+        if( this.vehicleInsertedAdapter.isAdapaterEmtpy() ){
+            vehicleInserted.setVisibility(View.INVISIBLE);
+            v.findViewById(R.id.frag_main_no_vehicle_inserted).setVisibility(View.VISIBLE);
+        }else {
+            vehicleInserted.setVisibility(View.VISIBLE);
+            v.findViewById(R.id.frag_main_no_vehicle_inserted).setVisibility(View.INVISIBLE);
+        }
 
 //        RecyclerView lastRefuel = (RecyclerView) v.findViewById(R.id.frag_main_last_refuel);
 //        lastRefuel.setLayoutManager(new LinearLayoutManager(v.getContext()));
@@ -73,11 +84,18 @@ public class MainFragment extends Fragment {
 //        this.lastRefuelAdapter = new LastRefuelsCardViewAdapter(v.getContext());
 //        lastRefuel.setAdapter(this.lastRefuelAdapter);
 
-        RecyclerView deadlines = (RecyclerView) v.findViewById(R.id.frag_main_deadlines);
+        deadlines = (RecyclerView) v.findViewById(R.id.frag_main_deadlines);
         deadlines.setLayoutManager(new LinearLayoutManager(v.getContext()));
         deadlines.setItemAnimator(new DefaultItemAnimator());
         this.deadLineCardViewAdapter = new DeadLineCardViewAdapter(v.getContext());
         deadlines.setAdapter(this.deadLineCardViewAdapter);
+        if( this.deadLineCardViewAdapter.isAdapterEmpty() ){
+            deadlines.setVisibility(View.INVISIBLE);
+            v.findViewById(R.id.frag_main_no_deadlines).setVisibility(View.VISIBLE);
+        }else{
+            deadlines.setVisibility(View.VISIBLE);
+            v.findViewById(R.id.frag_main_no_deadlines).setVisibility(View.INVISIBLE);
+        }
     }
 
 //==================================================================================================
@@ -118,6 +136,13 @@ public class MainFragment extends Fragment {
                         Toast.makeText(view.getContext(), "Maintenance saved.",
                                 Toast.LENGTH_LONG ).show();
                         deadLineCardViewAdapter.notifyDeadLinesChanges();
+                        if( deadLineCardViewAdapter.isAdapterEmpty() ){
+                            deadlines.setVisibility(View.INVISIBLE);
+                            getActivity().findViewById(R.id.frag_main_no_deadlines).setVisibility(View.VISIBLE);
+                        }else{
+                            deadlines.setVisibility(View.VISIBLE);
+                            getActivity().findViewById(R.id.frag_main_no_deadlines).setVisibility(View.INVISIBLE);
+                        }
                     }else{
                         Toast.makeText(view.getContext(), "No Vehicle to save the refuel.",
                                 Toast.LENGTH_LONG ).show();
@@ -130,6 +155,13 @@ public class MainFragment extends Fragment {
                     dao.save(v);
                     Toast.makeText(view.getContext(), "Vehicle saved.", Toast.LENGTH_LONG ).show();
                     vehicleInsertedAdapter.notifyVehiclesChanges();
+                    if( vehicleInsertedAdapter.isAdapaterEmtpy() ){
+                        vehicleInserted.setVisibility(View.INVISIBLE);
+                        getActivity().findViewById(R.id.frag_main_no_vehicle_inserted).setVisibility(View.VISIBLE);
+                    }else {
+                        vehicleInserted.setVisibility(View.VISIBLE);
+                        getActivity().findViewById(R.id.frag_main_no_vehicle_inserted).setVisibility(View.INVISIBLE);
+                    }
                     break;
                 }
             }

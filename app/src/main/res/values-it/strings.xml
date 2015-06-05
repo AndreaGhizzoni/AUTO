@@ -23,6 +23,8 @@
     <string name="content_descriptor_adapter_deadline_icon">Icona delle ultime Scadenze</string>
 
     <string name="frag_main_vehicle_inserted">VEICOLI INSERITI</string>
+    <string name="frag_main_no_vehicle_inserted">Nessun Veicolo Inserito</string>
     <string name="frag_main_last_refuel">ULTIMI RIFORNIMENTI</string>
     <string name="frag_main_deadlines">SCADENZE</string>
+    <string name="frag_main_no_deadlines">Nessuna Scadenza</string>
 </resources>
