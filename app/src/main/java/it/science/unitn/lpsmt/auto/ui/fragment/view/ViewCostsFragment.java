@@ -29,11 +29,7 @@ public class ViewCostsFragment extends Fragment {
 
     private List<Vehicle> vehicleList;
     private Vehicle vehicleToDisplay;
-
-    private RecyclerView recyclerView;
     private RefuelsCardViewAdapter recyclerViewAdapter;
-    private Spinner spinner;
-    private ArrayAdapter<CharSequence> spinnerAdapter;
 
     /**
      * TODO add doc
@@ -45,10 +41,10 @@ public class ViewCostsFragment extends Fragment {
     }
 
     // init the spinner components
-    private void initSpinner( View v, int vehicleStored ){
-        spinnerAdapter = new ArrayAdapter<>(v.getContext(), android.R.layout.simple_spinner_item);
+    private void initSpinner( View v ){
+        ArrayAdapter<CharSequence> spinnerAdapter = new ArrayAdapter<>(v.getContext(), android.R.layout.simple_spinner_item);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        if( vehicleStored != 0 ) {
+        if( new DAOVehicle().countObject() != 0 ) {
             spinnerAdapter.add("");
             // populate the spinner
             vehicleList = new DAOVehicle().getAll();
@@ -59,7 +55,7 @@ public class ViewCostsFragment extends Fragment {
             spinnerAdapter.add("No Vehicle");
         }
 
-        spinner = (Spinner) v.findViewById(R.id.frag_view_costs_spinner_vehicles);
+        Spinner spinner = (Spinner) v.findViewById(R.id.frag_view_costs_spinner_vehicles);
         spinner.setOnItemSelectedListener(new SpinnerSelectionListener());
         spinner.setAdapter(spinnerAdapter);
 
@@ -72,7 +68,7 @@ public class ViewCostsFragment extends Fragment {
     }
 
     private  void initRecycleView( View v ){
-        recyclerView = (RecyclerView) v.findViewById(R.id.frag_view_costs_recycle_view);
+        RecyclerView recyclerView = (RecyclerView) v.findViewById(R.id.frag_view_costs_recycle_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(v.getContext()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerViewAdapter = new RefuelsCardViewAdapter(v.getContext());
@@ -85,15 +81,7 @@ public class ViewCostsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.frag_view_costs, container, false);
-        int vehicleStored = new DAOVehicle().countObject();
-        if( vehicleStored != 0 ){
-            v.findViewById(R.id.frag_view_costs_no_cost).setVisibility(View.INVISIBLE);
-            v.findViewById(R.id.frag_view_costs_recycle_view).setVisibility(View.VISIBLE);
-        }else{
-            v.findViewById(R.id.frag_view_costs_no_cost).setVisibility(View.VISIBLE);
-            v.findViewById(R.id.frag_view_costs_recycle_view).setVisibility(View.INVISIBLE);
-        }
-        this.initSpinner( v, vehicleStored );
+        this.initSpinner( v );
         this.initRecycleView( v );
         return v;
     }
@@ -109,7 +97,14 @@ public class ViewCostsFragment extends Fragment {
             }else{
                 Vehicle i = vehicleList.get(pos-1);
                 List<Refuel> r = new DAOCost().getAllRefuelWhereVehicleIs(i);
-                recyclerViewAdapter.setData(r);
+                if( r.isEmpty() ){
+                    getActivity().findViewById(R.id.frag_view_costs_no_cost).setVisibility(View.VISIBLE);
+                    getActivity().findViewById(R.id.frag_view_costs_recycle_view).setVisibility(View.INVISIBLE);
+                }else{
+                    getActivity().findViewById(R.id.frag_view_costs_no_cost).setVisibility(View.INVISIBLE);
+                    getActivity().findViewById(R.id.frag_view_costs_recycle_view).setVisibility(View.VISIBLE);
+                    recyclerViewAdapter.setData(r);
+                }
             }
         }
 
