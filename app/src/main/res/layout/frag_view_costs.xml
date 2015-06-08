@@ -22,16 +22,25 @@
             android:layout_height="match_parent"/>
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/frag_view_costs_no_cost"
-        android:layout_width="match_parent"
-        android:layout_height="15dp"
-        android:text="@string/frag_view_costs_no_cost_associated"
-        android:visibility="invisible"/>
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/frag_view_costs_recycle_view"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="10dp"/>
+        android:layout_marginEnd="12dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/frag_view_costs_no_cost"
+            android:layout_width="match_parent"
+            android:layout_height="15dp"
+            android:text="@string/frag_view_costs_no_cost_associated"
+            android:visibility="invisible"/>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/frag_view_costs_recycle_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
 
 </LinearLayout>
