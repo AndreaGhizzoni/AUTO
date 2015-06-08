@@ -9,7 +9,8 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="@dimen/frag_view_costs_spinner_height"
-        android:layout_margin="@dimen/frag_view_costs_spinner_margin">
+        android:layout_marginBottom="@dimen/frag_view_costs_spinner_margin"
+        android:background="@color/primary">
         <ImageView
             android:layout_width="@dimen/frag_view_costs_spinner_icon_width"
             android:layout_height="@dimen/frag_view_costs_spinner_icon_height"
