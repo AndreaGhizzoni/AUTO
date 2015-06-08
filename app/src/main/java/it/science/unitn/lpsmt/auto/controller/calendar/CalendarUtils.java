@@ -19,6 +19,8 @@ import static android.provider.CalendarContract.Events.DTEND;
 import static android.provider.CalendarContract.Events.DTSTART;
 import static android.provider.CalendarContract.Events.EVENT_LOCATION;
 import static android.provider.CalendarContract.Events.RDATE;
+import static android.provider.CalendarContract.Events.ALL_DAY;
+import static android.provider.CalendarContract.Events.RRULE;
 
 /**
  * TODO add doc
@@ -46,13 +48,13 @@ public class CalendarUtils {
      */
     public Intent newEvent( String title ){
         Intent i = new Intent(Intent.ACTION_INSERT);
-        i.putExtra("title", title);
+        i.putExtra(TITLE, title);
         i.setType("vnd.android.cursor.item/event");
         Calendar c = Calendar.getInstance();
-        i.putExtra("beginTime", c.getTimeInMillis());
-        i.putExtra("endTime", c.getTimeInMillis()+DateUtils.DAY_IN_MILLIS);
-        i.putExtra("allDay", false);
-        i.putExtra("rrule", "FREQ=DAILY");
+        i.putExtra(DTSTART, c.getTimeInMillis());
+        i.putExtra(DTEND, c.getTimeInMillis()+DateUtils.DAY_IN_MILLIS);
+        i.putExtra(ALL_DAY, false);
+        i.putExtra(RRULE, "FREQ=DAILY");
         //check out event location
         //add description
         return i;
