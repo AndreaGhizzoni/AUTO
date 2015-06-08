@@ -45,7 +45,7 @@ public class VehicleInsertedCardViewAdapter extends RecyclerView.Adapter<Vehicle
         notifyDataSetChanged();
     }
 
-    public boolean isAdapaterEmtpy(){ return this.vehicles.isEmpty(); }
+    public boolean isAdapterEmpty(){ return this.vehicles.isEmpty(); }
 
 //==================================================================================================
 //  OVERRIDE

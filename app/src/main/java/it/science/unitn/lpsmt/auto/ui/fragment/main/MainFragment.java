@@ -63,7 +63,7 @@ public class MainFragment extends Fragment {
         vehicleInserted.setItemAnimator(new DefaultItemAnimator());
         this.vehicleInsertedAdapter = new VehicleInsertedCardViewAdapter(v.getContext());
         vehicleInserted.setAdapter(this.vehicleInsertedAdapter);
-        if( this.vehicleInsertedAdapter.isAdapaterEmtpy() ){
+        if( this.vehicleInsertedAdapter.isAdapterEmpty() ){
             vehicleInserted.setVisibility(View.INVISIBLE);
             v.findViewById(R.id.frag_main_no_vehicle_inserted).setVisibility(View.VISIBLE);
         }else {
@@ -153,7 +153,7 @@ public class MainFragment extends Fragment {
                     dao.save(v);
                     Toast.makeText(view.getContext(), "Vehicle saved.", Toast.LENGTH_LONG ).show();
                     vehicleInsertedAdapter.notifyVehiclesChanges();
-                    if( vehicleInsertedAdapter.isAdapaterEmtpy() ){
+                    if( vehicleInsertedAdapter.isAdapterEmpty() ){
                         vehicleInserted.setVisibility(View.INVISIBLE);
                         getActivity().findViewById(R.id.frag_main_no_vehicle_inserted).setVisibility(View.VISIBLE);
                     }else {
