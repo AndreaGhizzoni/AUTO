@@ -2,6 +2,7 @@ package it.science.unitn.lpsmt.auto.ui;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -156,7 +157,9 @@ public class MainActivity extends ActionBarActivity{
 
         if (args != null)
             f.setArguments(args);
-        m.beginTransaction().replace(R.id.content, f).addToBackStack(TAG).commit();
+        FragmentTransaction transaction = m.beginTransaction();
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        transaction.replace(R.id.content, f).addToBackStack(TAG).commit();
     }
 
 //==================================================================================================
