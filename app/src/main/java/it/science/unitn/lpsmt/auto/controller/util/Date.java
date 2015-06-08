@@ -10,16 +10,17 @@ import java.util.Locale;
  * TODO add doc
  */
 public final class Date {
+    private static SimpleDateFormat dateFormat = new SimpleDateFormat(
+        "yyyy-MM-dd HH:mm:ss",
+        Locale.getDefault()
+    );
+
     /**
      * TODO add doc
      * @param d
      * @return
      */
     public static String getStringFromDate( java.util.Date d ){
-        SimpleDateFormat dateFormat = new SimpleDateFormat(
-                "yyyy-MM-dd HH:mm:ss",
-                Locale.getDefault()
-        );
         return dateFormat.format(d);
     }
 
@@ -29,10 +30,6 @@ public final class Date {
      * @return
      */
     public static java.util.Date getDateFromString( String s ){
-        SimpleDateFormat dateFormat = new SimpleDateFormat(
-                "yyyy-MM-dd HH:mm:ss",
-                Locale.getDefault()
-        );
         try {
             return dateFormat.parse(s);
         } catch (ParseException e) {
