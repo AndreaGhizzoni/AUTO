@@ -37,20 +37,13 @@ public class MainFragment extends Fragment {
     private RecyclerView vehicleInserted;
     private VehicleInsertedCardViewAdapter vehicleInsertedAdapter;
 
-//    private LastRefuelsCardViewAdapter lastRefuelAdapter;
-
     private RecyclerView deadlines;
     private DeadLineCardViewAdapter deadLineCardViewAdapter;
 
+    /**
+     * TODO add doc
+     */
     public MainFragment(){}
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.frag_main, container, false);
-        this.initFAB(v);
-        this.initRecycleView(v);
-        return v;
-    }
 
     private void initFAB(View v){
         // get the instanced one for onClick method: avoiding null references
@@ -78,12 +71,6 @@ public class MainFragment extends Fragment {
             v.findViewById(R.id.frag_main_no_vehicle_inserted).setVisibility(View.INVISIBLE);
         }
 
-//        RecyclerView lastRefuel = (RecyclerView) v.findViewById(R.id.frag_main_last_refuel);
-//        lastRefuel.setLayoutManager(new LinearLayoutManager(v.getContext()));
-//        lastRefuel.setItemAnimator(new DefaultItemAnimator());
-//        this.lastRefuelAdapter = new LastRefuelsCardViewAdapter(v.getContext());
-//        lastRefuel.setAdapter(this.lastRefuelAdapter);
-
         deadlines = (RecyclerView) v.findViewById(R.id.frag_main_deadlines);
         deadlines.setLayoutManager(new LinearLayoutManager(v.getContext()));
         deadlines.setItemAnimator(new DefaultItemAnimator());
@@ -99,7 +86,18 @@ public class MainFragment extends Fragment {
     }
 
 //==================================================================================================
-//  GETTER
+//  OVERRIDE
+//==================================================================================================
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.frag_main, container, false);
+        this.initFAB(v);
+        this.initRecycleView(v);
+        return v;
+    }
+
+//==================================================================================================
+//  INNER CLASS
 //==================================================================================================
     private final class FABActionListener implements View.OnClickListener{
         @Override
