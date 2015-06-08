@@ -17,6 +17,7 @@
 
     <string name="content_descriptor_drawer_open">Apri il menu di navigazione</string>
     <string name="content_descriptor_drawer_close">Chiudi il menu di navigazione</string>
+    <string name="content_descriptor_drawer_image">Immagine del menu di navigazione</string>
     <string name="content_descriptor_drawer_item_icon">Icona del menu di navigazione</string>
     <string name="content_descriptor_adapter_vehicle_inserted_icon">Icona del Veicolo</string>
     <string name="content_descriptor_adapter_last_refuels_icon">Icona degli ultimi Rifornimenti</string>
