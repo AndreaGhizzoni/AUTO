@@ -23,4 +23,5 @@
     <string name="frag_main_no_deadlines">No Deadlines</string>
 
     <string name="frag_view_costs_no_cost_associated">No costs associated to this Vehicle</string>
+    <string name="frag_view_costs_no_vehicle_selected">Select a Vehicle</string>
 </resources>

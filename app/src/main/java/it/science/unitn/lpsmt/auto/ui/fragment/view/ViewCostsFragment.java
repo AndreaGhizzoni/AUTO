@@ -42,7 +42,7 @@ public class ViewCostsFragment extends Fragment {
         );
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         if( new DAOVehicle().countObject() != 0 ) {
-            spinnerAdapter.add("");
+            spinnerAdapter.add(getResources().getString(R.string.frag_view_costs_no_vehicle_selected));
             // populate the spinner
             vehicleList = new DAOVehicle().getAll();
             for( Vehicle i : vehicleList ){

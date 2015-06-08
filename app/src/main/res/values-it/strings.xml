@@ -30,4 +30,5 @@
     <string name="frag_main_no_deadlines">Nessuna Scadenza</string>
 
     <string name="frag_view_costs_no_cost_associated">Nessun costo associato a questo Veicolo</string>
+    <string name="frag_view_costs_no_vehicle_selected">Seleziona un Veicolo</string>
 </resources>

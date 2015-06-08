@@ -20,7 +20,7 @@
             android:id="@+id/drawer_header_image"
             android:layout_width="260dp"
             android:layout_height="100dp"
-            android:contentDescription="@string/drawer_image_content_description"
+            android:contentDescription="@string/content_descriptor_drawer_image"
             android:background="@drawable/drawer_header_placeholder"
         />
 
