@@ -28,17 +28,11 @@ public class ViewCostsFragment extends Fragment {
     public static final String ARG_VEHICLE_TO_DISPLAY = "vehicle";
 
     private List<Vehicle> vehicleList;
-    private Vehicle vehicleToDisplay;
+    private Long idVehicleToDisplay = null;
     private RefuelsCardViewAdapter recyclerViewAdapter;
+    private Spinner spinner;
 
-    /**
-     * TODO add doc
-     */
-    public ViewCostsFragment(){
-        Bundle args = getArguments();
-        if( args != null && args.containsKey(ARG_VEHICLE_TO_DISPLAY))
-            vehicleToDisplay = (Vehicle) args.get(ARG_VEHICLE_TO_DISPLAY);
-    }
+    public ViewCostsFragment(){}
 
     // init the spinner components
     private void initSpinner( View v ){
@@ -58,16 +52,9 @@ public class ViewCostsFragment extends Fragment {
             spinnerAdapter.add("No Vehicle");
         }
 
-        Spinner spinner = (Spinner) v.findViewById(R.id.frag_view_costs_spinner_vehicles);
+        spinner = (Spinner) v.findViewById(R.id.frag_view_costs_spinner_vehicles);
         spinner.setOnItemSelectedListener(new SpinnerSelectionListener());
         spinner.setAdapter(spinnerAdapter);
-
-        // display the correct costs associated with the vehicle passed to this fragment
-        if( vehicleToDisplay != null ){
-            int pos = spinnerAdapter.getPosition(vehicleToDisplay.getName());
-            spinner.setSelection(pos);
-            // load the cost associated at vehicle "vehicleToDisplay
-        }
     }
 
     private  void initRecycleView( View v ){
@@ -83,10 +70,34 @@ public class ViewCostsFragment extends Fragment {
 //==================================================================================================
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Bundle args = getArguments();
+        if( args != null && args.containsKey(ARG_VEHICLE_TO_DISPLAY)) {
+            idVehicleToDisplay = (Long) args.get(ARG_VEHICLE_TO_DISPLAY);
+        }
+
         View v = inflater.inflate(R.layout.frag_view_costs, container, false);
         this.initSpinner( v );
-        this.initRecycleView( v );
+        this.initRecycleView(v);
         return v;
+    }
+
+    @Override
+    public void onStart(){
+        super.onStart();
+        // display the correct costs associated with the vehicle passed to this fragment
+        if( idVehicleToDisplay != null ){
+            Vehicle tmp = null;
+            for( Vehicle i : vehicleList ){
+                if( i.getId().equals(idVehicleToDisplay) ) {
+                    tmp = i;
+                    break;
+                }
+            }
+            int pos = vehicleList.indexOf(tmp)+1;
+            spinner.setSelection(pos);
+            // load the cost associated at vehicle "vehicleToDisplay
+            spinner.getOnItemSelectedListener().onItemSelected(null, null, pos, -1);
+        }
     }
 
 //==================================================================================================

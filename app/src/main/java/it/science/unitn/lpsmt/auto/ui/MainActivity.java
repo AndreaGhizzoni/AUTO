@@ -154,7 +154,7 @@ public class MainActivity extends ActionBarActivity{
             }
         }
 
-        if( args != null )
+        if (args != null)
             f.setArguments(args);
         m.beginTransaction().replace(R.id.content, f).addToBackStack(TAG).commit();
     }
@@ -166,7 +166,7 @@ public class MainActivity extends ActionBarActivity{
      * Trick to get the application context.
      * @return MainActivity the App main activity.
      */
-    public static MainActivity getApp(){ return instance; }
+    public static MainActivity getApp(){ return instance;}
 
 //==================================================================================================
 //  INNER CLASS

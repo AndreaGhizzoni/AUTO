@@ -1,6 +1,7 @@
 package it.science.unitn.lpsmt.auto.ui.fragment.main;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,8 @@ import java.util.Locale;
 import it.science.unitn.lpsmt.auto.controller.VehicleDAO;
 import it.science.unitn.lpsmt.auto.controller.dao.DAOVehicle;
 import it.science.unitn.lpsmt.auto.model.Vehicle;
+import it.science.unitn.lpsmt.auto.ui.MainActivity;
+import it.science.unitn.lpsmt.auto.ui.fragment.view.ViewCostsFragment;
 import lpsmt.science.unitn.it.auto.R;
 
 /**
@@ -93,8 +96,9 @@ public class VehicleInsertedCardViewAdapter extends RecyclerView.Adapter<Vehicle
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(view.getContext(), "Vehicle id: "+associatedVehicle.getId(),
-                            Toast.LENGTH_LONG).show();
+                    Bundle args = new Bundle();
+                    args.putLong(ViewCostsFragment.ARG_VEHICLE_TO_DISPLAY, associatedVehicle.getId());
+                    MainActivity.getApp().selectFragment(4, args);
                 }
             });
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
