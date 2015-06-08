@@ -15,7 +15,7 @@ public final class Preferences {
     private SharedPreferences sharedPreferences;
 
     private Preferences(){
-        sharedPreferences = MainActivity.getAppContext().getSharedPreferences(
+        sharedPreferences = MainActivity.getApp().getApplicationContext().getSharedPreferences(
             SHARED_PREFS_NAME,
             Context.MODE_PRIVATE
         );

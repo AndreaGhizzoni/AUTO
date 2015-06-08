@@ -48,7 +48,7 @@ public class MainActivity extends ActionBarActivity{
         this.initDrawer();
 
         if(savedInstanceState == null)
-            selectFragment(0);
+            selectFragment(0, savedInstanceState );
     }
 
     private void initDrawer(){
@@ -130,49 +130,43 @@ public class MainActivity extends ActionBarActivity{
 //==================================================================================================
 //  METHOD
 //==================================================================================================
-    private void selectFragment( int position ){
+    public void selectFragment( int position, Bundle args ){
         mDrawerLayout.closeDrawer(mDrawerRelativeLayout);
 
         FragmentManager m = getFragmentManager();
-        Fragment f;
+        Fragment f = null;
+        String TAG = null;
         switch (position){
-            case 0:{
+            case 0:{ // home frag main
                 f = m.findFragmentById(R.id.frag_main);
-                if( f == null ){
+                if( f == null )
                     f = new MainFragment();
-                }
-                m.beginTransaction()
-                    .replace(R.id.content, f)
-                    .addToBackStack(MainFragment.TAG)
-                    .commit();
+                TAG = MainActivity.TAG;
                 break;
             }
 
-            case 4:{
+            case 4:{ // frag view costs
                 f = m.findFragmentById(R.id.frag_view_costs);
-                if( f == null ){
+                if( f == null )
                     f = new ViewCostsFragment();
-                    // put the bundle
-                }
-                m.beginTransaction()
-                    .replace(R.id.content, f)
-                    .addToBackStack(ViewCostsFragment.TAG)
-                    .commit();
+                TAG = ViewCostsFragment.TAG;
                 break;
             }
         }
+
+        if( args != null )
+            f.setArguments(args);
+        m.beginTransaction().replace(R.id.content, f).addToBackStack(TAG).commit();
     }
 
 //==================================================================================================
 //  GETTER
 //==================================================================================================
     /**
-     * Trick to get the application context for class PersistenceDAO.
-     * @return Context the App context.
+     * Trick to get the application context.
+     * @return MainActivity the App main activity.
      */
-    public static Context getAppContext(){
-        return instance.getApplicationContext();
-    }
+    public static MainActivity getApp(){ return instance; }
 
 //==================================================================================================
 //  INNER CLASS
@@ -181,7 +175,7 @@ public class MainActivity extends ActionBarActivity{
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            selectFragment(position);
+            selectFragment(position, null);
         }
     }
 
