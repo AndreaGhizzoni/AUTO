@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.provider.CalendarContract;
 import android.text.format.DateUtils;
 
 import java.util.Calendar;
@@ -12,15 +13,15 @@ import java.util.Date;
 
 import it.science.unitn.lpsmt.auto.ui.MainActivity;
 
+import static android.provider.CalendarContract.Events.ALL_DAY;
 import static android.provider.CalendarContract.Events.CALENDAR_ID;
-import static android.provider.CalendarContract.Events.TITLE;
+import static android.provider.CalendarContract.Events.CONTENT_URI;
 import static android.provider.CalendarContract.Events.DESCRIPTION;
 import static android.provider.CalendarContract.Events.DTEND;
 import static android.provider.CalendarContract.Events.DTSTART;
 import static android.provider.CalendarContract.Events.EVENT_LOCATION;
 import static android.provider.CalendarContract.Events.RDATE;
-import static android.provider.CalendarContract.Events.ALL_DAY;
-import static android.provider.CalendarContract.Events.RRULE;
+import static android.provider.CalendarContract.Events.TITLE;
 
 /**
  * TODO add doc
@@ -37,9 +38,7 @@ public class CalendarUtils {
         return instance;
     }
 
-    private CalendarUtils(){
-        this.context = MainActivity.getApp().getApplicationContext();
-    }
+    private CalendarUtils(){ this.context = MainActivity.getApp().getApplicationContext(); }
 
     /**
      * https://goo.gl/CyLlXx
@@ -47,14 +46,13 @@ public class CalendarUtils {
      * @return
      */
     public Intent newEvent( String title ){
-        Intent i = new Intent(Intent.ACTION_INSERT);
+        Intent i = new Intent(Intent.ACTION_INSERT, CONTENT_URI);
         i.putExtra(TITLE, title);
-        i.setType("vnd.android.cursor.item/event");
         Calendar c = Calendar.getInstance();
-        i.putExtra(DTSTART, c.getTimeInMillis());
-        i.putExtra(DTEND, c.getTimeInMillis()+DateUtils.DAY_IN_MILLIS);
+        i.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, c.getTimeInMillis());
+        i.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, c.getTimeInMillis()+DateUtils.DAY_IN_MILLIS);
         i.putExtra(ALL_DAY, false);
-        i.putExtra(RRULE, "FREQ=DAILY");
+//        i.putExtra(RRULE, "FREQ=DAILY");
         //check out event location
         //add description
         return i;

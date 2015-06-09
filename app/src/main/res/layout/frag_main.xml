@@ -44,24 +44,6 @@
             </android.support.v7.widget.RecyclerView>
         </RelativeLayout>
 
-        <!--<RelativeLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginTop="@dimen/frag_main_relative_layout_margin_top"-->
-            <!-->-->
-            <!--<TextView-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="@dimen/frag_main_title_recycle_view_height"-->
-                <!--android:textStyle="bold"-->
-                <!--android:text="@string/frag_main_last_refuel"/>-->
-            <!--<android.support.v7.widget.RecyclerView-->
-                <!--android:id="@+id/frag_main_last_refuel"-->
-                <!--android:layout_marginTop="@dimen/frag_main_recycle_view_margin_top"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="@dimen/frag_main_recycle_view_height">-->
-            <!--</android.support.v7.widget.RecyclerView>-->
-        <!--</RelativeLayout>-->
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -102,6 +84,15 @@
         fab:fab_addButtonColorNormal="@color/primary"
         fab:fab_addButtonColorPressed="@color/primary"
         fab:fab_addButtonPlusIconColor="@color/textColorWhite">
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btnTestCalendar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_icon="@drawable/ic_content_clear_48dp"
+            fab:fab_size="mini"
+            fab:fab_colorNormal="@color/white"
+            fab:fab_colorPressed="@color/half_black" />
 
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/btnAddRefuel"

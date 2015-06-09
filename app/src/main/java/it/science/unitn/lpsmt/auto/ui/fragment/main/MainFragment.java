@@ -1,11 +1,14 @@
 package it.science.unitn.lpsmt.auto.ui.fragment.main;
 
+import android.app.Activity;
 import android.app.Fragment;
+import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +22,7 @@ import java.util.List;
 
 import it.science.unitn.lpsmt.auto.controller.CostDAO;
 import it.science.unitn.lpsmt.auto.controller.VehicleDAO;
+import it.science.unitn.lpsmt.auto.controller.calendar.CalendarUtils;
 import it.science.unitn.lpsmt.auto.controller.dao.DAOCost;
 import it.science.unitn.lpsmt.auto.controller.dao.DAOVehicle;
 import it.science.unitn.lpsmt.auto.model.Maintenance;
@@ -48,10 +52,12 @@ public class MainFragment extends Fragment {
     private void initFAB(View v){
         // get the instanced one for onClick method: avoiding null references
         fab = (FloatingActionsMenu)v.findViewById(R.id.btnFab);
+        FloatingActionButton bntTestCalendar = (FloatingActionButton)v.findViewById(R.id.btnTestCalendar);
         FloatingActionButton bntAddRefuel = (FloatingActionButton)v.findViewById(R.id.btnAddRefuel);
         FloatingActionButton bntAddCost   = (FloatingActionButton)v.findViewById(R.id.btnAddCost);
         FloatingActionButton bntAddVehicle= (FloatingActionButton)v.findViewById(R.id.btnAddVehicle);
         FABActionListener fabal = new FABActionListener();
+        bntTestCalendar.setOnClickListener(fabal);
         bntAddRefuel.setOnClickListener(fabal);
         bntAddCost.setOnClickListener(fabal);
         bntAddVehicle.setOnClickListener(fabal);
@@ -96,6 +102,22 @@ public class MainFragment extends Fragment {
         return v;
     }
 
+    @Override
+    public void onActivityResult( int reqCode, int resultCode, Intent data ){
+        Log.d(TAG, resultCode == Activity.RESULT_OK ? "RES OK" : "NOT RES OK");
+        if( resultCode == Activity.RESULT_OK ){
+            Log.d(TAG, String.valueOf(reqCode));
+            if( reqCode ==  1000 ){ // start the calendar intent
+                try{
+                    Integer id = (Integer) data.getExtras().get("calendar_id");
+                    Log.d(TAG, id.toString());
+                }catch ( Throwable t ){
+                    Log.d(TAG, t.getMessage());
+                }
+            }
+        }
+    }
+
 //==================================================================================================
 //  INNER CLASS
 //==================================================================================================
@@ -103,6 +125,12 @@ public class MainFragment extends Fragment {
         @Override
         public void onClick(View view) {
             switch ( view.getId() ){
+                case R.id.btnTestCalendar:{
+                    Intent calendar = CalendarUtils.getInstance().newEvent("Test Event");
+                    startActivityForResult(calendar, 1000);
+                    break;
+                }
+
                 case R.id.btnAddRefuel:{
                     List<Vehicle> list = new DAOVehicle().getAll();
                     if( list.size() != 0 ) {
@@ -113,7 +141,6 @@ public class MainFragment extends Fragment {
                         DAOCost dao = new DAOCost();
                         dao.save(r);
                         Toast.makeText(view.getContext(), "Refuel saved.", Toast.LENGTH_LONG ).show();
-//                        lastRefuelAdapter.notifyRefuelChanges();
                     }else{
                         Toast.makeText(view.getContext(), "No Vehicle to save the refuel.",
                                 Toast.LENGTH_LONG ).show();
