@@ -11,7 +11,8 @@ public class MaintenanceTest extends TestCase {
 
     //TODO add description
     public void testMaintenanceCreation(){
-        Maintenance m = getMaintenanceInstance();
+        Vehicle v = getVehicleInstance();
+        Maintenance m = getMaintenanceInstance(v);
 
         try{
             m.setName(null);

@@ -99,14 +99,19 @@ public class VehicleTest extends TestCase {
             fail("I can remove a cost with index >> getCosts().size().");
         }catch (IllegalArgumentException ex){}
 
-        Vehicle.Default.get().addCost(getRefuelInstance());
-        int costs = Vehicle.Default.get().getCosts().size();
-        assertTrue("I can not add a cost to Vehicle.Default.", costs == 0);
+        try {
+            getRefuelInstance(Vehicle.Default.get());
+            fail("I can assign the default Vehicle on a Refuel.");
+        }catch (IllegalArgumentException ex){}
+
+        try {
+            getMaintenanceInstance(Vehicle.Default.get());
+            fail("I can assign the default Vehicle on a Maintenance.");
+        }catch (IllegalArgumentException ex){}
 
         // testing the adding procedure
-        Cost ref = getRefuelInstance();
         int costsBefore = tmp.getCosts().size();
-        tmp.addCost(ref);
+        Cost ref = getRefuelInstance(tmp);
         int costsAfter = tmp.getCosts().size();
         assertTrue("Costs list before and after the insertion must be different.", costsBefore != costsAfter);
         assertTrue("Costs list before and after the insertion must be different by one.", costsBefore+1 == costsAfter);

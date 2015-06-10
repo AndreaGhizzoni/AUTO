@@ -40,6 +40,7 @@ public abstract class Cost {
         if( vehicle.isDefaultVehicle() )
             throw new IllegalArgumentException("Vehicle associated can not be the Default Vehicle.");
         this.vehicle = vehicle;
+        this.vehicle.addCost(this);
     }
 
     public void setAmount(Float amount) throws IllegalArgumentException{

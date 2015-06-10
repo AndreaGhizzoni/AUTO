@@ -5,6 +5,7 @@ import junit.framework.TestCase;
 import it.science.unitn.lpsmt.auto.model.util.Const;
 
 import static it.science.unitn.lpsmt.auto.Generator.getRefuelInstance;
+import static it.science.unitn.lpsmt.auto.Generator.getVehicleInstance;
 
 /**
  * TODO add doc
@@ -13,7 +14,8 @@ public class RefuelTest extends TestCase{
 
     //TODO add description
     public void testRefuelCreation(){
-        Refuel r = getRefuelInstance();
+        Vehicle v = getVehicleInstance();
+        Refuel r = getRefuelInstance(v);
 
         try{
             r.setId(null);

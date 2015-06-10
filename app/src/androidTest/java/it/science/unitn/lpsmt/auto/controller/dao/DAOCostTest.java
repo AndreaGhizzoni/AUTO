@@ -6,10 +6,12 @@ import it.science.unitn.lpsmt.auto.controller.CostDAO;
 import it.science.unitn.lpsmt.auto.model.Cost;
 import it.science.unitn.lpsmt.auto.model.Maintenance;
 import it.science.unitn.lpsmt.auto.model.Refuel;
+import it.science.unitn.lpsmt.auto.model.Vehicle;
 import it.science.unitn.lpsmt.auto.model.util.Const;
 
 import static it.science.unitn.lpsmt.auto.Generator.getMaintenanceInstance;
 import static it.science.unitn.lpsmt.auto.Generator.getRefuelInstance;
+import static it.science.unitn.lpsmt.auto.Generator.getVehicleInstance;
 
 /**
  * TODO add doc
@@ -32,7 +34,8 @@ public class DAOCostTest extends AndroidTestCase {
     }
 
     public void testRefuelIODB(){
-        Refuel toStore = getRefuelInstance();
+        Vehicle v = getVehicleInstance();
+        Refuel toStore = getRefuelInstance(v);
 
         // testing the storing procedure
         Long idFromDB = this.daoCost.save(toStore);
@@ -62,7 +65,8 @@ public class DAOCostTest extends AndroidTestCase {
     }
 
     public void testMaintenanceIODB(){
-        Maintenance toStore = getMaintenanceInstance();
+        Vehicle v = getVehicleInstance();
+        Maintenance toStore = getMaintenanceInstance(v);
 
         // testing the storing procedure
         Long idFromDB = this.daoCost.save(toStore);

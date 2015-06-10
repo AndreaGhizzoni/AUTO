@@ -38,6 +38,8 @@ public class Vehicle {
             return;
         if( c == null )
             throw new IllegalArgumentException("Cost to add can not be null.");
+        if( !c.getVehicle().equals(this)  )
+            throw new IllegalArgumentException("Cost is already associated with another Vehicle.");
         this.costs.add(c);
     }
 

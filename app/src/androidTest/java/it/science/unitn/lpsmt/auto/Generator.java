@@ -64,10 +64,10 @@ public final class Generator {
         );
     }
 
-    public static Refuel getRefuelInstance(){
+    public static Refuel getRefuelInstance( Vehicle v ){
         return new Refuel(
             Const.NO_DB_ID_SET,
-            getVehicleInstance(),
+            v,
             (r.nextFloat()*10)+1,
             "notes",
             (r.nextFloat())+0.4f,
@@ -77,10 +77,10 @@ public final class Generator {
         );
     }
 
-    public static Maintenance getMaintenanceInstance(){
+    public static Maintenance getMaintenanceInstance( Vehicle v ){
         return new Maintenance(
             Const.NO_DB_ID_SET,
-            getVehicleInstance(),
+            v,
             (r.nextFloat()*100)+1,
             "notes",
             "name",
@@ -89,8 +89,4 @@ public final class Generator {
             (r.nextInt(10)+1)
         );
     }
-
-
-
-
 }
