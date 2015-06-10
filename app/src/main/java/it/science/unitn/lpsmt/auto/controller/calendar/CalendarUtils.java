@@ -15,6 +15,7 @@ import java.util.TimeZone;
 
 import it.science.unitn.lpsmt.auto.ui.MainActivity;
 
+import static android.provider.CalendarContract.Events._ID;
 import static android.provider.CalendarContract.Events.ALL_DAY;
 import static android.provider.CalendarContract.Events.CALENDAR_ID;
 import static android.provider.CalendarContract.Events.CONTENT_URI;
@@ -68,18 +69,18 @@ public class CalendarUtils {
 
     /**
      * TODO add doc
-     * @param calID
+     * @param eventID
      * @return
      */
-    public CalendarUtils.Holder getEventDataById( Integer calID ){
+    public CalendarUtils.Holder getEventDataById( Integer eventID ){
         // https://goo.gl/C0hXD1
         ContentResolver cr = this.context.getContentResolver();
         Cursor cursor = cr.query(
-                CONTENT_URI,
-                new String[]{CALENDAR_ID, TITLE, EVENT_LOCATION, DESCRIPTION, DTSTART, DTEND, RDATE},
-                CALENDAR_ID + " = ?",
-                new String[]{calID + ""},
-                null
+            CONTENT_URI,
+            new String[]{CALENDAR_ID, _ID, TITLE, EVENT_LOCATION, DESCRIPTION, DTSTART, DTEND, RDATE},
+            _ID+" = ?",
+            new String[]{eventID+""},
+            null
         );
 
         if( cursor.getCount() == 0 )
@@ -89,12 +90,13 @@ public class CalendarUtils {
         CalendarUtils.Holder h = new CalendarUtils.Holder();
         while( cursor.moveToNext() ){
             h.calendarID = cursor.getInt(0);
-            h.title = cursor.getString(1);
-            h.location = cursor.getString(2);
-            h.description = cursor.getString(3);
-            h.dStart = new Date(cursor.getLong(4));
-            h.dEnd = new Date(cursor.getLong(5));
-            h.rDate = new Date(cursor.getLong(6));
+            h.eventID = cursor.getLong(1);
+            h.title = cursor.getString(2);
+            h.location = cursor.getString(3);
+            h.description = cursor.getString(4);
+            h.dStart = new Date(cursor.getLong(5));
+            h.dEnd = new Date(cursor.getLong(6));
+            h.rDate = new Date(cursor.getLong(7));
         }
         cursor.close();
         return h;
@@ -108,7 +110,8 @@ public class CalendarUtils {
         // Set Event in calendar.
         Uri eventUri = cr.insert(CONTENT_URI, cv);
         // Getting ID of event in Long.
-        return Long.parseLong(eventUri.getLastPathSegment());
+        data.eventID = Long.parseLong(eventUri.getLastPathSegment());
+        return data.eventID;
     }
 
     public long putEventWithReminder( CalendarUtils.Holder data ){
@@ -120,7 +123,8 @@ public class CalendarUtils {
         rv.put(CalendarContract.Reminders.MINUTES, (60*24)*2); // 2 days
         rv.put(CalendarContract.Reminders.METHOD, CalendarContract.Reminders.METHOD_ALERT);
         //Setting reminder in calendar on Event.
-        cr.insert(CalendarContract.Reminders.CONTENT_URI, rv);
+        Uri reminderUri = cr.insert(CalendarContract.Reminders.CONTENT_URI, rv);
+        data.reminderID = Long.parseLong(reminderUri.getLastPathSegment());
         return eventID;
     }
 
@@ -132,6 +136,8 @@ public class CalendarUtils {
      */
     public static class Holder{
         public Integer calendarID;
+        public Long eventID;
+        public Long reminderID;
         public String title;
         public String location;
         public String description;
@@ -142,6 +148,12 @@ public class CalendarUtils {
 
         private ContentValues toContentValue(){
             ContentValues cv = new ContentValues();
+            if( calendarID != null )
+                cv.put(CALENDAR_ID, calendarID);
+            if( eventID != null )
+                cv.put(_ID, eventID);
+            if( reminderID != null )
+                cv.put(CalendarContract.Reminders._ID, reminderID);
             cv.put(TITLE, title);
             cv.put(EVENT_LOCATION, location);
             cv.put(DESCRIPTION, description);
