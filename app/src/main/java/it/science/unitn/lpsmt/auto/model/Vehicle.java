@@ -152,7 +152,7 @@ public class Vehicle {
      * TODO add doc
      */
     public static class Default{
-        public static Vehicle instance;
+        private static Vehicle instance;
         private static String DEF_PLATE = "XX123XX";
         private static String DEF_NAME  = "Default";
 
