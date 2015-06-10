@@ -21,6 +21,9 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import it.science.unitn.lpsmt.auto.controller.dao.DAOCost;
+import it.science.unitn.lpsmt.auto.controller.dao.DAOPlace;
+import it.science.unitn.lpsmt.auto.controller.dao.DAOVehicle;
 import it.science.unitn.lpsmt.auto.ui.fragment.main.MainFragment;
 import it.science.unitn.lpsmt.auto.ui.fragment.view.ViewCostsFragment;
 import lpsmt.science.unitn.it.auto.R;
@@ -81,6 +84,15 @@ public class MainActivity extends ActionBarActivity{
             }
         };
         mDrawerLayout.setDrawerListener(mDrawerToggle);
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        new DAOVehicle().close();
+        new DAOCost().close();
+        new DAOPlace().close();
+        this.finish();
     }
 
     @Override
