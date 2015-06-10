@@ -41,6 +41,37 @@ public class Vehicle {
         this.costs.add(c);
     }
 
+    public void removeCost( Long id ) throws IllegalArgumentException{
+        if( id == null )
+            throw new IllegalArgumentException("Id to remove cost can not be null.");
+        if( id <= Const.NO_DB_ID_SET )
+            throw new IllegalArgumentException("Id to remove cost can not be equal or " +
+                    "less than Const.NO_DB_ID_SET.");
+
+        for( Cost c : this.costs ){
+            if( c.getId().equals(id) ){
+                this.removeCost(c);
+                break;
+            }
+        }
+    }
+
+    public void removeCost( int index ) throws IllegalArgumentException{
+        if( index < 0 || index >= this.costs.size() )
+            throw new IllegalArgumentException("Index of cost to remove is out of bound.");
+        this.costs.remove(index);
+    }
+
+    public void removeCost( Cost c ) throws IllegalArgumentException{
+        if( c == null )
+            throw new IllegalArgumentException("Cost to remove can not be null.");
+        if( this.costs.indexOf(c) == -1 )
+            throw new IllegalArgumentException("Cost to remove not found in this Vehicle.");
+        this.costs.remove(c);
+    }
+
+    public void removeAll(){ this.costs.clear(); }
+
 //==================================================================================================
 // SETTER
 //==================================================================================================
@@ -80,7 +111,6 @@ public class Vehicle {
     public void setCosts( List<Cost> list ) throws IllegalArgumentException{
         if( list == null )
             throw new IllegalArgumentException("List of Cost to set can not be null.");
-
         this.costs.clear();
         this.costs.addAll(list);
     }
