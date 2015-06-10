@@ -65,6 +65,20 @@ public class VehicleTest extends TestCase {
             fail("I can set future date for purchase");
         }catch (IllegalArgumentException ex){}
 
-        //TODO test cost
+        try{
+            tmp.addCost(null);
+            fail("I can add a null cost to a Vehicle.");
+        }catch (IllegalArgumentException ex){}
+
+        Vehicle.Default.get().addCost(getRefuelInstance());
+        int costs = Vehicle.Default.get().getCosts().size();
+        assertTrue("I can not add a cost to Vehicle.Default.", costs == 0);
+
+        Cost ref = getRefuelInstance();
+        int costsBefore = tmp.getCosts().size();
+        tmp.addCost(ref);
+        int costsAfter = tmp.getCosts().size();
+        assertTrue("Costs list before and after the insertion must be different", costsBefore != costsAfter);
+        assertTrue("Costs list before and after the insertion must be different by one", costsBefore+1 == costsAfter);
     }
 }
