@@ -10,6 +10,8 @@
 
     <string name="title_activity_maintenance_insertion">New Cost</string>
 
+    <string name="activity_maintenance_insertion_select_type">Select a Type</string>
+
     <string name="content_descriptor_drawer_open">Open Drawer</string>
     <string name="content_descriptor_drawer_close">Close Drawer</string>
     <string name="content_descriptor_drawer_image">Drawer Image</string>

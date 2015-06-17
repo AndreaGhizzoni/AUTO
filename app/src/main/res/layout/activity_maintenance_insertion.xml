@@ -94,6 +94,9 @@
                 android:layout_height="match_parent"/>
         </LinearLayout>
 
+
+        <!-- if type == tax -->
+        <!--    show a checkbox to allow user to set a calendar event -->
         <!-- if type == ordinary -->
         <!--    show a checkbox to save a calendar with cadenza annuale/mensile-->
         <!-- if type == extraordinary -->

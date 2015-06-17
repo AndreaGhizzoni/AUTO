@@ -18,6 +18,8 @@
 
     <string name="title_activity_maintenance_insertion">Nuovo Costo</string>
 
+    <string name="activity_maintenance_insertion_select_type">Seleziona un Tipo</string>
+
     <string name="content_descriptor_drawer_open">Apri il menu di navigazione</string>
     <string name="content_descriptor_drawer_close">Chiudi il menu di navigazione</string>
     <string name="content_descriptor_drawer_image">Immagine del menu di navigazione</string>

@@ -64,7 +64,7 @@ public class MaintenanceInsertion extends ActionBarActivity {
             R.layout.frag_view_costs_spinner_item
         );
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerAdapter.add("-----");
+        spinnerAdapter.add(getResources().getString(R.string.activity_maintenance_insertion_select_type));
         spinnerAdapter.add(Maintenance.Type.EXTRAORDINARY.toString());
         spinnerAdapter.add(Maintenance.Type.ORDINARY.toString());
         spinnerAdapter.add(Maintenance.Type.TAX.toString());
