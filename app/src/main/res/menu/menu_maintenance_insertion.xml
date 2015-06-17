@@ -3,4 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="it.science.unitn.lpsmt.auto.ui.MaintenanceInsertion">
+
+    <!-- Done, should appear as action button -->
+    <item
+        android:id="@+id/done"
+        android:icon="@drawable/ic_action_done_48dp"
+        android:title="done"
+        app:showAsAction="ifRoom"/>
 </menu>

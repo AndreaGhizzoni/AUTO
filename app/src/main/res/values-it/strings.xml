@@ -15,6 +15,9 @@
         <item>Benzina</item>
     </string-array>
 
+
+    <string name="title_activity_maintenance_insertion">Nuovo Costo</string>
+
     <string name="content_descriptor_drawer_open">Apri il menu di navigazione</string>
     <string name="content_descriptor_drawer_close">Chiudi il menu di navigazione</string>
     <string name="content_descriptor_drawer_image">Immagine del menu di navigazione</string>

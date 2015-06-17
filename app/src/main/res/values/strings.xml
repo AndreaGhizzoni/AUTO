@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">AUTO</string>
     <string name="title_activity_vehicle_insertion">VehicleInsertion</string>
-    <string name="title_activity_maintenance_insertion">MaintenanceInsertion</string>
 
 </resources>

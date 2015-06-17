@@ -8,6 +8,8 @@
         <item>Export</item>
     </string-array>
 
+    <string name="title_activity_maintenance_insertion">New Cost</string>
+
     <string name="content_descriptor_drawer_open">Open Drawer</string>
     <string name="content_descriptor_drawer_close">Close Drawer</string>
     <string name="content_descriptor_drawer_image">Drawer Image</string>
