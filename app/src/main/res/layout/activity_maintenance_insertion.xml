@@ -38,7 +38,7 @@
         <!-- TODO insert here the place insertion filed -->
 
         <!-- text field to insert the name -->
-        <LinearLayout
+         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -94,13 +94,16 @@
                 android:layout_height="match_parent"/>
         </LinearLayout>
 
-
         <!-- if type == tax -->
         <!--    show a checkbox to allow user to set a calendar event -->
         <!-- if type == ordinary -->
         <!--    show a checkbox to save a calendar with cadenza annuale/mensile-->
         <!-- if type == extraordinary -->
         <!--    show a date picker where the user inserts the date of maintenance -->
+        <FrameLayout
+            android:id="@+id/maintenance_insertion_type_args"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 
     </LinearLayout>
 </RelativeLayout>

@@ -1,0 +1,23 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/maintenance_insertion_inner_frag_extraordinary"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    >
+
+    <TextView
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:text="Date:"
+        android:textStyle="bold"
+    />
+    <EditText
+        android:id="@+id/maintenance_insertion_inner_frag_extraordinary_date"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:inputType="date"
+        android:textColor="@color/black"
+    />
+
+</LinearLayout>
