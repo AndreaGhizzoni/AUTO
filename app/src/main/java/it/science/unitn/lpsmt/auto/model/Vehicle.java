@@ -72,7 +72,7 @@ public class Vehicle {
         this.costs.remove(c);
     }
 
-    public void removeAll(){ this.costs.clear(); }
+    public void removeAllCosts(){ this.costs.clear(); }
 
 //==================================================================================================
 // SETTER
