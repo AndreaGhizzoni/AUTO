@@ -7,24 +7,26 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import it.science.unitn.lpsmt.auto.controller.CostDAO;
 import it.science.unitn.lpsmt.auto.controller.util.Converter;
 import it.science.unitn.lpsmt.auto.model.Cost;
+import it.science.unitn.lpsmt.auto.model.Maintenance;
+import it.science.unitn.lpsmt.auto.model.Place;
+import it.science.unitn.lpsmt.auto.model.Refuel;
+import it.science.unitn.lpsmt.auto.model.Vehicle;
 import it.science.unitn.lpsmt.auto.model.util.Const;
 
 /**
  * TODO add doc
  */
-
 //https://stackoverflow.com/questions/8147440/android-database-transaction
 public class DAOCost implements CostDAO {
     private final SQLiteDatabase db;
 
-    public DAOCost(){
-        db = PersistenceDAO.getInstance().getWritableDatabase();
-    }
+    public DAOCost(){ db = PersistenceDAO.getInstance().getWritableDatabase(); }
 
     public DAOCost( Context testContext ){
         db = new PersistenceDAO(testContext).getWritableDatabase();
@@ -63,7 +65,7 @@ public class DAOCost implements CostDAO {
         Cursor c = db.query(
             Cost.SQLData.TABLE_NAME,
             Cost.SQLData.ALL_COLUMNS,
-            Cost.SQLData.ID+" = ?",
+            Cost.SQLData.ID + " = ?",
             new String[]{id.toString()},
             null, null, null
         );
@@ -109,6 +111,37 @@ public class DAOCost implements CostDAO {
     }
 
     @Override
+    public void deleteAllWhereVehicleID( Long id ){
+        // pass null to delete all the entry
+        String where = null;
+        String[] whereArgs = null;
+        if( id != null ){
+            where = Cost.SQLData.VEHICLE_ID+" = ?";
+            whereArgs = new String[]{id.toString()};
+        }
+
+        db.beginTransaction();
+        try{
+            db.delete(
+                Cost.SQLData.TABLE_NAME,
+                where,
+                whereArgs
+            );
+            db.setTransactionSuccessful();
+        }catch (Throwable t){
+            Log.e(DAOCost.class.getSimpleName(), t.getMessage());
+        }finally {
+            db.endTransaction();
+        }
+    }
+
+    @Override
+    public void deleteAll(){
+        // null means 'skip'. In other words delete all the cost.
+        this.deleteAllWhereVehicleID(null);
+    }
+
+    @Override
     public List<Cost> getAll() {
         ArrayList<Cost> list = new ArrayList<>();
         Cursor c = db.query(
@@ -127,6 +160,152 @@ public class DAOCost implements CostDAO {
             c.close();
         }
         return list;
+    }
+
+    @Override
+    public List<Refuel> getAllRefuel() {
+        ArrayList<Refuel> list = new ArrayList<>();
+        Cursor c = db.query(
+            Cost.SQLData.TABLE_NAME,
+            Cost.SQLData.ALL_COLUMNS,
+            Cost.SQLData.CLASS+" = ?",
+            new String[]{Refuel.class.getSimpleName().toLowerCase()},
+            null, null,
+            Cost.SQLData.DATE
+        );
+        if( c.getCount() != 0 ){ //means that there are rows
+            c.moveToFirst();
+            Refuel tmp;
+            while( !c.isAfterLast() ){
+                tmp = (Refuel) Converter.cursorToCost(c, false);
+                list.add(tmp);
+                c.moveToNext();
+            }
+            c.close();
+        }
+        return list;
+    }
+
+    @Override
+    public List<Refuel> getAllRefuelWhereVehicleIs(Vehicle v) {
+        ArrayList<Refuel> list = new ArrayList<>();
+        Cursor c = db.query(
+            Cost.SQLData.TABLE_NAME,
+            Cost.SQLData.ALL_COLUMNS,
+            Cost.SQLData.CLASS+" = ? and "+Cost.SQLData.VEHICLE_ID+" = ?",
+            new String[]{Refuel.class.getSimpleName().toLowerCase(), v.getId()+""},
+            null, null,
+            Cost.SQLData.DATE
+        );
+        if( c.getCount() != 0 ){ //means that there are rows
+            c.moveToFirst();
+            Refuel tmp;
+            while( !c.isAfterLast() ){
+                tmp = (Refuel) Converter.cursorToCost(c, false);
+                list.add(tmp);
+                c.moveToNext();
+            }
+            c.close();
+        }
+        return list;
+    }
+
+    @Override
+    public List<Maintenance> getAllMaintenance() {
+        ArrayList<Maintenance> list = new ArrayList<>();
+        Cursor c = db.query(
+            Cost.SQLData.TABLE_NAME,
+            Cost.SQLData.ALL_COLUMNS,
+            Cost.SQLData.CLASS+" = ?",
+            new String[]{Maintenance.class.getSimpleName().toLowerCase()},
+            null, null, null
+        );
+        if( c.getCount() != 0 ){ //means that there are rows
+            c.moveToFirst();
+            Maintenance tmp;
+            while( !c.isAfterLast() ){
+                tmp = (Maintenance) Converter.cursorToCost(c, false);
+                list.add(tmp);
+                c.moveToNext();
+            }
+            c.close();
+        }
+        return list;
+    }
+
+    @Override
+    public List<Maintenance> getAllMaintenanceWhereTypeIs(Maintenance.Type type) {
+        ArrayList<Maintenance> list = new ArrayList<>();
+        Cursor c = db.query(
+            Cost.SQLData.TABLE_NAME,
+            Cost.SQLData.ALL_COLUMNS,
+            Cost.SQLData.CLASS+" = ? and "+Cost.SQLData.TYPE+" = ?",
+            new String[]{Maintenance.class.getSimpleName().toLowerCase(), type.toString()},
+            null, null, null
+        );
+        if( c.getCount() != 0 ){ //means that there are rows
+            c.moveToFirst();
+            Maintenance tmp;
+            while( !c.isAfterLast() ){
+                tmp = (Maintenance) Converter.cursorToCost(c, false);
+                list.add(tmp);
+                c.moveToNext();
+            }
+            c.close();
+        }
+        return list;
+    }
+
+
+    @Override
+    public List<Cost> getAllWhereVehicleIs(Vehicle v){
+        ArrayList<Cost> list = new ArrayList<>();
+        Cursor c = db.query(
+            Cost.SQLData.TABLE_NAME,
+            Cost.SQLData.ALL_COLUMNS_WITHOUT_VEHICLE_FK,
+            Cost.SQLData.VEHICLE_ID+" = ?",
+            new String[]{v.getId().toString()},
+            null, null, null, null
+        );
+
+        if( c.getCount() != 0 ){
+            c.moveToFirst();
+            Cost tmp = null;
+            while( !c.isAfterLast() ){
+                Long id = c.getLong(0);
+                Float amount = c.getFloat(1);
+                String notes = c.getString(2);
+                String clazz = c.getString(3);
+                Place place = new DAOPlace().get(c.getLong(4));
+
+                if(clazz.equals(Refuel.class.getSimpleName().toLowerCase())){
+                    Float pricePerLiter = c.getFloat(5);
+                    Date d = it.science.unitn.lpsmt.auto.controller.util.Date.
+                            getDateFromString(c.getString(6));
+                    Integer atKm = c.getInt(7);
+                    tmp = new Refuel(id, v, amount, notes, pricePerLiter, d, atKm, place);
+                }else if(clazz.equals(Maintenance.class.getSimpleName().toLowerCase())){
+                    String name = c.getString(8);
+                    Maintenance.Type type = Maintenance.Type.valueOf(c.getString(9));
+                    Integer calendarID = c.getInt(10);
+                    tmp = new Maintenance(id, v, amount, notes, name, type, place, calendarID);
+                }
+
+                list.add(tmp);
+                c.moveToNext();
+            }
+            c.close();
+        }
+        return list;
+    }
+
+    @Override
+    public int countObject(){
+        Cursor c = db.rawQuery("select count(*) from "+Cost.SQLData.TABLE_NAME, null);
+        c.moveToFirst();
+        int counter = c.getInt(0);
+        c.close();
+        return counter;
     }
 
     @Override

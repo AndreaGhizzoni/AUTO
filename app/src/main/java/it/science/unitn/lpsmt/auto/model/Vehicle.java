@@ -2,6 +2,7 @@ package it.science.unitn.lpsmt.auto.model;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import it.science.unitn.lpsmt.auto.model.util.Const;
 
@@ -37,8 +38,41 @@ public class Vehicle {
             return;
         if( c == null )
             throw new IllegalArgumentException("Cost to add can not be null.");
+        if( !c.getVehicle().equals(this)  )
+            throw new IllegalArgumentException("Cost is already associated with another Vehicle.");
         this.costs.add(c);
     }
+
+    public void removeCost( Long id ) throws IllegalArgumentException{
+        if( id == null )
+            throw new IllegalArgumentException("Id to remove cost can not be null.");
+        if( id <= Const.NO_DB_ID_SET )
+            throw new IllegalArgumentException("Id to remove cost can not be equal or " +
+                    "less than Const.NO_DB_ID_SET.");
+
+        for( Cost c : this.costs ){
+            if( c.getId().equals(id) ){
+                this.removeCost(c);
+                break;
+            }
+        }
+    }
+
+    public void removeCost( int index ) throws IllegalArgumentException{
+        if( index < 0 || index >= this.costs.size() )
+            throw new IllegalArgumentException("Index of cost to remove is out of bound.");
+        this.costs.remove(index);
+    }
+
+    public void removeCost( Cost c ) throws IllegalArgumentException{
+        if( c == null )
+            throw new IllegalArgumentException("Cost to remove can not be null.");
+        if( this.costs.indexOf(c) == -1 )
+            throw new IllegalArgumentException("Cost to remove not found in this Vehicle.");
+        this.costs.remove(c);
+    }
+
+    public void removeAllCosts(){ this.costs.clear(); }
 
 //==================================================================================================
 // SETTER
@@ -74,6 +108,13 @@ public class Vehicle {
         if( purchaseDate != null && purchaseDate.after(new Date()) )
             throw new IllegalArgumentException("Purchase Date can not be in the future.");
         this.purchaseDate = purchaseDate;
+    }
+
+    public void setCosts( List<Cost> list ) throws IllegalArgumentException{
+        if( list == null )
+            throw new IllegalArgumentException("List of Cost to set can not be null.");
+        this.costs.clear();
+        this.costs.addAll(list);
     }
 
 //==================================================================================================
@@ -114,6 +155,18 @@ public class Vehicle {
         return result;
     }
 
+    @Override
+    public String toString() {
+        return "Vehicle{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", plate='" + plate + '\'' +
+                ", fuel=" + fuel +
+                ", purchaseDate=" + purchaseDate +
+                ", costs=" + costs +
+                '}';
+    }
+
 //==================================================================================================
 //  INNER CLASS
 //==================================================================================================
@@ -131,7 +184,7 @@ public class Vehicle {
      * TODO add doc
      */
     public static class Default{
-        public static Vehicle instance;
+        private static Vehicle instance;
         private static String DEF_PLATE = "XX123XX";
         private static String DEF_NAME  = "Default";
 

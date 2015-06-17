@@ -10,17 +10,18 @@ public class Maintenance extends Cost {
     private Place place;
     private Integer calendarID;
 
-    public Maintenance( Long id, Float amount, String notes, String name, Maintenance.Type type,
-                        Place place, Integer calendarID){
-        super(id, amount, notes);
+    public Maintenance( Long id, Vehicle vehicle, Float amount, String notes, String name,
+                        Maintenance.Type type, Place place, Integer calendarID){
+        super(id, vehicle, amount, notes);
         this.setName(name);
         this.setType(type);
         this.setPlace(place);
         this.setCalendarID(calendarID);
     }
 
-    public Maintenance( Long id, Float amount, String name, Maintenance.Type type ){
-        this(id, amount, null, name, type, null, null);
+    public Maintenance( Long id, Vehicle vehicle, Float amount, String name,
+                        Maintenance.Type type ){
+        this(id, vehicle, amount, null, name, type, null, null);
     }
 
 //==================================================================================================
@@ -84,6 +85,16 @@ public class Maintenance extends Cost {
         result = 31 * result + (place != null ? place.hashCode() : 0);
         result = 31 * result + (calendarID != null ? calendarID.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Maintenance{" +
+                "name='" + name + '\'' +
+                ", type=" + type +
+                ", place=" + place +
+                ", calendarID=" + calendarID +
+                "} " + super.toString();
     }
 
 //==================================================================================================

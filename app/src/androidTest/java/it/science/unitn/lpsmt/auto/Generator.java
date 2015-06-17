@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Random;
 
 import it.science.unitn.lpsmt.auto.model.Maintenance;
 import it.science.unitn.lpsmt.auto.model.Place;
@@ -17,7 +18,12 @@ import it.science.unitn.lpsmt.auto.model.util.Const;
 import static it.science.unitn.lpsmt.auto.controller.util.Const.LOCATION_PROVIDER;
 
 public final class Generator {
-    private Generator(){}
+    private static SimpleDateFormat s = new SimpleDateFormat(
+        "yyyy-MM-dd",
+        Locale.getDefault()
+    );
+
+    private static Random r = new Random(new Date().getTime());
 
     public static Date getTomorrowDate(){
         Calendar c = Calendar.getInstance();
@@ -26,10 +32,6 @@ public final class Generator {
     }
 
     public static Date getDate( String yyyymmdd ){
-        SimpleDateFormat s = new SimpleDateFormat(
-            "yyyy-MM-dd",
-            Locale.getDefault()
-        );
         try {
             return s.parse(yyyymmdd);
         } catch (ParseException e) {
@@ -39,45 +41,52 @@ public final class Generator {
 
     public static Location getLocationInstance(){
         Location l = new Location(LOCATION_PROVIDER);
-        l.setLongitude(10);
-        l.setLatitude(10);
+        l.setLongitude(r.nextInt(9) + 1);
+        l.setLatitude(r.nextInt(9) + 1);
         return l;
-    }
-
-    public static Refuel getRefuelInstance(){
-        return new Refuel(
-            Const.NO_DB_ID_SET,
-            10f, "notes",
-            1.4f,
-            new Date(),
-            1000,
-            getPlaceInstance()
-        );
-    }
-
-    public static Maintenance getMaintenanceInstance(){
-        return new Maintenance(
-            Const.NO_DB_ID_SET,
-            100f,
-            "notes",
-            "name",
-            Maintenance.Type.EXTRAORDINARY,
-            getPlaceInstance(),
-            10
-        );
     }
 
     public static Vehicle getVehicleInstance(){
         return new Vehicle(
             Const.NO_DB_ID_SET,
-            "MyVehicle",
-            "qwe123",
+            "MyVehicle_"+(r.nextInt(100)+1),
+            "plate"+(r.nextInt(100)+1),
             Vehicle.Fuel.GASOLINE,
             new Date()
         );
     }
 
     public static Place getPlaceInstance(){
-        return new Place(Const.NO_DB_ID_SET, "address", getLocationInstance());
+        return new Place(
+            Const.NO_DB_ID_SET,
+            "address_"+(r.nextInt(10)+1),
+            getLocationInstance()
+        );
+    }
+
+    public static Refuel getRefuelInstance( Vehicle v ){
+        return new Refuel(
+            Const.NO_DB_ID_SET,
+            v,
+            (r.nextFloat()*10)+1,
+            "notes",
+            (r.nextFloat())+0.4f,
+            new Date(),
+            r.nextInt(1000)+1,
+            getPlaceInstance()
+        );
+    }
+
+    public static Maintenance getMaintenanceInstance( Vehicle v ){
+        return new Maintenance(
+            Const.NO_DB_ID_SET,
+            v,
+            (r.nextFloat()*100)+1,
+            "notes",
+            "name",
+            Maintenance.Type.EXTRAORDINARY,
+            getPlaceInstance(),
+            (r.nextInt(10)+1)
+        );
     }
 }

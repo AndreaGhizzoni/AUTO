@@ -22,7 +22,7 @@ class PersistenceDAO extends SQLiteOpenHelper {
      */
     public PersistenceDAO() {
         super(
-            MainActivity.getAppContext(), // static reference to context
+            MainActivity.getApp().getApplicationContext(), // static reference to context
             Const.DB_NAME,                // db name
             null,                         // default cursor factory
             Const.DB_VERSION              // db version

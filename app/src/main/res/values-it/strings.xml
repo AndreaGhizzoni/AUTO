@@ -1,4 +1,34 @@
 <resources>
-    <!--<string name="test">questa e\' una string in italiano</string>-->
+    <string-array name="drawer_items">
+        <item>Principale</item>
+        <item>Aggiungi Veicolo</item>
+        <item>Nuovo Riformimento</item>
+        <item>Nuovo Costo</item>
+        <item>Visualizza Costi</item>
+        <item>Esporta</item>
+    </string-array>
 
+    <string-array name="fuel">
+        <item>Diesel</item>
+        <item>GLP</item>
+        <item>Metano</item>
+        <item>Benzina</item>
+    </string-array>
+
+    <string name="content_descriptor_drawer_open">Apri il menu di navigazione</string>
+    <string name="content_descriptor_drawer_close">Chiudi il menu di navigazione</string>
+    <string name="content_descriptor_drawer_image">Immagine del menu di navigazione</string>
+    <string name="content_descriptor_drawer_item_icon">Icona del menu di navigazione</string>
+    <string name="content_descriptor_adapter_vehicle_inserted_icon">Icona del Veicolo</string>
+    <string name="content_descriptor_adapter_last_refuels_icon">Icona degli ultimi Rifornimenti</string>
+    <string name="content_descriptor_adapter_deadline_icon">Icona delle ultime Scadenze</string>
+
+    <string name="frag_main_vehicle_inserted">VEICOLI INSERITI</string>
+    <string name="frag_main_no_vehicle_inserted">Nessun Veicolo Inserito</string>
+    <string name="frag_main_last_refuel">ULTIMI RIFORNIMENTI</string>
+    <string name="frag_main_deadlines">SCADENZE</string>
+    <string name="frag_main_no_deadlines">Nessuna Scadenza</string>
+
+    <string name="frag_view_costs_no_cost_associated">Nessun costo associato a questo Veicolo</string>
+    <string name="frag_view_costs_no_vehicle_selected">Seleziona un Veicolo</string>
 </resources>

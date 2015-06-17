@@ -65,6 +65,76 @@ public class VehicleTest extends TestCase {
             fail("I can set future date for purchase");
         }catch (IllegalArgumentException ex){}
 
-        //TODO test cost
+        try{
+            tmp.addCost(null);
+            fail("I can add a null cost to a Vehicle.");
+        }catch (IllegalArgumentException ex){}
+
+        try{
+            Cost c = null;
+            tmp.removeCost(c);
+            fail("I can remove a cost by a null object reference.");
+        }catch (IllegalArgumentException ex){}
+
+        try{
+            Long id = null;
+            tmp.removeCost(id);
+            fail("I can remove a cost by a null id references.");
+        }catch (IllegalArgumentException ex){}
+
+        try{
+            tmp.removeCost(Const.NO_DB_ID_SET);
+            fail("I can remove a cost by id == Const.NO_DB_ID_SET.");
+        }catch (IllegalArgumentException ex){}
+
+        try{
+            int minusOne = -1;
+            tmp.removeCost(minusOne);
+            fail("I can remove a cost with index == -1.");
+        }catch (IllegalArgumentException ex){}
+
+        try{
+            int over = tmp.getCosts().size()+2;
+            tmp.removeCost(over);
+            fail("I can remove a cost with index >> getCosts().size().");
+        }catch (IllegalArgumentException ex){}
+
+        try {
+            getRefuelInstance(Vehicle.Default.get());
+            fail("I can assign the default Vehicle on a Refuel.");
+        }catch (IllegalArgumentException ex){}
+
+        try {
+            getMaintenanceInstance(Vehicle.Default.get());
+            fail("I can assign the default Vehicle on a Maintenance.");
+        }catch (IllegalArgumentException ex){}
+
+        // testing the adding procedure
+        int costsBefore = tmp.getCosts().size();
+        Cost ref = getRefuelInstance(tmp);
+        int costsAfter = tmp.getCosts().size();
+        assertTrue("Costs list before and after the insertion must be different.", costsBefore != costsAfter);
+        assertTrue("Costs list before and after the insertion must be different by one.", costsBefore+1 == costsAfter);
+
+        // testing remove by object reference
+        tmp.removeCost(ref);
+        int afterRemoving = tmp.getCosts().size();
+        assertTrue("After removeCost(Cost obj), the size must be as the original", costsBefore == afterRemoving);
+
+        ref.setId(1L);
+        tmp.addCost(ref);// add again
+
+        // testing removing by id
+        tmp.removeCost(ref.getId());
+        afterRemoving = tmp.getCosts().size();
+        assertTrue("After removeCost(Long id), the size must be as the original", costsBefore == afterRemoving);
+
+        tmp.addCost(ref);// and add again
+
+        // testing removing by position
+        int index = tmp.getCosts().indexOf(ref);
+        tmp.removeCost(index);
+        afterRemoving = tmp.getCosts().size();
+        assertTrue("After removeCost(int index), the size must be as the original", costsBefore == afterRemoving);
     }
 }

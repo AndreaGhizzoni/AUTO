@@ -60,11 +60,11 @@ public class DAOPlace implements PlaceDAO {
             return null;
 
         Cursor c = db.query(              // select from
-            Place.SQLData.TABLE_NAME,
-            Place.SQLData.ALL_COLUMNS,    // where
-            Place.SQLData.ID+" = ?",
-            new String[]{id.toString()},
-            null, null, null
+                Place.SQLData.TABLE_NAME,
+                Place.SQLData.ALL_COLUMNS,    // where
+                Place.SQLData.ID + " = ?",
+                new String[]{id.toString()},
+                null, null, null
         );
 
         if( c.getCount() == 0 ) { // means that select returns no rows
@@ -108,6 +108,23 @@ public class DAOPlace implements PlaceDAO {
     }
 
     @Override
+    public void deleteAll(){
+        db.beginTransaction();
+        try{
+            db.delete(
+                Place.SQLData.TABLE_NAME,
+                null,
+                null
+            );
+            db.setTransactionSuccessful();
+        }catch (Throwable t){
+            Log.e(DAOPlace.class.getSimpleName(), t.getMessage());
+        }finally {
+            db.endTransaction();
+        }
+    }
+
+    @Override
     public List<Place> getAll() {
         ArrayList<Place> list = new ArrayList<>();
         Cursor c = db.query(
@@ -126,6 +143,15 @@ public class DAOPlace implements PlaceDAO {
             c.close();
         }
         return list;
+    }
+
+    @Override
+    public int countObject(){
+        Cursor c = db.rawQuery("select count(*) from "+Place.SQLData.TABLE_NAME, null);
+        c.moveToFirst();
+        int counter = c.getInt(0);
+        c.close();
+        return counter;
     }
 
     @Override

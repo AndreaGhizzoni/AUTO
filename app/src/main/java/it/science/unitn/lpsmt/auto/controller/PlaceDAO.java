@@ -48,7 +48,18 @@ public interface PlaceDAO {
 
     /**
      * TODO add doc
+     */
+    void deleteAll();
+
+    /**
+     * TODO add doc
      * @return
      */
     List<Place> getAll();
+
+    /**
+     * TODO add doc
+     * @return
+     */
+    int countObject();
 }
