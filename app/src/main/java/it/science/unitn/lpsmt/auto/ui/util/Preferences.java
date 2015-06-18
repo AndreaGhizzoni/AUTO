@@ -1,9 +1,11 @@
-package it.science.unitn.lpsmt.auto.ui;
+package it.science.unitn.lpsmt.auto.ui.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 
 import java.util.Set;
+
+import it.science.unitn.lpsmt.auto.ui.MainActivity;
 
 /**
  * TODO add doc
