@@ -48,10 +48,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="android.support.v7.app.ActionBarActivity" />
         </activity>
-        <activity
-            android:name="it.science.unitn.lpsmt.auto.ui.GoogleLoginActivity"
-            android:label="@string/title_activity_google_login" >
-        </activity>
     </application>
 
 </manifest>
