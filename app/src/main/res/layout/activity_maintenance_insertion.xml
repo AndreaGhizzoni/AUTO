@@ -94,16 +94,51 @@
                 android:layout_height="match_parent"/>
         </LinearLayout>
 
+        <Switch
+            android:id="@+id/btnAddCalendarEvent"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:text="Add Event in calendar"
+            android:textColor="@color/black"
+            />
+
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/maintenance_insertion_inner_frag_extraordinary"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:visibility="invisible"
+            >
+
+            <TextView
+                android:layout_width="38dp"
+                android:layout_height="48dp"
+                android:text="Date:"
+                android:textStyle="bold"
+            />
+            <EditText
+                android:id="@+id/maintenance_insertion_inner_frag_extraordinary_date"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:inputType="date"
+                android:textColor="@color/black"
+            />
+        </LinearLayout>
+
         <!-- if type == tax -->
         <!--    show a checkbox to allow user to set a calendar event -->
         <!-- if type == ordinary -->
         <!--    show a checkbox to save a calendar with cadenza annuale/mensile-->
         <!-- if type == extraordinary -->
         <!--    show a date picker where the user inserts the date of maintenance -->
-        <FrameLayout
-            android:id="@+id/maintenance_insertion_type_args"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-
+        <!--<FrameLayout-->
+            <!--android:id="@+id/maintenance_insertion_type_args"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"/>-->
     </LinearLayout>
 </RelativeLayout>
