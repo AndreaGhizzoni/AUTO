@@ -35,7 +35,32 @@
                 android:layout_height="match_parent"/>
         </LinearLayout>
 
-        <!-- TODO insert here the place insertion filed -->
+        <!-- place insertion filed -->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginBottom="10dp">
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@drawable/ic_maps_place_48dp"
+                android:contentDescription="to move out"/>
+            <EditText
+                android:id="@+id/maintenance_insertion_place_edit"
+                android:layout_width="190dp"
+                android:layout_height="match_parent"
+                android:inputType="text"
+                android:textColor="@color/black"/>
+            <Switch
+                android:id="@+id/maintenance_insertion_place_current_place"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:text="Here"
+                android:textColor="@color/black"/>
+        </LinearLayout>
 
         <!-- text field to insert the name -->
          <LinearLayout
