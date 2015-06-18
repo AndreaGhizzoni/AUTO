@@ -2,14 +2,18 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_marginLeft="10dp"
+    android:layout_marginStart="10dp"
+    >
 
-    <Button
+    <Switch
         android:id="@+id/btnAddCalendarEvent"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="50dp"
+
         android:text="Add Event in calendar"
         android:textColor="@color/black"
-        />
+    />
 
 </LinearLayout>

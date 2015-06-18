@@ -37,16 +37,6 @@ public class MaintenanceInsertion extends ActionBarActivity {
     private Spinner vehicleAssociated;
     private Spinner maintenanceType;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_maintenance_insertion);
-
-        this.initSpinnerVehicleAssociated();
-        this.initSpinnerTypeMaintenance();
-        instance = this;
-    }
-
     private void initSpinnerVehicleAssociated(){
         ArrayAdapter<CharSequence> spinnerAdapter = new ArrayAdapter<>(
             getApplicationContext(),
@@ -102,6 +92,19 @@ public class MaintenanceInsertion extends ActionBarActivity {
         newFragment.show(getSupportFragmentManager(), "datePicker");
     }
 
+//==================================================================================================
+//  OVERRIDE
+//==================================================================================================
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_maintenance_insertion);
+
+        this.initSpinnerVehicleAssociated();
+        this.initSpinnerTypeMaintenance();
+        instance = this;
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -140,10 +143,11 @@ public class MaintenanceInsertion extends ActionBarActivity {
                     v = inflater.inflate(R.layout.activity_maintenance_inner_frag_type_extraordinary,
                             container, false);
                     v.findViewById(R.id.maintenance_insertion_inner_frag_extraordinary_date)
-                            .setOnClickListener(new View.OnClickListener() {
+                            .setOnFocusChangeListener(new View.OnFocusChangeListener() {
                                 @Override
-                                public void onClick(View view) {
-                                    MaintenanceInsertion.instance.showDatePickerDialog();
+                                public void onFocusChange(View view, boolean b) {
+                                    if( b )
+                                        MaintenanceInsertion.instance.showDatePickerDialog();
                                 }
                             });
                     break;
@@ -171,8 +175,6 @@ public class MaintenanceInsertion extends ActionBarActivity {
                 vehicleSelectedBySpinner = null;
             }else{
                 vehicleSelectedBySpinner = vehicleList.get(pos-1);
-                Toast.makeText(getApplicationContext(), vehicleSelectedBySpinner.getId()+"",
-                        Toast.LENGTH_LONG).show();
             }
         }
         @Override
@@ -185,14 +187,11 @@ public class MaintenanceInsertion extends ActionBarActivity {
         public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
             if( pos == 0 ){
                 maintenanceSelectedBySpinner = null;
-                Toast.makeText(getApplicationContext(), "pos == 0", Toast.LENGTH_LONG).show();
                 findViewById(R.id.maintenance_insertion_type_args).setVisibility(View.INVISIBLE);
             }else{
                 Maintenance.Type newT = Maintenance.Type.valueOf(maintenanceType.getSelectedItem().toString());
                 if( !newT.equals(maintenanceSelectedBySpinner)) {
                     maintenanceSelectedBySpinner = newT;
-                            Toast.makeText(getApplicationContext(), maintenanceSelectedBySpinner.toString(),
-                                    Toast.LENGTH_LONG).show();
                     selectMaintenanceFragment();
                     findViewById(R.id.maintenance_insertion_type_args).setVisibility(View.VISIBLE);
                 }
