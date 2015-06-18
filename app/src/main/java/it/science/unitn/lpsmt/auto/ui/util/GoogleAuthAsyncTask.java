@@ -12,8 +12,15 @@ import com.google.android.gms.location.LocationServices;
 
 import lpsmt.science.unitn.it.auto.R;
 
-//params, progress, result
-public class GoogleAuthAsyncTask extends AsyncTask<Void, Void, Void>
+//GoogleAuthAsyncTask g = new GoogleAuthAsyncTask(this);
+//g.execute();
+//try {
+//    GoogleApiClient m = g.get( 5, TimeUnit.MINUTES );
+//    Toast.makeText(getApplicationContext(), "get from the task", Toast.LENGTH_SHORT).show();
+//} catch (InterruptedException | ExecutionException | TimeoutException e) {
+//    e.printStackTrace();
+//}
+public class GoogleAuthAsyncTask extends AsyncTask<Void, Void, GoogleApiClient>//params, progress, result
         implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
     private ProgressDialog dialog;
 
@@ -40,7 +47,7 @@ public class GoogleAuthAsyncTask extends AsyncTask<Void, Void, Void>
     }
 
     @Override
-    protected Void doInBackground(Void... voids) {
+    protected GoogleApiClient doInBackground(Void... voids) {
         this.dialog.setMessage(getString(R.string.async_task_google_login_connecting));
         if( this.mGoogleApiClient == null ){
             this.mGoogleApiClient = new GoogleApiClient.Builder(this.activity)
@@ -50,11 +57,11 @@ public class GoogleAuthAsyncTask extends AsyncTask<Void, Void, Void>
                     .build();
         }
         this.mGoogleApiClient.connect();
-        return null;
+        return this.mGoogleApiClient;
     }
 
     @Override
-    protected void onPostExecute( Void result ){
+    protected void onPostExecute( GoogleApiClient result ){
        if( this.dialog.isShowing() ) {
            this.dialog.dismiss();
        }
