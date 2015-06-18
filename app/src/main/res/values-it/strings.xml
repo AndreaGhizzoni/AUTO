@@ -19,6 +19,8 @@
     <string name="title_activity_maintenance_insertion">Nuovo Costo</string>
 
     <string name="activity_maintenance_insertion_select_type">Seleziona un Tipo</string>
+    <string name="activity_maintenance_insertion_add_calendar">Aggiungi Evento al Calendario</string>
+    <string name="activity_maintenance_insertion_date">Data:</string>
 
     <string name="content_descriptor_drawer_open">Apri il menu di navigazione</string>
     <string name="content_descriptor_drawer_close">Chiudi il menu di navigazione</string>
@@ -27,6 +29,10 @@
     <string name="content_descriptor_adapter_vehicle_inserted_icon">Icona del Veicolo</string>
     <string name="content_descriptor_adapter_last_refuels_icon">Icona degli ultimi Rifornimenti</string>
     <string name="content_descriptor_adapter_deadline_icon">Icona delle ultime Scadenze</string>
+    <string name="content_descriptor_maintenance_insertion_vehicle_icon">Icona del Veicolo</string>
+    <string name="content_descriptor_maintenance_insertion_name_icon">Icona del Nome</string>
+    <string name="content_descriptor_maintenance_insertion_amount_icon">Icona dell\'importo</string>
+    <string name="content_descriptor_maintenance_insertion_type_icon">Icona della Manutenzione</string>
 
     <string name="frag_main_vehicle_inserted">VEICOLI INSERITI</string>
     <string name="frag_main_no_vehicle_inserted">Nessun Veicolo Inserito</string>

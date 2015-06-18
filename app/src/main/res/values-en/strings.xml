@@ -11,6 +11,8 @@
     <string name="title_activity_maintenance_insertion">New Cost</string>
 
     <string name="activity_maintenance_insertion_select_type">Select a Type</string>
+    <string name="activity_maintenance_insertion_add_calendar">Add a Calendar Event</string>
+    <string name="activity_maintenance_insertion_date">Date:</string>
 
     <string name="content_descriptor_drawer_open">Open Drawer</string>
     <string name="content_descriptor_drawer_close">Close Drawer</string>
@@ -19,6 +21,10 @@
     <string name="content_descriptor_adapter_vehicle_inserted_icon">Vehicle Icon</string>
     <string name="content_descriptor_adapter_last_refuels_icon">Last Refuels Icon</string>
     <string name="content_descriptor_adapter_deadline_icon">Deadline Icon</string>
+    <string name="content_descriptor_maintenance_insertion_vehicle_icon">Vehicle Icon</string>
+    <string name="content_descriptor_maintenance_insertion_name_icon">Text Icon</string>
+    <string name="content_descriptor_maintenance_insertion_amount_icon">Amount Icon</string>
+    <string name="content_descriptor_maintenance_insertion_type_icon">Maintenance Type Icon</string>
 
     <string name="frag_main_vehicle_inserted">VEHICLE INSERTED</string>
     <string name="frag_main_no_vehicle_inserted">No Vehicle Inserted</string>
