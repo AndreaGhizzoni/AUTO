@@ -2,7 +2,16 @@ package it.science.unitn.lpsmt.auto.ui;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.IBinder;
+import android.os.Message;
+import android.os.Messenger;
+import android.os.RemoteException;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -24,15 +33,23 @@ import java.util.List;
 import it.science.unitn.lpsmt.auto.controller.dao.DAOVehicle;
 import it.science.unitn.lpsmt.auto.model.Maintenance;
 import it.science.unitn.lpsmt.auto.model.Vehicle;
+import it.science.unitn.lpsmt.auto.ui.service.GPSService;
 import lpsmt.science.unitn.it.auto.R;
 
 // TODO maybe implements method to save the app instance when is put onPause
 public class MaintenanceInsertion extends ActionBarActivity {
+    public static MaintenanceInsertion instance;
     private List<Vehicle> vehicleList;
     private Vehicle vehicleSelectedBySpinner;
     private Maintenance.Type maintenanceSelectedBySpinner;
 
+    private ServiceConnection mConnection = new MyServiceConnection();
+    private Messenger mMessenger = new Messenger(new ServiceHandler());
+    private Messenger mService;
+
     private Spinner spinnerVehicle;
+    private Switch switchGetCurrentPlace;
+    private EditText editCurrentPlace;
     private Spinner spinnerMaintenanceType;
 
     private void initSpinnerVehicleAssociated(){
@@ -43,7 +60,6 @@ public class MaintenanceInsertion extends ActionBarActivity {
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         if( new DAOVehicle().countObject() != 0 ) {
             spinnerAdapter.add(getResources().getString(R.string.frag_view_costs_no_vehicle_selected));
-            // populate the spinner
             vehicleList = new DAOVehicle().getAll();
             for( Vehicle i : vehicleList ){
                 spinnerAdapter.add(i.getName());
@@ -56,6 +72,20 @@ public class MaintenanceInsertion extends ActionBarActivity {
         spinnerVehicle = (Spinner) findViewById(R.id.maintenance_insertion_vehicle_associated);
         spinnerVehicle.setOnItemSelectedListener(new SpinnerVehicleSelection());
         spinnerVehicle.setAdapter(spinnerAdapter);
+    }
+
+    private void initCurrentPlace(){
+        this.editCurrentPlace = (EditText)findViewById(R.id.maintenance_insertion_place_edit);
+        this.switchGetCurrentPlace = (Switch) findViewById(R.id.maintenance_insertion_switch_current_place);
+        this.switchGetCurrentPlace.setOnCheckedChangeListener(
+                new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                        if( b ) doBind(); else doUnBind();
+                        editCurrentPlace.setEnabled(!b);
+                    }
+                }
+        );
     }
 
     private void initSpinnerTypeMaintenance(){
@@ -74,34 +104,54 @@ public class MaintenanceInsertion extends ActionBarActivity {
         spinnerMaintenanceType.setAdapter(spinnerAdapter);
     }
 
-    private void initSwitch(){
-        ((Switch)findViewById(R.id.btnAddCalendarEvent)).setOnCheckedChangeListener(
+    private void initSwitchAddCalendarEvent(){
+        ((Switch)findViewById(R.id.maintenance_insertion_switch_add_calendar_event)).setOnCheckedChangeListener(
                 new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                LinearLayout layoutDate = (LinearLayout) findViewById(R.id.maintenance_insertion_inner_frag_extraordinary);
-                if(b)
-                    layoutDate.setVisibility(View.VISIBLE);
-                else
-                    layoutDate.setVisibility(View.INVISIBLE);
-            }
-        });
-
+                    @Override
+                    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                        LinearLayout layoutDate = (LinearLayout) findViewById(R.id.maintenance_insertion_inner_frag_extraordinary);
+                        if (b)
+                            layoutDate.setVisibility(View.VISIBLE);
+                        else
+                            layoutDate.setVisibility(View.INVISIBLE);
+                    }
+                });
     }
 
     private void initDatePickerEvent(){
         findViewById(R.id.maintenance_insertion_inner_frag_extraordinary_date).setOnFocusChangeListener(
-            new View.OnFocusChangeListener() {
-                @Override
-                public void onFocusChange(View view, boolean b) {
-                    if(b) showDatePickerDialog();
-                }
-            });
+                new View.OnFocusChangeListener() {
+                    @Override
+                    public void onFocusChange(View view, boolean b) {
+                        if (b) showDatePickerDialog();
+                    }
+                });
     }
 
     public void showDatePickerDialog(){
         DialogFragment newFragment = new DatePickerFragment();
         newFragment.show(getSupportFragmentManager(), "datePicker");
+    }
+
+    private void doBind(){
+        Intent gps = new Intent( getApplicationContext(), GPSService.class );
+        getApplicationContext().bindService(gps, mConnection, Context.BIND_AUTO_CREATE);
+    }
+
+    private void doUnBind(){
+       if( switchGetCurrentPlace.isEnabled() ) {
+           if( mService != null ){
+               Message msg = Message.obtain(null, GPSService.Protocol.REQUEST_UNBIND);
+               msg.replyTo = mMessenger;
+               try {
+                   mService.send(msg);
+               } catch (RemoteException e) {
+                   Toast.makeText(getApplicationContext(), e.getMessage(),Toast.LENGTH_LONG).show();
+               }
+               getApplicationContext().unbindService(mConnection);
+               switchGetCurrentPlace.setEnabled(false);
+           }
+       }
     }
 
 //==================================================================================================
@@ -113,9 +163,18 @@ public class MaintenanceInsertion extends ActionBarActivity {
         setContentView(R.layout.activity_maintenance_insertion);
 
         this.initSpinnerVehicleAssociated();
+        this.initCurrentPlace();
         this.initSpinnerTypeMaintenance();
-        this.initSwitch();
+        this.initSwitchAddCalendarEvent();
         this.initDatePickerEvent();
+        instance = this;
+    }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+        if(this.switchGetCurrentPlace.isEnabled())
+           doUnBind();
     }
 
     @Override
@@ -157,13 +216,10 @@ public class MaintenanceInsertion extends ActionBarActivity {
         public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
             if( pos == 0 ){
                 maintenanceSelectedBySpinner = null;
-//                findViewById(R.id.maintenance_insertion_type_args).setVisibility(View.INVISIBLE);
             }else{
                 Maintenance.Type newT = Maintenance.Type.valueOf(spinnerMaintenanceType.getSelectedItem().toString());
                 if( !newT.equals(maintenanceSelectedBySpinner)) {
                     maintenanceSelectedBySpinner = newT;
-//                    selectMaintenanceFragment();
-//                    findViewById(R.id.maintenance_insertion_type_args).setVisibility(View.VISIBLE);
                 }
             }
         }
@@ -192,5 +248,40 @@ public class MaintenanceInsertion extends ActionBarActivity {
                     .findViewById(R.id.maintenance_insertion_inner_frag_extraordinary_date);
             edt.setText(date);
         }
+    }
+
+    private class ServiceHandler extends Handler {
+        @Override
+        public void handleMessage( Message msg ){
+            switch (msg.what){
+                case GPSService.Protocol.SEND_LOCATION:{
+                    Bundle receivedBundle = msg.getData();
+                    String address = receivedBundle.getString("address");
+                    editCurrentPlace.setText(address);
+                    break;
+                }
+                default: super.handleMessage(msg);
+            }
+        }
+    }
+
+    private class MyServiceConnection implements ServiceConnection{
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            mService = new Messenger(service);
+            Message msg = Message.obtain(null, GPSService.Protocol.REQUEST_BIND);
+            msg.replyTo = mMessenger;
+            try {
+                mService.send(msg);
+            } catch (RemoteException e) {
+                Toast.makeText(
+                    MaintenanceInsertion.this.getApplicationContext(),
+                    e.getMessage(), Toast.LENGTH_LONG
+                ).show();
+            }
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) { mService = null; }
     }
 }

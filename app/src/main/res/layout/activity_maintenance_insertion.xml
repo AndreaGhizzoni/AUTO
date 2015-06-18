@@ -53,7 +53,7 @@
                 android:inputType="text"
                 android:textColor="@color/black"/>
             <Switch
-                android:id="@+id/maintenance_insertion_place_current_place"
+                android:id="@+id/maintenance_insertion_switch_current_place"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
@@ -117,17 +117,17 @@
                 android:layout_height="match_parent"/>
         </LinearLayout>
 
+        <!-- calendar switch -->
         <Switch
-            android:id="@+id/btnAddCalendarEvent"
+            android:id="@+id/maintenance_insertion_switch_add_calendar_event"
             android:layout_width="match_parent"
             android:layout_height="@dimen/activity_maintenance_insertion_switch_height"
             android:layout_marginLeft="@dimen/activity_maintenance_insertion_switch_margin_left"
             android:layout_marginStart="@dimen/activity_maintenance_insertion_switch_margin_left"
             android:text="@string/activity_maintenance_insertion_add_calendar"
             android:textColor="@color/black"/>
-
+        <!-- add a calendar date -->
         <LinearLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/maintenance_insertion_inner_frag_extraordinary"
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -135,7 +135,6 @@
             android:layout_marginLeft="@dimen/activity_maintenance_insertion_date_margin_left"
             android:layout_marginStart="@dimen/activity_maintenance_insertion_date_margin_left"
             android:visibility="invisible">
-
             <TextView
                 android:layout_width="@dimen/activity_maintenance_insertion_date_label_width"
                 android:layout_height="@dimen/activity_maintenance_insertion_date_label_height"
