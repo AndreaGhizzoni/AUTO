@@ -13,8 +13,7 @@
     <dimen name="activity_maintenance_insertion_place_margin_bottom">10dp</dimen>
     <dimen name="activity_maintenance_insertion_place_icon_width">36dp</dimen>
     <dimen name="activity_maintenance_insertion_place_icon_height">36dp</dimen>
-    <dimen name="activity_maintenance_insertion_place_edit_width">225dp</dimen>
-    <dimen name="activity_maintenance_insertion_place_here_margin_left">5dp</dimen>
+    <dimen name="activity_maintenance_insertion_place_switch_margin_left">10dp</dimen>
 
     <dimen name="activity_maintenance_insertion_text_name_height">45dp</dimen>
     <dimen name="activity_maintenance_insertion_text_name_margin_bottom">10dp</dimen>
