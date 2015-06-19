@@ -81,7 +81,8 @@ public class MaintenanceInsertion extends ActionBarActivity {
                 new CompoundButton.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                        if( b ) doBind(); else doUnBind();
+                        if (b) doBind();
+                        else doUnBind();
                         editCurrentPlace.setEnabled(!b);
                     }
                 }
@@ -139,8 +140,8 @@ public class MaintenanceInsertion extends ActionBarActivity {
     }
 
     private void doUnBind(){
-       if( switchGetCurrentPlace.isEnabled() ) {
-           if( mService != null ){
+       if( this.switchGetCurrentPlace.isChecked() ) {
+           if( this.mService != null ){
                Message msg = Message.obtain(null, GPSService.Protocol.REQUEST_UNBIND);
                msg.replyTo = mMessenger;
                try {
@@ -149,7 +150,6 @@ public class MaintenanceInsertion extends ActionBarActivity {
                    Toast.makeText(getApplicationContext(), e.getMessage(),Toast.LENGTH_LONG).show();
                }
                getApplicationContext().unbindService(mConnection);
-               switchGetCurrentPlace.setEnabled(false);
            }
        }
     }
@@ -173,8 +173,16 @@ public class MaintenanceInsertion extends ActionBarActivity {
     @Override
     protected void onPause(){
         super.onPause();
-        if(this.switchGetCurrentPlace.isEnabled())
-           doUnBind();
+        if(this.switchGetCurrentPlace.isChecked()) {
+            doUnBind();
+        }
+    }
+
+    @Override
+    protected void onRestart(){
+        super.onRestart();
+        if(this.switchGetCurrentPlace.isChecked())
+            doBind();
     }
 
     @Override
