@@ -11,7 +11,6 @@
     android:layout_marginTop="@dimen/activity_vertical_margin"
     android:layout_marginBottom="@dimen/activity_vertical_margin">
 
-    <!-- TODO move the dimen foreach linear layout -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -39,16 +38,16 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginBottom="10dp">
+            android:layout_height="@dimen/activity_maintenance_insertion_place_height"
+            android:layout_marginBottom="@dimen/activity_maintenance_insertion_place_margin_bottom">
             <ImageView
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="@dimen/activity_maintenance_insertion_place_icon_width"
+                android:layout_height="@dimen/activity_maintenance_insertion_place_icon_height"
                 android:background="@drawable/ic_maps_place_48dp"
-                android:contentDescription="to move out"/>
+                android:contentDescription="@string/content_descriptor_maintenance_insertion_place_icon"/>
             <EditText
                 android:id="@+id/maintenance_insertion_place_edit"
-                android:layout_width="190dp"
+                android:layout_width="@dimen/activity_maintenance_insertion_place_edit_width"
                 android:layout_height="match_parent"
                 android:inputType="text"
                 android:textColor="@color/black"/>
@@ -56,9 +55,9 @@
                 android:id="@+id/maintenance_insertion_switch_current_place"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
-                android:layout_marginStart="10dp"
-                android:text="Here"
+                android:layout_marginLeft="@dimen/activity_maintenance_insertion_place_here_margin_left"
+                android:layout_marginStart="@dimen/activity_maintenance_insertion_place_here_margin_left"
+                android:text="@string/activity_maintenance_insertion_place"
                 android:textColor="@color/black"/>
         </LinearLayout>
 
@@ -124,6 +123,7 @@
             android:layout_height="@dimen/activity_maintenance_insertion_switch_height"
             android:layout_marginLeft="@dimen/activity_maintenance_insertion_switch_margin_left"
             android:layout_marginStart="@dimen/activity_maintenance_insertion_switch_margin_left"
+            android:layout_marginBottom="@dimen/activity_maintenance_insertion_switch_margin_bottom"
             android:text="@string/activity_maintenance_insertion_add_calendar"
             android:textColor="@color/black"/>
         <!-- add a calendar date -->
@@ -131,18 +131,17 @@
             android:id="@+id/maintenance_insertion_inner_frag_extraordinary"
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/activity_maintenance_insertion_date_margin_left"
-            android:layout_marginStart="@dimen/activity_maintenance_insertion_date_margin_left"
+            android:layout_height="@dimen/activity_maintenance_insertion_date_height"
             android:visibility="invisible">
-            <TextView
-                android:layout_width="@dimen/activity_maintenance_insertion_date_label_width"
-                android:layout_height="@dimen/activity_maintenance_insertion_date_label_height"
-                android:text="@string/activity_maintenance_insertion_date"/>
+            <ImageView
+                android:layout_width="@dimen/activity_maintenance_insertion_date_icon_width"
+                android:layout_height="@dimen/activity_maintenance_insertion_date_icon_height"
+                android:background="@drawable/ic_calendar_event_48dp"
+                android:contentDescription="@string/content_descriptor_maintenance_insertion_calendar_icon"/>
             <EditText
                 android:id="@+id/maintenance_insertion_inner_frag_extraordinary_date"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/activity_maintenance_insertion_date_edit_height"
+                android:layout_height="match_parent"
                 android:inputType="date"
                 android:textColor="@color/black"/>
         </LinearLayout>
