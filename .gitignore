@@ -5,3 +5,4 @@ app/app.iml
 .DS_Store
 /build
 /captures
+lpsmt_keystore.jks
