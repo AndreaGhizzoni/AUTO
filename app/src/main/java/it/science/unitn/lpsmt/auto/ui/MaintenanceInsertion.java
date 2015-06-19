@@ -129,7 +129,7 @@ public class MaintenanceInsertion extends ActionBarActivity {
                 });
     }
 
-    public void showDatePickerDialog(){
+    private void showDatePickerDialog(){
         DialogFragment newFragment = new DatePickerFragment();
         newFragment.show(getSupportFragmentManager(), "datePicker");
     }
