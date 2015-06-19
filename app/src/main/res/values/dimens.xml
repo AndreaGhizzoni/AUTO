@@ -1,7 +1,42 @@
 <resources>
     <!-- Default screen margins, per the Android Design guidelines. -->
-    <dimen name="activity_horizontal_margin">16dp</dimen>
-    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="activity_horizontal_margin">8dp</dimen>
+    <dimen name="activity_vertical_margin">8dp</dimen>
+
+    <!-- MAINTENANCE INSERTION ACTIVITY -->
+    <dimen name="activity_maintenance_insertion_spinner_vehicle_height">70dp</dimen>
+    <dimen name="activity_maintenance_insertion_spinner_vehicle_margin_bottom">10dp</dimen>
+    <dimen name="activity_maintenance_insertion_spinner_vehicle_icon_width">68dp</dimen>
+    <dimen name="activity_maintenance_insertion_spinner_vehicle_icon_height">68dp</dimen>
+
+    <dimen name="activity_maintenance_insertion_place_height">45dp</dimen>
+    <dimen name="activity_maintenance_insertion_place_margin_bottom">10dp</dimen>
+    <dimen name="activity_maintenance_insertion_place_icon_width">36dp</dimen>
+    <dimen name="activity_maintenance_insertion_place_icon_height">36dp</dimen>
+    <dimen name="activity_maintenance_insertion_place_switch_margin_left">10dp</dimen>
+
+    <dimen name="activity_maintenance_insertion_text_name_height">45dp</dimen>
+    <dimen name="activity_maintenance_insertion_text_name_margin_bottom">10dp</dimen>
+    <dimen name="activity_maintenance_insertion_text_name_icon_width">36dp</dimen>
+    <dimen name="activity_maintenance_insertion_text_name_icon_height">36dp</dimen>
+
+    <dimen name="activity_maintenance_insertion_text_amount_height">45dp</dimen>
+    <dimen name="activity_maintenance_insertion_text_amount_margin_bottom">10dp</dimen>
+    <dimen name="activity_maintenance_insertion_text_amount_icon_width">36dp</dimen>
+    <dimen name="activity_maintenance_insertion_text_amount_icon_height">36dp</dimen>
+
+    <dimen name="activity_maintenance_insertion_spinner_maintenance_type_height">35dp</dimen>
+    <dimen name="activity_maintenance_insertion_spinner_maintenance_type_margin_bottom">10dp</dimen>
+    <dimen name="activity_maintenance_insertion_spinner_maintenance_type_icon_width">36dp</dimen>
+    <dimen name="activity_maintenance_insertion_spinner_maintenance_type_icon_height">36dp</dimen>
+
+    <dimen name="activity_maintenance_insertion_switch_height">45dp</dimen>
+    <dimen name="activity_maintenance_insertion_switch_margin_left">10dp</dimen>
+    <dimen name="activity_maintenance_insertion_switch_margin_bottom">10dp</dimen>
+
+    <dimen name="activity_maintenance_insertion_date_height">45dp</dimen>
+    <dimen name="activity_maintenance_insertion_date_icon_width">36dp</dimen>
+    <dimen name="activity_maintenance_insertion_date_icon_height">36dp</dimen>
 
     <!-- MAIN FRAGMENT DIMENSIONS-->
     <dimen name="frag_main_linear_layout_padding">20dp</dimen>

@@ -1,0 +1,154 @@
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="it.science.unitn.lpsmt.auto.ui.MaintenanceInsertion"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_marginRight="@dimen/activity_horizontal_margin"
+    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+    android:layout_marginStart="@dimen/activity_horizontal_margin"
+    android:layout_marginTop="@dimen/activity_vertical_margin"
+    android:layout_marginBottom="@dimen/activity_vertical_margin">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- spinner to select the associated vehicle -->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/activity_maintenance_insertion_spinner_vehicle_height"
+            android:layout_marginBottom="@dimen/activity_maintenance_insertion_spinner_vehicle_margin_bottom"
+            android:background="@color/white">
+            <ImageView
+                android:layout_width="@dimen/activity_maintenance_insertion_spinner_vehicle_icon_width"
+                android:layout_height="@dimen/activity_maintenance_insertion_spinner_vehicle_icon_height"
+                android:background="@drawable/ic_car_48dp"
+                android:contentDescription="@string/content_descriptor_maintenance_insertion_vehicle_icon"/>
+            <Spinner
+                android:id="@+id/maintenance_insertion_vehicle_associated"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </LinearLayout>
+
+        <!-- place insertion filed -->
+        <LinearLayout
+             android:orientation="horizontal"
+             android:layout_width="match_parent"
+             android:layout_height="@dimen/activity_maintenance_insertion_place_height"
+             android:layout_marginBottom="@dimen/activity_maintenance_insertion_place_margin_bottom">
+             <ImageView
+                 android:layout_width="@dimen/activity_maintenance_insertion_place_icon_width"
+                 android:layout_height="@dimen/activity_maintenance_insertion_place_icon_height"
+                 android:background="@drawable/ic_maps_place_48dp"
+                 android:contentDescription="@string/content_descriptor_maintenance_insertion_place_icon"/>
+             <EditText
+                 android:id="@+id/maintenance_insertion_place_edit"
+                 android:layout_width="0dp"
+                 android:layout_height="match_parent"
+                 android:layout_weight="2"
+                 android:inputType="text"
+                 android:textColor="@color/black"/>
+             <Switch
+                 android:id="@+id/maintenance_insertion_switch_current_place"
+                 android:layout_width="wrap_content"
+                 android:layout_height="match_parent"
+                 android:layout_weight="0"
+                 android:layout_marginLeft="@dimen/activity_maintenance_insertion_place_switch_margin_left"
+                 android:layout_marginStart="@dimen/activity_maintenance_insertion_place_switch_margin_left"
+                 android:text="@string/activity_maintenance_insertion_place"
+                 android:textColor="@color/black"/>
+         </LinearLayout>
+
+        <!-- text field to insert the name -->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/activity_maintenance_insertion_text_name_height"
+            android:layout_marginBottom="@dimen/activity_maintenance_insertion_text_name_margin_bottom">
+            <ImageView
+                android:layout_width="@dimen/activity_maintenance_insertion_text_name_icon_width"
+                android:layout_height="@dimen/activity_maintenance_insertion_text_name_icon_height"
+                android:background="@drawable/ic_text_48dp"
+                android:contentDescription="@string/content_descriptor_maintenance_insertion_name_icon"/>
+            <EditText
+                android:id="@+id/maintenance_insertion_name"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="text"
+                android:textColor="@color/black"/>
+        </LinearLayout>
+
+        <!-- text field to insert the amount -->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/activity_maintenance_insertion_text_amount_height"
+            android:layout_marginBottom="@dimen/activity_maintenance_insertion_text_amount_margin_bottom">
+            <ImageView
+                android:layout_width="@dimen/activity_maintenance_insertion_text_amount_icon_width"
+                android:layout_height="@dimen/activity_maintenance_insertion_text_amount_height"
+                android:background="@drawable/ic_editor_attach_money_48dp"
+                android:contentDescription="@string/content_descriptor_maintenance_insertion_amount_icon"/>
+            <EditText
+                android:id="@+id/maintenance_insertion_amount"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="numberDecimal"
+                android:textColor="@color/black"/>
+        </LinearLayout>
+
+        <!-- spinner to select the type -->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/activity_maintenance_insertion_spinner_maintenance_type_height"
+            android:layout_marginBottom="@dimen/activity_maintenance_insertion_spinner_maintenance_type_margin_bottom">
+            <ImageView
+                android:layout_width="@dimen/activity_maintenance_insertion_spinner_maintenance_type_icon_width"
+                android:layout_height="@dimen/activity_maintenance_insertion_spinner_maintenance_type_icon_height"
+                android:background="@drawable/ic_car_48dp"
+                android:contentDescription="@string/content_descriptor_maintenance_insertion_type_icon"/>
+            <Spinner
+                android:id="@+id/maintenance_insertion_type"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="4dp"
+                android:layout_marginStart="4dp"/>
+        </LinearLayout>
+
+        <!-- calendar switch -->
+        <Switch
+            android:id="@+id/maintenance_insertion_switch_add_calendar_event"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/activity_maintenance_insertion_switch_height"
+            android:layout_marginLeft="@dimen/activity_maintenance_insertion_switch_margin_left"
+            android:layout_marginStart="@dimen/activity_maintenance_insertion_switch_margin_left"
+            android:layout_marginBottom="@dimen/activity_maintenance_insertion_switch_margin_bottom"
+            android:text="@string/activity_maintenance_insertion_add_calendar"
+            android:textColor="@color/black"/>
+        <!-- add a calendar date -->
+        <LinearLayout
+            android:id="@+id/maintenance_insertion_inner_frag_extraordinary"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/activity_maintenance_insertion_date_height"
+            android:visibility="invisible">
+            <ImageView
+                android:layout_width="@dimen/activity_maintenance_insertion_date_icon_width"
+                android:layout_height="@dimen/activity_maintenance_insertion_date_icon_height"
+                android:background="@drawable/ic_calendar_event_48dp"
+                android:contentDescription="@string/content_descriptor_maintenance_insertion_calendar_icon"/>
+            <EditText
+                android:id="@+id/maintenance_insertion_inner_frag_extraordinary_date"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="date"
+                android:textColor="@color/black"/>
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>
