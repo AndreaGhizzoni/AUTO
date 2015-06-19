@@ -116,13 +116,11 @@ public class GPSService extends Service {
             float curAccuracy = l.getAccuracy();
             float distanceNowFromLast = l.distanceTo(lastLocation);
 
-            if( distanceNowFromLast < GPS_ACCURACY ){
-                return false; // positions did not change
-            }
-
-            if( curAccuracy >= lastLocation.getAccuracy() && distanceNowFromLast < curAccuracy ){
-                return false; //accuracy got worst
-            }
+            // false if positions did not change or accuracy got worst
+            boolean isNotLocationChanged = distanceNowFromLast < GPS_ACCURACY ||
+                    ( curAccuracy >= lastLocation.getAccuracy() && distanceNowFromLast < curAccuracy);
+            if(isNotLocationChanged)
+                return false;
 
             this.lastLocation = l; // last location update;
             return true;
@@ -159,7 +157,7 @@ public class GPSService extends Service {
     private void sendAddressToClients(){
         Message message = Message.obtain(null, Protocol.SEND_LOCATION);
         Bundle b = new Bundle();
-        b.putString("address", this.addressFromLocation);
+        b.putString(Protocol.RETRIVED_ADDRESS, this.addressFromLocation);
         message.setData(b);
 
         for(Messenger m : mBandedClients){
@@ -202,5 +200,6 @@ public class GPSService extends Service {
         public static final int REQUEST_BIND = 0;
         public static final int REQUEST_UNBIND = -1;
         public static final int SEND_LOCATION = 1;
+        public static final String RETRIVED_ADDRESS = "address";
     }
 }

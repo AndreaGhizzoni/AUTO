@@ -256,7 +256,7 @@ public class MaintenanceInsertion extends ActionBarActivity {
             switch (msg.what){
                 case GPSService.Protocol.SEND_LOCATION:{
                     Bundle receivedBundle = msg.getData();
-                    String address = receivedBundle.getString("address");
+                    String address = receivedBundle.getString(GPSService.Protocol.RETRIVED_ADDRESS);
                     editCurrentPlace.setText(address);
                     break;
                 }
