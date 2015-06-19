@@ -15,6 +15,12 @@
         <item>Benzina</item>
     </string-array>
 
+    <string-array name="maintenance_type">
+        <item>Straordinaria</item>
+        <item>Ordinaria</item>
+        <item>Tassa</item>
+    </string-array>
+
     <string name="app_name">AUTO</string>
     <string name="title_activity_maintenance_insertion">Nuovo Costo</string>
 

@@ -15,6 +15,12 @@
         <item>Petrol</item>
     </string-array>
 
+    <string-array name="maintenance_type">
+        <item>Extraordinary</item>
+        <item>Ordinary</item>
+        <item>Tax</item>
+    </string-array>
+
     <string name="app_name">AUTO</string>
     <string name="title_activity_vehicle_insertion">VehicleInsertion</string>
 

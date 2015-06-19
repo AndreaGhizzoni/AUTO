@@ -30,7 +30,6 @@ import java.util.Calendar;
 import java.util.List;
 
 import it.science.unitn.lpsmt.auto.controller.dao.DAOVehicle;
-import it.science.unitn.lpsmt.auto.model.Maintenance;
 import it.science.unitn.lpsmt.auto.model.Vehicle;
 import it.science.unitn.lpsmt.auto.ui.service.GPSService;
 import lpsmt.science.unitn.it.auto.R;
@@ -137,9 +136,8 @@ public class MaintenanceInsertion extends ActionBarActivity {
         );
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerAdapter.add(getResources().getString(R.string.activity_maintenance_insertion_select_type));
-        spinnerAdapter.add(Maintenance.Type.EXTRAORDINARY.toString());
-        spinnerAdapter.add(Maintenance.Type.ORDINARY.toString());
-        spinnerAdapter.add(Maintenance.Type.TAX.toString());
+        for( String s : getResources().getStringArray(R.array.maintenance_type) )
+            spinnerAdapter.add(s);
 
         spinnerMaintenanceType = (Spinner) findViewById(R.id.maintenance_insertion_type);
         spinnerMaintenanceType.setAdapter(spinnerAdapter);

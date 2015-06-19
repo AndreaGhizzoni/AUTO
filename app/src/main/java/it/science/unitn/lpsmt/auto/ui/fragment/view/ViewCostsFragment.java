@@ -49,7 +49,7 @@ public class ViewCostsFragment extends Fragment {
                 spinnerAdapter.add(i.getName());
             }
         }else {
-            spinnerAdapter.add("No Vehicle");
+            spinnerAdapter.add(getResources().getString(R.string.frag_main_no_vehicle_inserted));
         }
 
         spinner = (Spinner) v.findViewById(R.id.frag_view_costs_spinner_vehicles);
