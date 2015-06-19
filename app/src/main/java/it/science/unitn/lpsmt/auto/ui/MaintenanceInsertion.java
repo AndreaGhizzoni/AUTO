@@ -55,7 +55,7 @@ public class MaintenanceInsertion extends ActionBarActivity {
     private void initSpinnerVehicleAssociated(){
         ArrayAdapter<CharSequence> spinnerAdapter = new ArrayAdapter<>(
             getApplicationContext(),
-            R.layout.frag_view_costs_spinner_item
+            R.layout.spinner_item
         );
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         if( new DAOVehicle().countObject() != 0 ) {
@@ -129,7 +129,7 @@ public class MaintenanceInsertion extends ActionBarActivity {
                 });
     }
 
-    public void showDatePickerDialog(){
+    private void showDatePickerDialog(){
         DialogFragment newFragment = new DatePickerFragment();
         newFragment.show(getSupportFragmentManager(), "datePicker");
     }
