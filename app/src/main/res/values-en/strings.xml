@@ -8,6 +8,14 @@
         <item>Export</item>
     </string-array>
 
+    <string-array name="fuel">
+        <item>Gasoline</item>
+        <item>LPG</item>
+        <item>Natural Gas</item>
+        <item>Petrol</item>
+    </string-array>
+
+    <string name="app_name">AUTO</string>
     <string name="title_activity_maintenance_insertion">New Cost</string>
 
     <string name="activity_maintenance_insertion_place">Here</string>

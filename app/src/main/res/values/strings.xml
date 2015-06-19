@@ -1,4 +1,54 @@
 <resources>
+    <string-array name="drawer_items">
+        <item>Home</item>
+        <item>Add Vehicle</item>
+        <item>New Refuel</item>
+        <item>New Cost</item>
+        <item>View Costs</item>
+        <item>Export</item>
+    </string-array>
+
+    <string-array name="fuel">
+        <item>Gasoline</item>
+        <item>LPG</item>
+        <item>Natural Gas</item>
+        <item>Petrol</item>
+    </string-array>
+
     <string name="app_name">AUTO</string>
     <string name="title_activity_vehicle_insertion">VehicleInsertion</string>
+
+    <string name="activity_maintenance_insertion_place">Here</string>
+    <string name="activity_maintenance_insertion_select_type">Select a Type</string>
+    <string name="activity_maintenance_insertion_add_calendar">Add a Calendar Event</string>
+    <string name="activity_maintenance_insertion_date">Date:</string>
+
+    <string name="async_task_google_login_dialog_title">Google Login.</string>
+    <string name="async_task_google_login_try_to_connect">Try to login with Google Account.</string>
+    <string name="async_task_google_login_connecting">Connecting…</string>
+    <string name="async_task_google_connection_success">Connected</string>
+    <string name="async_task_google_connection_fail">Connection fail</string>
+
+    <string name="content_descriptor_drawer_open">Open Drawer</string>
+    <string name="content_descriptor_drawer_close">Close Drawer</string>
+    <string name="content_descriptor_drawer_image">Drawer Image</string>
+    <string name="content_descriptor_drawer_item_icon">Drawer Icon</string>
+    <string name="content_descriptor_adapter_vehicle_inserted_icon">Vehicle Icon</string>
+    <string name="content_descriptor_adapter_last_refuels_icon">Last Refuels Icon</string>
+    <string name="content_descriptor_adapter_deadline_icon">Deadline Icon</string>
+    <string name="content_descriptor_maintenance_insertion_vehicle_icon">Vehicle Icon</string>
+    <string name="content_descriptor_maintenance_insertion_place_icon">Position Icon</string>
+    <string name="content_descriptor_maintenance_insertion_name_icon">Text Icon</string>
+    <string name="content_descriptor_maintenance_insertion_amount_icon">Amount Icon</string>
+    <string name="content_descriptor_maintenance_insertion_type_icon">Maintenance Type Icon</string>
+    <string name="content_descriptor_maintenance_insertion_calendar_icon">Calendar Icon</string>
+
+    <string name="frag_main_vehicle_inserted">VEHICLE INSERTED</string>
+    <string name="frag_main_no_vehicle_inserted">No Vehicle Inserted</string>
+    <string name="frag_main_last_refuel">LAST REFUEL</string>
+    <string name="frag_main_deadlines">DEADLINES</string>
+    <string name="frag_main_no_deadlines">No Deadlines</string>
+
+    <string name="frag_view_costs_no_cost_associated">No costs associated to this Vehicle</string>
+    <string name="frag_view_costs_no_vehicle_selected">Select a Vehicle</string>
 </resources>
