@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -147,6 +148,7 @@ public class MainActivity extends ActionBarActivity{
         mDrawerLayout.closeDrawer(mDrawerRelativeLayout);
 
         FragmentManager m = getFragmentManager();
+        boolean skip = false;
         Fragment f = null;
         String TAG = null;
         switch (position){
@@ -155,6 +157,14 @@ public class MainActivity extends ActionBarActivity{
                 if( f == null )
                     f = new MainFragment();
                 TAG = MainActivity.TAG;
+                skip = false;
+                break;
+            }
+
+            case 3:{ // maintenance insertion activity
+                Intent i = new Intent(this, MaintenanceInsertion.class);
+                startActivity(i);
+                skip = true;
                 break;
             }
 
@@ -163,15 +173,18 @@ public class MainActivity extends ActionBarActivity{
                 if( f == null )
                     f = new ViewCostsFragment();
                 TAG = ViewCostsFragment.TAG;
+                skip = false;
                 break;
             }
         }
 
-        if (args != null)
-            f.setArguments(args);
-        FragmentTransaction transaction = m.beginTransaction();
-        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-        transaction.replace(R.id.content, f).addToBackStack(TAG).commit();
+        if( !skip ) {
+            if (args != null)
+                f.setArguments(args);
+            FragmentTransaction transaction = m.beginTransaction();
+            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+            transaction.replace(R.id.content, f).addToBackStack(TAG).commit();
+        }
     }
 
 //==================================================================================================
@@ -224,6 +237,7 @@ public class MainActivity extends ActionBarActivity{
         private int getIcon( int position ){
             switch (position){
                 case 0: return R.drawable.ic_action_home_48dp;
+                case 3: return R.drawable.ic_editor_attach_money_48dp;
                 default: return R.drawable.ic_placeholder; // STUB
             }
         }
