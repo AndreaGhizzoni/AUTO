@@ -17,7 +17,6 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
@@ -38,102 +37,29 @@ import lpsmt.science.unitn.it.auto.R;
 
 // TODO maybe implements method to save the app instance when is put onPause
 public class MaintenanceInsertion extends ActionBarActivity {
-    public static MaintenanceInsertion instance;
     private List<Vehicle> vehicleList;
-    private Vehicle vehicleSelectedBySpinner;
-    private Maintenance.Type maintenanceSelectedBySpinner;
 
+    // graphical components necessary to save Maintenance object.
+    private Spinner spinnerVehicle;
+    private Switch switchGetCurrentPlace;
+    private EditText editCurrentPlace;
+    private EditText editName;
+    private EditText editAmount;
+    private Spinner spinnerMaintenanceType;
+    private EditText editCalendarDate;
+
+    // filed for gps service
     private ServiceConnection mConnection = new MyServiceConnection();
     private Messenger mMessenger = new Messenger(new ServiceHandler());
     private Messenger mService;
 
-    private Spinner spinnerVehicle;
-    private Switch switchGetCurrentPlace;
-    private EditText editCurrentPlace;
-    private Spinner spinnerMaintenanceType;
-
-    private void initSpinnerVehicleAssociated(){
-        ArrayAdapter<CharSequence> spinnerAdapter = new ArrayAdapter<>(
-            getApplicationContext(),
-            R.layout.spinner_item
-        );
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        if( new DAOVehicle().countObject() != 0 ) {
-            spinnerAdapter.add(getResources().getString(R.string.frag_view_costs_no_vehicle_selected));
-            vehicleList = new DAOVehicle().getAll();
-            for( Vehicle i : vehicleList ){
-                spinnerAdapter.add(i.getName());
-            }
-        }else {
-            spinnerAdapter.add("No Vehicle");
-            // TODO disable the form
-        }
-
-        spinnerVehicle = (Spinner) findViewById(R.id.maintenance_insertion_vehicle_associated);
-        spinnerVehicle.setOnItemSelectedListener(new SpinnerVehicleSelection());
-        spinnerVehicle.setAdapter(spinnerAdapter);
+    private boolean checkField(){
+        return false;
     }
 
-    private void initCurrentPlace(){
-        this.editCurrentPlace = (EditText)findViewById(R.id.maintenance_insertion_place_edit);
-        this.switchGetCurrentPlace = (Switch) findViewById(R.id.maintenance_insertion_switch_current_place);
-        this.switchGetCurrentPlace.setOnCheckedChangeListener(
-                new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                        if (b) doBind();
-                        else doUnBind();
-                        editCurrentPlace.setEnabled(!b);
-                    }
-                }
-        );
-    }
-
-    private void initSpinnerTypeMaintenance(){
-        ArrayAdapter<CharSequence> spinnerAdapter = new ArrayAdapter<>(
-            getApplicationContext(),
-            R.layout.frag_view_costs_spinner_item
-        );
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerAdapter.add(getResources().getString(R.string.activity_maintenance_insertion_select_type));
-        spinnerAdapter.add(Maintenance.Type.EXTRAORDINARY.toString());
-        spinnerAdapter.add(Maintenance.Type.ORDINARY.toString());
-        spinnerAdapter.add(Maintenance.Type.TAX.toString());
-
-        spinnerMaintenanceType = (Spinner) findViewById(R.id.maintenance_insertion_type);
-        spinnerMaintenanceType.setOnItemSelectedListener(new SpinnerMaintenanceTypeSelection());
-        spinnerMaintenanceType.setAdapter(spinnerAdapter);
-    }
-
-    private void initSwitchAddCalendarEvent(){
-        ((Switch)findViewById(R.id.maintenance_insertion_switch_add_calendar_event)).setOnCheckedChangeListener(
-                new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                        LinearLayout layoutDate = (LinearLayout) findViewById(R.id.maintenance_insertion_inner_frag_extraordinary);
-                        if (b)
-                            layoutDate.setVisibility(View.VISIBLE);
-                        else
-                            layoutDate.setVisibility(View.INVISIBLE);
-                    }
-                });
-    }
-
-    private void initDatePickerEvent(){
-        findViewById(R.id.maintenance_insertion_inner_frag_extraordinary_date).setOnFocusChangeListener(
-                new View.OnFocusChangeListener() {
-                    @Override
-                    public void onFocusChange(View view, boolean b) {
-                        if (b) showDatePickerDialog();
-                    }
-                });
-    }
-
-    private void showDatePickerDialog(){
-        DialogFragment newFragment = new DatePickerFragment();
-        newFragment.show(getSupportFragmentManager(), "datePicker");
-    }
-
+//==================================================================================================
+//  GPS SERVICE METHODS
+//==================================================================================================
     private void doBind(){
         Intent gps = new Intent( getApplicationContext(), GPSService.class );
         getApplicationContext().bindService(gps, mConnection, Context.BIND_AUTO_CREATE);
@@ -155,6 +81,100 @@ public class MaintenanceInsertion extends ActionBarActivity {
     }
 
 //==================================================================================================
+//  INIT METHODS
+//==================================================================================================
+    private void initSpinnerVehicleAssociated(){
+        ArrayAdapter<CharSequence> spinnerAdapter = new ArrayAdapter<>(
+            getApplicationContext(),
+            R.layout.spinner_item
+        );
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        if( new DAOVehicle().countObject() != 0 ) {
+            spinnerAdapter.add(getResources().getString(R.string.frag_view_costs_no_vehicle_selected));
+            vehicleList = new DAOVehicle().getAll();
+            for( Vehicle i : vehicleList ){
+                spinnerAdapter.add(i.getName());
+            }
+        }else {
+            spinnerAdapter.add("No Vehicle");
+            // TODO disable the form
+        }
+
+        spinnerVehicle = (Spinner) findViewById(R.id.maintenance_insertion_vehicle_associated);
+        spinnerVehicle.setAdapter(spinnerAdapter);
+    }
+
+    private void initEditTextCurrentPlace(){
+        this.editCurrentPlace = (EditText)findViewById(R.id.maintenance_insertion_place_edit);
+
+    }
+
+    private void initSwitchGetCurrentPlace(){
+        this.switchGetCurrentPlace = (Switch) findViewById(R.id.maintenance_insertion_switch_current_place);
+        this.switchGetCurrentPlace.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    if (b) doBind();
+                    else doUnBind();
+                    editCurrentPlace.setEnabled(!b);
+                }
+            }
+        );
+    }
+
+    private void initEditTextName(){
+        this.editName = (EditText)findViewById(R.id.maintenance_insertion_name);
+    }
+
+    private void initEditTextAmount(){
+        this.editAmount = (EditText)findViewById(R.id.maintenance_insertion_amount);
+    }
+
+    private void initSpinnerTypeMaintenance(){
+        ArrayAdapter<CharSequence> spinnerAdapter = new ArrayAdapter<>(
+            getApplicationContext(),
+            R.layout.spinner_item
+        );
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerAdapter.add(getResources().getString(R.string.activity_maintenance_insertion_select_type));
+        spinnerAdapter.add(Maintenance.Type.EXTRAORDINARY.toString());
+        spinnerAdapter.add(Maintenance.Type.ORDINARY.toString());
+        spinnerAdapter.add(Maintenance.Type.TAX.toString());
+
+        spinnerMaintenanceType = (Spinner) findViewById(R.id.maintenance_insertion_type);
+        spinnerMaintenanceType.setAdapter(spinnerAdapter);
+    }
+
+    private void initSwitchAddCalendarEvent(){
+        ((Switch)findViewById(R.id.maintenance_insertion_switch_add_calendar_event)).setOnCheckedChangeListener(
+                new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                        LinearLayout layoutDate = (LinearLayout) findViewById(R.id.maintenance_insertion_inner_frag_extraordinary);
+                        if (b)
+                            layoutDate.setVisibility(View.VISIBLE);
+                        else
+                            layoutDate.setVisibility(View.INVISIBLE);
+                    }
+                });
+    }
+
+    private void initDatePickerEvent(){
+        this.editCalendarDate = (EditText)findViewById(R.id.maintenance_insertion_inner_frag_extraordinary_date);
+        this.editCalendarDate.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if (b) showDatePickerDialog();
+            }
+        });
+    }
+
+    private void showDatePickerDialog(){
+        DialogFragment newFragment = new DatePickerFragment();
+        newFragment.show(getSupportFragmentManager(), "datePicker");
+    }
+
+//==================================================================================================
 //  OVERRIDE
 //==================================================================================================
     @Override
@@ -163,11 +183,13 @@ public class MaintenanceInsertion extends ActionBarActivity {
         setContentView(R.layout.activity_maintenance_insertion);
 
         this.initSpinnerVehicleAssociated();
-        this.initCurrentPlace();
+        this.initEditTextCurrentPlace();
+        this.initSwitchGetCurrentPlace();
+        this.initEditTextName();
+        this.initEditTextAmount();
         this.initSpinnerTypeMaintenance();
         this.initSwitchAddCalendarEvent();
         this.initDatePickerEvent();
-        instance = this;
     }
 
     @Override
@@ -206,34 +228,34 @@ public class MaintenanceInsertion extends ActionBarActivity {
 //==================================================================================================
 //  INNER CLASS
 //==================================================================================================
-    private class SpinnerVehicleSelection implements AdapterView.OnItemSelectedListener{
-        @Override
-        public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-            if( pos == 0 ) {
-                vehicleSelectedBySpinner = null;
-            }else{
-                vehicleSelectedBySpinner = vehicleList.get(pos-1);
-            }
-        }
-        @Override
-        public void onNothingSelected(AdapterView<?> adapterView) {}
-    }
-
-    private class SpinnerMaintenanceTypeSelection implements AdapterView.OnItemSelectedListener{
-        @Override
-        public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-            if( pos == 0 ){
-                maintenanceSelectedBySpinner = null;
-            }else{
-                Maintenance.Type newT = Maintenance.Type.valueOf(spinnerMaintenanceType.getSelectedItem().toString());
-                if( !newT.equals(maintenanceSelectedBySpinner)) {
-                    maintenanceSelectedBySpinner = newT;
-                }
-            }
-        }
-        @Override
-        public void onNothingSelected(AdapterView<?> adapterView) {}
-    }
+//    private class SpinnerVehicleSelection implements AdapterView.OnItemSelectedListener{
+//        @Override
+//        public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+//            if( pos == 0 ) {
+//                vehicleSelectedBySpinner = null;
+//            }else{
+//                vehicleSelectedBySpinner = vehicleList.get(pos-1);
+//            }
+//        }
+//        @Override
+//        public void onNothingSelected(AdapterView<?> adapterView) {}
+//    }
+//
+//    private class SpinnerMaintenanceTypeSelection implements AdapterView.OnItemSelectedListener{
+//        @Override
+//        public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+//            if( pos == 0 ){
+//                maintenanceSelectedBySpinner = null;
+//            }else{
+//                Maintenance.Type newT = Maintenance.Type.valueOf(spinnerMaintenanceType.getSelectedItem().toString());
+//                if( !newT.equals(maintenanceSelectedBySpinner)) {
+//                    maintenanceSelectedBySpinner = newT;
+//                }
+//            }
+//        }
+//        @Override
+//        public void onNothingSelected(AdapterView<?> adapterView) {}
+//    }
 
     public static class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
         @Override

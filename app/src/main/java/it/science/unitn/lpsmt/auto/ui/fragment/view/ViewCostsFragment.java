@@ -38,7 +38,7 @@ public class ViewCostsFragment extends Fragment {
     private void initSpinner( View v ){
         ArrayAdapter<CharSequence> spinnerAdapter = new ArrayAdapter<>(
             v.getContext(),
-            R.layout.frag_view_costs_spinner_item
+            R.layout.spinner_item
         );
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         if( new DAOVehicle().countObject() != 0 ) {

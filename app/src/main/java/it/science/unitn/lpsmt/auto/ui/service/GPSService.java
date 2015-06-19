@@ -24,7 +24,7 @@ import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import it.science.unitn.lpsmt.auto.ui.MaintenanceInsertion;
+import it.science.unitn.lpsmt.auto.ui.MainActivity;
 
 public class GPSService extends Service {
 //    private static final String TAG = GPSService.class.getSimpleName();
@@ -130,7 +130,7 @@ public class GPSService extends Service {
     }
 
     private void doAddressChange(){
-        Geocoder geocoder = new Geocoder(MaintenanceInsertion.instance, Locale.getDefault());
+        Geocoder geocoder = new Geocoder(MainActivity.getApp(), Locale.getDefault());
         List<Address> addressList = null;
         try {
             addressList = geocoder.getFromLocation(
