@@ -61,28 +61,28 @@ public class MaintenanceInsertion extends ActionBarActivity {
 
     private boolean checkField(){
         if( this.spinnerVehicle.getSelectedItemPosition() == 0 ) {
-            displayToast("Select a vehicle");
+            displayToast(R.string.activity_maintenance_insertion_vehicle_missing);
             return false;
         }
 
         if( this.editName.getText().toString().isEmpty() ){
-            displayToast("Name missing");
+            displayToast(R.string.activity_maintenance_insertion_name_missing);
             return false;
         }
 
         if( this.editAmount.getText().toString().isEmpty() ){
-            displayToast("Amount missing");
+            displayToast(R.string.activity_maintenance_insertion_amount_missing);
             return false;
         }
 
         if( this.spinnerMaintenanceType.getSelectedItemPosition() == 0 ){
-            displayToast("Select a maintenance type");
+            displayToast(R.string.activity_maintenance_insertion_maintenance_type_missing);
             return false;
         }
 
         if( this.switchAddCalendarEvent.isChecked() &&
                 this.editCalendarDate.getText().toString().isEmpty() ){
-            displayToast("Calendar date missing");
+            displayToast(R.string.activity_maintenance_insertion_calendar_date_missing);
             return false;
         }
 
@@ -113,8 +113,9 @@ public class MaintenanceInsertion extends ActionBarActivity {
         new DAOCost().save(m);
     }
 
-    private void displayToast(String s){
-        Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
+    private void displayToast(int resources){
+        Toast.makeText(getApplicationContext(), getResources().getString(resources),
+                Toast.LENGTH_LONG).show();
     }
 
 //==================================================================================================
@@ -156,7 +157,7 @@ public class MaintenanceInsertion extends ActionBarActivity {
                 spinnerAdapter.add(i.getName());
             }
         }else {
-            spinnerAdapter.add("No Vehicle");
+            spinnerAdapter.add(getResources().getString(R.string.frag_main_no_vehicle_inserted));
             // TODO disable the form
         }
 
@@ -166,7 +167,6 @@ public class MaintenanceInsertion extends ActionBarActivity {
 
     private void initEditTextCurrentPlace(){
         this.editCurrentPlace = (EditText)findViewById(R.id.maintenance_insertion_place_edit);
-
     }
 
     private void initSwitchGetCurrentPlace(){
@@ -280,7 +280,11 @@ public class MaintenanceInsertion extends ActionBarActivity {
         if (id == R.id.done) {
             if( checkField() ) {
                 save();
-                Toast.makeText(getApplicationContext(), "Done button", Toast.LENGTH_SHORT).show();
+                Toast.makeText(
+                    getApplicationContext(),
+                    getResources().getString(R.string.activity_maintenance_insertion_maintenance_saved_success),
+                    Toast.LENGTH_LONG
+                ).show();
             }
             return true;
         }
@@ -290,35 +294,6 @@ public class MaintenanceInsertion extends ActionBarActivity {
 //==================================================================================================
 //  INNER CLASS
 //==================================================================================================
-//    private class SpinnerVehicleSelection implements AdapterView.OnItemSelectedListener{
-//        @Override
-//        public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-//            if( pos == 0 ) {
-//                vehicleSelectedBySpinner = null;
-//            }else{
-//                vehicleSelectedBySpinner = vehicleList.get(pos-1);
-//            }
-//        }
-//        @Override
-//        public void onNothingSelected(AdapterView<?> adapterView) {}
-//    }
-//
-//    private class SpinnerMaintenanceTypeSelection implements AdapterView.OnItemSelectedListener{
-//        @Override
-//        public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-//            if( pos == 0 ){
-//                maintenanceSelectedBySpinner = null;
-//            }else{
-//                Maintenance.Type newT = Maintenance.Type.valueOf(spinnerMaintenanceType.getSelectedItem().toString());
-//                if( !newT.equals(maintenanceSelectedBySpinner)) {
-//                    maintenanceSelectedBySpinner = newT;
-//                }
-//            }
-//        }
-//        @Override
-//        public void onNothingSelected(AdapterView<?> adapterView) {}
-//    }
-
     public static class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
