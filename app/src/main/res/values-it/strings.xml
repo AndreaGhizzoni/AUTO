@@ -53,6 +53,7 @@
     <string name="content_descriptor_maintenance_insertion_place_icon">Icona della Posizione</string>
     <string name="content_descriptor_maintenance_insertion_name_icon">Icona del Nome</string>
     <string name="content_descriptor_maintenance_insertion_amount_icon">Icona dell\'importo</string>
+    <string name="content_descriptor_maintenance_insertion_notes_icon">Icona delle note</string>
     <string name="content_descriptor_maintenance_insertion_type_icon">Icona della Manutenzione</string>
     <string name="content_descriptor_maintenance_insertion_calendar_icon">Icona del Calendario</string>
 

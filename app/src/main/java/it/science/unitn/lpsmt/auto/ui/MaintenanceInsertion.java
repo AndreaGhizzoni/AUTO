@@ -50,6 +50,7 @@ public class MaintenanceInsertion extends ActionBarActivity {
     private Location locationFromGPS;
     private EditText editName;
     private EditText editAmount;
+    private EditText editNotes;
     private Spinner spinnerMaintenanceType;
     private Switch switchAddCalendarEvent;
     private EditText editCalendarDate;
@@ -91,12 +92,21 @@ public class MaintenanceInsertion extends ActionBarActivity {
 
     private void save(){
         Vehicle v = vehicleList.get(this.spinnerVehicle.getSelectedItemPosition()-1);
+
         Place p = null;
         if( !editCurrentPlace.getText().toString().isEmpty() ){
             p = new Place(Const.NO_DB_ID_SET, editCurrentPlace.getText().toString(), locationFromGPS);
         }
+
         String name = this.editName.getText().toString();
+
         Float amount = Float.parseFloat(this.editAmount.getText().toString());
+
+        String notes = "";
+        if( !this.editNotes.getText().toString().isEmpty() ){
+            notes = this.editNotes.getText().toString();
+        }
+
         Maintenance.Type t;
         int pos = this.spinnerMaintenanceType.getSelectedItemPosition()-1;
         if( pos == 0 )
@@ -104,12 +114,13 @@ public class MaintenanceInsertion extends ActionBarActivity {
         else if( pos == 1 )
             t = Maintenance.Type.ORDINARY;
         else t = Maintenance.Type.TAX;
+
         Integer calendarID = 1;// stub
         if( this.switchAddCalendarEvent.isChecked() ){
             // set calendar id
         }
 
-        Maintenance m = new Maintenance(Const.NO_DB_ID_SET, v, amount, "", name, t, p, calendarID);
+        Maintenance m = new Maintenance(Const.NO_DB_ID_SET, v, amount, notes, name, t, p, calendarID);
         new DAOCost().save(m);
     }
 
@@ -190,6 +201,10 @@ public class MaintenanceInsertion extends ActionBarActivity {
         this.editAmount = (EditText)findViewById(R.id.maintenance_insertion_amount);
     }
 
+    private void initEditNotes(){
+        this.editNotes = (EditText)findViewById(R.id.maintenance_insertion_notes);
+    }
+
     private void initSpinnerTypeMaintenance(){
         ArrayAdapter<CharSequence> spinnerAdapter = new ArrayAdapter<>(
             getApplicationContext(),
@@ -246,6 +261,7 @@ public class MaintenanceInsertion extends ActionBarActivity {
         this.initSwitchGetCurrentPlace();
         this.initEditTextName();
         this.initEditTextAmount();
+        this.initEditNotes();
         this.initSpinnerTypeMaintenance();
         this.initSwitchAddCalendarEvent();
         this.initDatePickerEvent();

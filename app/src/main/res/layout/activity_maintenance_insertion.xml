@@ -101,6 +101,27 @@
                 android:textColor="@color/black"/>
         </LinearLayout>
 
+        <!-- text field of notes-->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/activity_maintenance_insertion_text_notes_margin_bottom">
+            <ImageView
+                android:layout_width="@dimen/activity_maintenance_insertion_text_notes_icon_width"
+                android:layout_height="@dimen/activity_maintenance_insertion_text_notes_icon_height"
+                android:background="@drawable/ic_placeholder"
+                android:contentDescription="@string/content_descriptor_maintenance_insertion_notes_icon"/>
+            <EditText
+                android:id="@+id/maintenance_insertion_notes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="@dimen/activity_maintenance_insertion_text_notes_height"
+                android:isScrollContainer="true"
+                android:inputType="textMultiLine"
+                android:textColor="@color/black"/>
+        </LinearLayout>
+
         <!-- spinner to select the type -->
         <LinearLayout
             android:orientation="horizontal"
