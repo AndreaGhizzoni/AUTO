@@ -18,7 +18,6 @@ import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import java.util.Date;
 import java.util.List;
 
-import it.science.unitn.lpsmt.auto.controller.VehicleDAO;
 import it.science.unitn.lpsmt.auto.controller.dao.DAOCost;
 import it.science.unitn.lpsmt.auto.controller.dao.DAOVehicle;
 import it.science.unitn.lpsmt.auto.model.Place;
@@ -166,18 +165,19 @@ public class MainFragment extends Fragment {
                     break;
                 }
                 case R.id.btnAddVehicle: {
-                    VehicleDAO dao = new DAOVehicle();
-                    Vehicle v = new Vehicle(Const.NO_DB_ID_SET, "myVehicle", "XX123", Vehicle.Fuel.GASOLINE, new Date());
-                    dao.save(v);
-                    Toast.makeText(view.getContext(), "Vehicle saved.", Toast.LENGTH_LONG ).show();
-                    vehicleInsertedAdapter.notifyVehiclesChanges();
-                    if( vehicleInsertedAdapter.isAdapterEmpty() ){
-                        vehicleInserted.setVisibility(View.INVISIBLE);
-                        getActivity().findViewById(R.id.frag_main_no_vehicle_inserted).setVisibility(View.VISIBLE);
-                    }else {
-                        vehicleInserted.setVisibility(View.VISIBLE);
-                        getActivity().findViewById(R.id.frag_main_no_vehicle_inserted).setVisibility(View.INVISIBLE);
-                    }
+                    MainActivity.getApp().selectFragment(1, null);
+//                    VehicleDAO dao = new DAOVehicle();
+//                    Vehicle v = new Vehicle(Const.NO_DB_ID_SET, "myVehicle", "XX123", Vehicle.Fuel.GASOLINE, new Date());
+//                    dao.save(v);
+//                    Toast.makeText(view.getContext(), "Vehicle saved.", Toast.LENGTH_LONG ).show();
+//                    vehicleInsertedAdapter.notifyVehiclesChanges();
+//                    if( vehicleInsertedAdapter.isAdapterEmpty() ){
+//                        vehicleInserted.setVisibility(View.INVISIBLE);
+//                        getActivity().findViewById(R.id.frag_main_no_vehicle_inserted).setVisibility(View.VISIBLE);
+//                    }else {
+//                        vehicleInserted.setVisibility(View.VISIBLE);
+//                        getActivity().findViewById(R.id.frag_main_no_vehicle_inserted).setVisibility(View.INVISIBLE);
+//                    }
                     break;
                 }
             }

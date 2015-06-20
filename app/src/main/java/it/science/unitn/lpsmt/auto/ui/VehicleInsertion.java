@@ -16,6 +16,8 @@ import lpsmt.science.unitn.it.auto.R;
 
 // TODO maybe implements method to save the app instance when is put onPause
 public class VehicleInsertion extends ActionBarActivity {
+    public static final int RESULT_CODE = 1001;
+
     // gui components
     private EditText editName;
     private EditText editPlate;

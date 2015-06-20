@@ -93,6 +93,13 @@ public class MainActivity extends ActionBarActivity{
                 break;
             }
 
+            case 1:{
+                Intent i = new Intent(this, VehicleInsertion.class);
+                startActivityForResult(i, VehicleInsertion.RESULT_OK);
+                skip = true;
+                break;
+            }
+
             case 3:{ // maintenance insertion activity
                 Intent i = new Intent(this, MaintenanceInsertion.class);
                 startActivityForResult(i, MaintenanceInsertion.RESULT_CODE);
