@@ -15,8 +15,15 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
+import it.science.unitn.lpsmt.auto.controller.dao.DAOVehicle;
+import it.science.unitn.lpsmt.auto.model.Vehicle;
+import it.science.unitn.lpsmt.auto.model.util.Const;
 import lpsmt.science.unitn.it.auto.R;
 
 // TODO maybe implements method to save the app instance when is put onPause
@@ -32,6 +39,56 @@ public class VehicleInsertion extends ActionBarActivity {
 //==================================================================================================
 //  METHOD
 //==================================================================================================
+    private boolean save(){
+        String n = this.editName.getText().toString();
+
+        String plate = this.editPlate.getText().toString();
+
+        Vehicle.Fuel f;
+        int p = this.spinnerFuel.getSelectedItemPosition()-1;
+        if( p == 0 )
+            f = Vehicle.Fuel.GASOLINE;
+        else if( p == 1 )
+            f = Vehicle.Fuel.LPG;
+        else if( p == 2 )
+            f = Vehicle.Fuel.NATURAL_GAS;
+        else f = Vehicle.Fuel.PETROL;
+
+        Date purchaseDate = null;
+        if( !this.editPurchaseDate.getText().toString().isEmpty() ){
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+            try {
+                purchaseDate = sdf.parse(this.editPurchaseDate.getText().toString());
+            } catch (ParseException e) {
+                // toast
+                return false;
+            }
+        }
+
+        Vehicle v = new Vehicle(Const.NO_DB_ID_SET, n, plate, f, purchaseDate);
+        new DAOVehicle().save(v);
+        return true;
+    }
+
+    private boolean checkFields(){
+        if( this.editName.getText().toString().isEmpty() ){
+            // toast
+            return false;
+        }
+
+        if( this.editPlate.getText().toString().isEmpty() ){
+            // toast
+            return false;
+        }
+
+        if( this.spinnerFuel.getSelectedItemPosition() == 0 ){
+            // toast
+            return false;
+        }
+
+        return true;
+    }
+
     private void initComponents(){
         this.editName = (EditText)findViewById(R.id.vehicle_insertion_name);
         this.editPlate = (EditText)findViewById(R.id.vehicle_insertion_plate);
@@ -59,6 +116,11 @@ public class VehicleInsertion extends ActionBarActivity {
         DialogFragment newFragment = new DatePickerFragment();
         newFragment.show(getSupportFragmentManager(), "datePicker");
     }
+
+    private void displayToast(int resources){
+        Toast.makeText(getApplicationContext(), getResources().getString(resources),
+                Toast.LENGTH_LONG).show();
+    }
 //==================================================================================================
 //  OVERRIDE
 //==================================================================================================
@@ -81,10 +143,11 @@ public class VehicleInsertion extends ActionBarActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.done) {
-            // check and save
-            Toast.makeText(getApplicationContext(), "Done button", Toast.LENGTH_SHORT).show();
-            setResult(Activity.RESULT_OK);
-            finish();
+            if( checkFields() && save() ) {
+                Toast.makeText(getApplicationContext(), "Done button", Toast.LENGTH_SHORT).show();
+                setResult(Activity.RESULT_OK);
+                finish();
+            }
             return true;
         }
         return super.onOptionsItemSelected(item);
