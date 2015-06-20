@@ -23,6 +23,7 @@
 
     <string name="app_name">AUTO</string>
     <string name="title_activity_maintenance_insertion">New Cost</string>
+    <string name="title_activity_vehicle_insertion">New Vehicle</string>
 
     <string name="activity_maintenance_insertion_place">Here</string>
     <string name="activity_maintenance_insertion_select_type">Select a Type</string>
