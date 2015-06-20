@@ -180,7 +180,7 @@ public class MainActivity extends ActionBarActivity{
 
         if( !skip ) {
             if (args != null)
-                f.setArguments(args);
+                    f.setArguments(args);
             FragmentTransaction transaction = m.beginTransaction();
             transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
             transaction.replace(R.id.content, f).addToBackStack(TAG).commit();
@@ -241,7 +241,7 @@ public class MainActivity extends ActionBarActivity{
                 case 2: return R.drawable.ic_refuel_add_48dp;
                 case 3: return R.drawable.ic_cost_add_48dp;
                 case 4: return R.drawable.ic_cost_show_48dp;
-                default: return R.drawable.ic_placeholder; // STUB
+                default: return R.drawable.ic_action_export_48dp; // STUB
             }
         }
 
