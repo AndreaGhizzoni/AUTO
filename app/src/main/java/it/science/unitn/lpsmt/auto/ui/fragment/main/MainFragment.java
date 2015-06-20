@@ -95,6 +95,17 @@ public class MainFragment extends Fragment {
         }
     }
 
+    public void updateVehicle(){
+        vehicleInsertedAdapter.notifyVehiclesChanges();
+        if( vehicleInsertedAdapter.isAdapterEmpty() ){
+            vehicleInserted.setVisibility(View.INVISIBLE);
+            getActivity().findViewById(R.id.frag_main_no_vehicle_inserted).setVisibility(View.VISIBLE);
+        }else {
+            vehicleInserted.setVisibility(View.VISIBLE);
+            getActivity().findViewById(R.id.frag_main_no_vehicle_inserted).setVisibility(View.INVISIBLE);
+        }
+    }
+
 //==================================================================================================
 //  OVERRIDE
 //==================================================================================================

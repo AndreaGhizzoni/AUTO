@@ -168,6 +168,14 @@ public class MainActivity extends ActionBarActivity{
                     }
                     break;
                 }
+                case VehicleInsertion.RESULT_CODE:{
+                    FragmentManager fm = getFragmentManager();
+                    Fragment f = fm.findFragmentById(R.id.content);
+                    if( f != null ){
+                        ((MainFragment)f).updateVehicle();
+                    }
+                    break;
+                }
                 default: {
                     super.onActivityResult(reqCode, resultCode, data);
                 }
