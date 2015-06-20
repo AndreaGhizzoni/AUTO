@@ -25,7 +25,7 @@ import it.science.unitn.lpsmt.auto.model.Place;
 import it.science.unitn.lpsmt.auto.model.Refuel;
 import it.science.unitn.lpsmt.auto.model.Vehicle;
 import it.science.unitn.lpsmt.auto.model.util.Const;
-import it.science.unitn.lpsmt.auto.ui.MaintenanceInsertion;
+import it.science.unitn.lpsmt.auto.ui.MainActivity;
 import lpsmt.science.unitn.it.auto.R;
 
 /**
@@ -85,6 +85,17 @@ public class MainFragment extends Fragment {
         }
     }
 
+    public void updateDeadlines(){
+        deadLineCardViewAdapter.notifyDeadLinesChanges();
+        if( deadLineCardViewAdapter.isAdapterEmpty() ){
+            deadlines.setVisibility(View.INVISIBLE);
+            getActivity().findViewById(R.id.frag_main_no_deadlines).setVisibility(View.VISIBLE);
+        }else{
+            deadlines.setVisibility(View.VISIBLE);
+            getActivity().findViewById(R.id.frag_main_no_deadlines).setVisibility(View.INVISIBLE);
+        }
+    }
+
 //==================================================================================================
 //  OVERRIDE
 //==================================================================================================
@@ -125,8 +136,9 @@ public class MainFragment extends Fragment {
                     break;
                 }
                 case R.id.btnAddCost:{
-                    Intent i = new Intent(view.getContext(), MaintenanceInsertion.class);
-                    startActivity(i);
+                    MainActivity.getApp().selectFragment(3, null);
+//                    Intent i = new Intent(view.getContext(), MaintenanceInsertion.class);
+//                    startActivity(i);
 //                    List<Vehicle> list = new DAOVehicle().getAll();
 //                    if( list.size() != 0 ){
 //                        Vehicle v = list.get(0);

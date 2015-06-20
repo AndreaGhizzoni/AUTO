@@ -1,5 +1,6 @@
 package it.science.unitn.lpsmt.auto.ui;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -38,24 +39,9 @@ public class MainActivity extends ActionBarActivity{
     private DrawerLayout mDrawerLayout;
     private LinearLayout mDrawerRelativeLayout;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        instance = this;
-
-        // enable ActionBar app icon to behave as action to toggle nav drawer
-        try {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setHomeButtonEnabled(true);
-        }catch (NullPointerException ignored){}
-
-        this.initDrawer();
-
-        if(savedInstanceState == null)
-            selectFragment(0, savedInstanceState );
-    }
-
+//==================================================================================================
+//  METHOD
+//==================================================================================================
     private void initDrawer(){
         ListView drawerList = (ListView) findViewById(R.id.drawer_list);
         drawerList.setFastScrollEnabled(false);
@@ -90,6 +76,70 @@ public class MainActivity extends ActionBarActivity{
         mDrawerLayout.setDrawerListener(mDrawerToggle);
     }
 
+    public void selectFragment( int position, Bundle args ){
+        mDrawerLayout.closeDrawer(mDrawerRelativeLayout);
+
+        FragmentManager m = getFragmentManager();
+        boolean skip = false;
+        Fragment f = null;
+        String TAG = null;
+        switch (position){
+            case 0:{ // home frag main
+                f = m.findFragmentById(R.id.frag_main);
+                if( f == null )
+                    f = new MainFragment();
+                TAG = MainActivity.TAG;
+                skip = false;
+                break;
+            }
+
+            case 3:{ // maintenance insertion activity
+                Intent i = new Intent(this, MaintenanceInsertion.class);
+                startActivityForResult(i, MaintenanceInsertion.RESULT_CODE);
+                skip = true;
+                break;
+            }
+
+            case 4:{ // frag view costs
+                f = m.findFragmentById(R.id.frag_view_costs);
+                if( f == null )
+                    f = new ViewCostsFragment();
+                TAG = ViewCostsFragment.TAG;
+                skip = false;
+                break;
+            }
+        }
+
+        if( !skip ) {
+            if (args != null)
+                    f.setArguments(args);
+            FragmentTransaction transaction = m.beginTransaction();
+            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+            transaction.replace(R.id.content, f).addToBackStack(TAG).commit();
+        }
+    }
+
+//==================================================================================================
+//  OVERRIDE
+//==================================================================================================
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        instance = this;
+
+        // enable ActionBar app icon to behave as action to toggle nav drawer
+        try {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeButtonEnabled(true);
+        }catch (NullPointerException ignored){}
+
+        this.initDrawer();
+
+        if(savedInstanceState == null)
+            selectFragment(0, savedInstanceState );
+    }
+
     @Override
     public void onDestroy(){
         super.onDestroy();
@@ -97,6 +147,25 @@ public class MainActivity extends ActionBarActivity{
         new DAOCost().close();
         new DAOPlace().close();
         this.finish();
+    }
+
+    @Override
+    public void onActivityResult( int reqCode, int resultCode, Intent data ){
+        if( resultCode == Activity.RESULT_OK ){
+            switch( reqCode ){
+                case MaintenanceInsertion.RESULT_CODE:{
+                    FragmentManager fm = getFragmentManager();
+                    Fragment f = fm.findFragmentById(R.id.content);
+                    if( f != null ){
+                        ((MainFragment)f).updateDeadlines();
+                    }
+                    break;
+                }
+                default: {
+                    super.onActivityResult(reqCode, resultCode, data);
+                }
+            }
+        }
     }
 
     @Override
@@ -141,52 +210,6 @@ public class MainActivity extends ActionBarActivity{
         }else{
             // Default action on back pressed
             super.onBackPressed();
-        }
-    }
-
-//==================================================================================================
-//  METHOD
-//==================================================================================================
-    public void selectFragment( int position, Bundle args ){
-        mDrawerLayout.closeDrawer(mDrawerRelativeLayout);
-
-        FragmentManager m = getFragmentManager();
-        boolean skip = false;
-        Fragment f = null;
-        String TAG = null;
-        switch (position){
-            case 0:{ // home frag main
-                f = m.findFragmentById(R.id.frag_main);
-                if( f == null )
-                    f = new MainFragment();
-                TAG = MainActivity.TAG;
-                skip = false;
-                break;
-            }
-
-            case 3:{ // maintenance insertion activity
-                Intent i = new Intent(this, MaintenanceInsertion.class);
-                startActivity(i);
-                skip = true;
-                break;
-            }
-
-            case 4:{ // frag view costs
-                f = m.findFragmentById(R.id.frag_view_costs);
-                if( f == null )
-                    f = new ViewCostsFragment();
-                TAG = ViewCostsFragment.TAG;
-                skip = false;
-                break;
-            }
-        }
-
-        if( !skip ) {
-            if (args != null)
-                    f.setArguments(args);
-            FragmentTransaction transaction = m.beginTransaction();
-            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-            transaction.replace(R.id.content, f).addToBackStack(TAG).commit();
         }
     }
 

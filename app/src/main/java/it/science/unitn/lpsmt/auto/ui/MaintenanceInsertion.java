@@ -1,5 +1,6 @@
 package it.science.unitn.lpsmt.auto.ui;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.ComponentName;
@@ -46,6 +47,7 @@ import lpsmt.science.unitn.it.auto.R;
 
 // TODO maybe implements method to save the app instance when is put onPause
 public class MaintenanceInsertion extends ActionBarActivity {
+    public static final int RESULT_CODE = 1000;
     private List<Vehicle> vehicleList;
 
     // graphical components necessary to save Maintenance object.
@@ -95,7 +97,7 @@ public class MaintenanceInsertion extends ActionBarActivity {
         return true;
     }
 
-    private void save(){
+    private boolean save(){
         // get the vehicle from the spinner
         Vehicle v = vehicleList.get(this.spinnerVehicle.getSelectedItemPosition() - 1);
 
@@ -140,7 +142,7 @@ public class MaintenanceInsertion extends ActionBarActivity {
                 dStart = f.parse(date);
             } catch (ParseException ignored){
                 displayToast(R.string.activity_maintenance_insertion_calendar_date_parse_error);
-                return;
+                return false;
             }
             h.dStart = dStart;
             h.dEnd = dStart;
@@ -174,6 +176,7 @@ public class MaintenanceInsertion extends ActionBarActivity {
         // create the maintenance object and save it
         Maintenance m = new Maintenance(Const.NO_DB_ID_SET, v, amount, notes, name, t, p, calendarID.intValue() );
         new DAOCost().save(m);
+        return true;
     }
 
     private void displayToast(int resources){
@@ -346,13 +349,15 @@ public class MaintenanceInsertion extends ActionBarActivity {
         // Handle action bar item clicks here.
         int id = item.getItemId();
         if (id == R.id.done) {
-            if( checkField() ) {
-                save();
+            if( checkField() && save() ) {
                 Toast.makeText(
                     getApplicationContext(),
                     getResources().getString(R.string.activity_maintenance_insertion_maintenance_saved_success),
                     Toast.LENGTH_LONG
                 ).show();
+
+                setResult(Activity.RESULT_OK);
+                finish();
             }
             return true;
         }
@@ -418,6 +423,8 @@ public class MaintenanceInsertion extends ActionBarActivity {
         }
 
         @Override
-        public void onServiceDisconnected(ComponentName name) { mService = null; }
+        public void onServiceDisconnected(ComponentName name){
+            mService = null;
+        }
     }
 }

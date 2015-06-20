@@ -73,6 +73,8 @@ public class GPSService extends Service {
         if(this.timer != null)
             this.timer.cancel();
         this.lastLocation = null;
+        this.addressFromLocation = null;
+        this.mBandedClients.clear();
         this.running = false;
     }
 
