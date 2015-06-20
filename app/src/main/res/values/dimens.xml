@@ -30,6 +30,11 @@
     <dimen name="activity_maintenance_insertion_text_amount_icon_width">36dp</dimen>
     <dimen name="activity_maintenance_insertion_text_amount_icon_height">36dp</dimen>
 
+    <dimen name="activity_maintenance_insertion_text_notes_height">45dp</dimen>
+    <dimen name="activity_maintenance_insertion_text_notes_margin_bottom">10dp</dimen>
+    <dimen name="activity_maintenance_insertion_text_notes_icon_width">36dp</dimen>
+    <dimen name="activity_maintenance_insertion_text_notes_icon_height">36dp</dimen>
+
     <dimen name="activity_maintenance_insertion_spinner_maintenance_type_height">35dp</dimen>
     <dimen name="activity_maintenance_insertion_spinner_maintenance_type_margin_bottom">10dp</dimen>
     <dimen name="activity_maintenance_insertion_spinner_maintenance_type_icon_width">36dp</dimen>

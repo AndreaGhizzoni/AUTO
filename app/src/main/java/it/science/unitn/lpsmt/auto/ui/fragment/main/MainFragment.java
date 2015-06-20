@@ -48,12 +48,10 @@ public class MainFragment extends Fragment {
     private void initFAB(View v){
         // get the instanced one for onClick method: avoiding null references
         fab = (FloatingActionsMenu)v.findViewById(R.id.btnFab);
-        FloatingActionButton bntTestCalendar = (FloatingActionButton)v.findViewById(R.id.btnTestCalendar);
         FloatingActionButton bntAddRefuel = (FloatingActionButton)v.findViewById(R.id.btnAddRefuel);
         FloatingActionButton bntAddCost   = (FloatingActionButton)v.findViewById(R.id.btnAddCost);
         FloatingActionButton bntAddVehicle= (FloatingActionButton)v.findViewById(R.id.btnAddVehicle);
         FABActionListener fabal = new FABActionListener();
-        bntTestCalendar.setOnClickListener(fabal);
         bntAddRefuel.setOnClickListener(fabal);
         bntAddCost.setOnClickListener(fabal);
         bntAddVehicle.setOnClickListener(fabal);
@@ -110,11 +108,6 @@ public class MainFragment extends Fragment {
         @Override
         public void onClick(View view) {
             switch ( view.getId() ){
-                case R.id.btnTestCalendar:{
-                    Toast.makeText(view.getContext(), "This is a test button", Toast.LENGTH_LONG).show();
-                    break;
-                }
-
                 case R.id.btnAddRefuel:{
                     List<Vehicle> list = new DAOVehicle().getAll();
                     if( list.size() != 0 ) {

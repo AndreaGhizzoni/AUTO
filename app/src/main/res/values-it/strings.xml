@@ -28,6 +28,13 @@
     <string name="activity_maintenance_insertion_select_type">Seleziona un Tipo</string>
     <string name="activity_maintenance_insertion_add_calendar">Aggiungi Evento al Calendario</string>
     <string name="activity_maintenance_insertion_date">Data:</string>
+    <string name="activity_maintenance_insertion_vehicle_missing">Veicolo non Selezionato.</string>
+    <string name="activity_maintenance_insertion_name_missing">Nome del costo mancante.</string>
+    <string name="activity_maintenance_insertion_amount_missing">Importo del costo mancante.</string>
+    <string name="activity_maintenance_insertion_maintenance_type_missing">Tipo del costo non Selezionato.</string>
+    <string name="activity_maintenance_insertion_calendar_date_missing">Data del calendario mancante.</string>
+    <string name="activity_maintenance_insertion_maintenance_saved_success">Costo salvato correttamente!</string>
+    <string name="activity_maintenance_insertion_maintenance_saved_fail">Errore nel salvataggio del Costo.</string>
 
     <string name="async_task_google_login_dialog_title">Accesso con Google</string>
     <string name="async_task_google_login_try_to_connect">Tentativo di accesso all\'Account Google.</string>
@@ -46,6 +53,7 @@
     <string name="content_descriptor_maintenance_insertion_place_icon">Icona della Posizione</string>
     <string name="content_descriptor_maintenance_insertion_name_icon">Icona del Nome</string>
     <string name="content_descriptor_maintenance_insertion_amount_icon">Icona dell\'importo</string>
+    <string name="content_descriptor_maintenance_insertion_notes_icon">Icona delle note</string>
     <string name="content_descriptor_maintenance_insertion_type_icon">Icona della Manutenzione</string>
     <string name="content_descriptor_maintenance_insertion_calendar_icon">Icona del Calendario</string>
 

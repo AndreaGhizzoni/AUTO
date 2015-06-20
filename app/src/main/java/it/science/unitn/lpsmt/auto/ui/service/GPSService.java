@@ -157,7 +157,8 @@ public class GPSService extends Service {
     private void sendAddressToClients(){
         Message message = Message.obtain(null, Protocol.SEND_LOCATION);
         Bundle b = new Bundle();
-        b.putString(Protocol.RETRIVED_ADDRESS, this.addressFromLocation);
+        b.putParcelable(Protocol.RETRIEVED_LOCATION, this.lastLocation);
+        b.putString(Protocol.RETRIEVED_ADDRESS, this.addressFromLocation);
         message.setData(b);
 
         for(Messenger m : mBandedClients){
@@ -200,6 +201,7 @@ public class GPSService extends Service {
         public static final int REQUEST_BIND = 0;
         public static final int REQUEST_UNBIND = -1;
         public static final int SEND_LOCATION = 1;
-        public static final String RETRIVED_ADDRESS = "address";
+        public static final String RETRIEVED_ADDRESS = "address";
+        public static final String RETRIEVED_LOCATION = "location";
     }
 }
