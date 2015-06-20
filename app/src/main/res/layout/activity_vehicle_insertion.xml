@@ -10,78 +10,85 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin">
 
-    <!-- name of vehicle -->
     <LinearLayout
-        android:layout_height="45dp"
-        android:layout_marginBottom="10dp"
         android:layout_width="match_parent"
-        android:orientation="horizontal">
-        <ImageView
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:background="@drawable/ic_car_48dp"
-            android:contentDescription="fucking car"/>
-        <EditText
-            android:id="@+id/vehicle_insertion_name"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:inputType="text"
-            android:textColor="@color/black"/>
-    </LinearLayout>
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-    <!-- plate of vehicle -->
-    <LinearLayout
-        android:layout_height="45dp"
-        android:layout_marginBottom="10dp"
-        android:layout_width="match_parent"
-        android:orientation="horizontal">
-        <ImageView
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:background="@drawable/ic_placeholder"
-            android:contentDescription="fucking plate"/>
-        <EditText
-            android:id="@+id/vehicle_insertion_plate"
+        <!-- name of vehicle -->
+        <LinearLayout
+            android:layout_height="45dp"
+            android:layout_marginBottom="10dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:inputType="text"
-            android:textColor="@color/black"/>
-    </LinearLayout>
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:background="@drawable/ic_car_48dp"
+                android:contentDescription="fucking car"/>
+            <EditText
+                android:id="@+id/vehicle_insertion_name"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="text"
+                android:textColor="@color/black"/>
+        </LinearLayout>
 
-    <!-- vehicle fuel -->
-    <LinearLayout
-        android:layout_height="45dp"
-        android:layout_marginBottom="10dp"
-        android:layout_width="match_parent"
-        android:orientation="horizontal">
-        <ImageView
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:background="@drawable/ic_placeholder"
-            android:contentDescription="fucking fuel"/>
-        <Spinner
-            android:id="@+id/vehicle_insertion_spinner_fuel"
+        <!-- plate of vehicle -->
+        <LinearLayout
+            android:layout_height="45dp"
+            android:layout_marginBottom="10dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-    </LinearLayout>
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:background="@drawable/ic_placeholder"
+                android:contentDescription="fucking plate"/>
+            <EditText
+                android:id="@+id/vehicle_insertion_plate"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="text"
+                android:textColor="@color/black"/>
+        </LinearLayout>
 
-    <!-- purchase data vehicle -->
-    <LinearLayout
-        android:layout_height="45dp"
-        android:layout_marginBottom="10dp"
-        android:layout_width="match_parent"
-        android:orientation="horizontal">
-        <ImageView
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:background="@drawable/ic_placeholder"
-            android:contentDescription="fucking date"/>
-        <EditText
-            android:id="@+id/vehicle_insertion_purchase_data"
+        <!-- vehicle fuel -->
+        <LinearLayout
+            android:layout_height="45dp"
+            android:layout_marginBottom="10dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:inputType="date"
-            android:textColor="@color/black"/>
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:background="@drawable/ic_placeholder"
+                android:contentDescription="fucking fuel"/>
+            <Spinner
+                android:id="@+id/vehicle_insertion_spinner_fuel"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </LinearLayout>
+
+        <!-- purchase data vehicle -->
+        <LinearLayout
+            android:layout_height="45dp"
+            android:layout_marginBottom="10dp"
+            android:layout_width="match_parent"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:background="@drawable/ic_placeholder"
+                android:contentDescription="fucking date"/>
+            <EditText
+                android:id="@+id/vehicle_insertion_purchase_data"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="date"
+                android:textColor="@color/black"/>
+        </LinearLayout>
+
     </LinearLayout>
 
 </ScrollView>
