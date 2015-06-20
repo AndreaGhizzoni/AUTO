@@ -101,7 +101,7 @@
             android:id="@+id/btnAddVehicle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            fab:fab_icon="@drawable/ic_placeholder"
+            fab:fab_icon="@drawable/ic_vehicle_add_48dp"
             fab:fab_size="mini"
             fab:fab_colorNormal="@color/white"
             fab:fab_colorPressed="@color/half_black" />

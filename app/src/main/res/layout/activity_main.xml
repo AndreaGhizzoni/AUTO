@@ -21,7 +21,7 @@
             android:layout_width="@dimen/activity_main_drawer_width"
             android:layout_height="@dimen/activity_main_drawer_height"
             android:contentDescription="@string/content_descriptor_drawer_image"
-            android:background="@drawable/drawer_header_placeholder"/>
+            android:background="@drawable/drawer_header"/>
         <ListView
             android:id="@+id/drawer_list"
             android:layout_width="@dimen/activity_main_drawer_width"

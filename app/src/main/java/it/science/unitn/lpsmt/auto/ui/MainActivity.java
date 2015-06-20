@@ -242,7 +242,10 @@ public class MainActivity extends ActionBarActivity{
         protected int getIcon(int position){
             switch (position){
                 case 0: return R.drawable.ic_action_home_48dp;
-                case 3: return R.drawable.ic_editor_attach_money_48dp;
+                case 1: return R.drawable.ic_vehicle_add_48dp;
+                case 2: return R.drawable.ic_refuel_add_48dp;
+                case 3: return R.drawable.ic_cost_add_48dp;
+                case 4: return R.drawable.ic_cost_show_48dp;
                 default: return R.drawable.ic_placeholder; // STUB
             }
         }
