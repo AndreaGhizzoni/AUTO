@@ -58,8 +58,11 @@ public class MainActivity extends ActionBarActivity{
 
     private void initDrawer(){
         ListView drawerList = (ListView) findViewById(R.id.drawer_list);
+        drawerList.setFastScrollEnabled(false);
+        drawerList.setFastScrollAlwaysVisible(false);
         drawerList.setAdapter(new DrawerAdapter(
                 this,
+                R.layout.adapter_drawer_list,
                 getResources().getStringArray(R.array.drawer_items)
         ));
         drawerList.setOnItemClickListener(new DrawerItemClickListener());
@@ -208,33 +211,35 @@ public class MainActivity extends ActionBarActivity{
     }
 
     private class DrawerAdapter extends ArrayAdapter<String> {
-        public DrawerAdapter(Context context, String[] data) {
-            super(context, 0, data);
+        private Context context;
+        private int resources;
+        public DrawerAdapter(Context context, int resources, String[] data) {
+            super(context, resources, data);
+            this.context = context;
+            this.resources = resources;
         }
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             DrawerItemHolder holder = new DrawerItemHolder();
 
-            if( convertView == null ){
-                convertView = LayoutInflater.from(getContext()).inflate(
-                    R.layout.adapter_drawer_list,
-                    parent,
-                    false
-                );
+            View v = convertView;
+
+            if( v == null ){
+                v = LayoutInflater.from(this.context).inflate(this.resources, parent, false);
             }
-            holder.text = (TextView) convertView.findViewById(R.id.adapter_drawer_item_text);
-            holder.icon = (ImageView) convertView.findViewById(R.id.adapter_drawer_item_icon);
+            holder.text = (TextView) v.findViewById(R.id.adapter_drawer_item_text);
+            holder.icon = (ImageView) v.findViewById(R.id.adapter_drawer_item_icon);
 
             String item = getItem(position);
             if(item != null){
                 holder.text.setText(item);
                 holder.icon.setImageResource(getIcon(position));
             }
-            return convertView;
+            return v;
         }
 
-        private int getIcon( int position ){
+        protected int getIcon(int position){
             switch (position){
                 case 0: return R.drawable.ic_action_home_48dp;
                 case 3: return R.drawable.ic_editor_attach_money_48dp;

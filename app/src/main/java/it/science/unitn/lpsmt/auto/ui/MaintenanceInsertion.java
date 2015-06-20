@@ -6,6 +6,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -29,8 +30,12 @@ import android.widget.Toast;
 import java.util.Calendar;
 import java.util.List;
 
+import it.science.unitn.lpsmt.auto.controller.dao.DAOCost;
 import it.science.unitn.lpsmt.auto.controller.dao.DAOVehicle;
+import it.science.unitn.lpsmt.auto.model.Maintenance;
+import it.science.unitn.lpsmt.auto.model.Place;
 import it.science.unitn.lpsmt.auto.model.Vehicle;
+import it.science.unitn.lpsmt.auto.model.util.Const;
 import it.science.unitn.lpsmt.auto.ui.service.GPSService;
 import lpsmt.science.unitn.it.auto.R;
 
@@ -42,9 +47,11 @@ public class MaintenanceInsertion extends ActionBarActivity {
     private Spinner spinnerVehicle;
     private Switch switchGetCurrentPlace;
     private EditText editCurrentPlace;
+    private Location locationFromGPS;
     private EditText editName;
     private EditText editAmount;
     private Spinner spinnerMaintenanceType;
+    private Switch switchAddCalendarEvent;
     private EditText editCalendarDate;
 
     // filed for gps service
@@ -53,7 +60,61 @@ public class MaintenanceInsertion extends ActionBarActivity {
     private Messenger mService;
 
     private boolean checkField(){
-        return false;
+        if( this.spinnerVehicle.getSelectedItemPosition() == 0 ) {
+            displayToast("Select a vehicle");
+            return false;
+        }
+
+        if( this.editName.getText().toString().isEmpty() ){
+            displayToast("Name missing");
+            return false;
+        }
+
+        if( this.editAmount.getText().toString().isEmpty() ){
+            displayToast("Amount missing");
+            return false;
+        }
+
+        if( this.spinnerMaintenanceType.getSelectedItemPosition() == 0 ){
+            displayToast("Select a maintenance type");
+            return false;
+        }
+
+        if( this.switchAddCalendarEvent.isChecked() &&
+                this.editCalendarDate.getText().toString().isEmpty() ){
+            displayToast("Calendar date missing");
+            return false;
+        }
+
+        return true;
+    }
+
+    private void save(){
+        Vehicle v = vehicleList.get(this.spinnerVehicle.getSelectedItemPosition()-1);
+        Place p = null;
+        if( !editCurrentPlace.getText().toString().isEmpty() ){
+            p = new Place(Const.NO_DB_ID_SET, editCurrentPlace.getText().toString(), locationFromGPS);
+        }
+        String name = this.editName.getText().toString();
+        Float amount = Float.parseFloat(this.editAmount.getText().toString());
+        Maintenance.Type t;
+        int pos = this.spinnerMaintenanceType.getSelectedItemPosition()-1;
+        if( pos == 0 )
+            t = Maintenance.Type.EXTRAORDINARY;
+        else if( pos == 1 )
+            t = Maintenance.Type.ORDINARY;
+        else t = Maintenance.Type.TAX;
+        Integer calendarID = 1;// stub
+        if( this.switchAddCalendarEvent.isChecked() ){
+            // set calendar id
+        }
+
+        Maintenance m = new Maintenance(Const.NO_DB_ID_SET, v, amount, "", name, t, p, calendarID);
+        new DAOCost().save(m);
+    }
+
+    private void displayToast(String s){
+        Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
     }
 
 //==================================================================================================
@@ -144,17 +205,17 @@ public class MaintenanceInsertion extends ActionBarActivity {
     }
 
     private void initSwitchAddCalendarEvent(){
-        ((Switch)findViewById(R.id.maintenance_insertion_switch_add_calendar_event)).setOnCheckedChangeListener(
-                new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                        LinearLayout layoutDate = (LinearLayout) findViewById(R.id.maintenance_insertion_inner_frag_extraordinary);
-                        if (b)
-                            layoutDate.setVisibility(View.VISIBLE);
-                        else
-                            layoutDate.setVisibility(View.INVISIBLE);
-                    }
-                });
+        this.switchAddCalendarEvent = (Switch)findViewById(R.id.maintenance_insertion_switch_add_calendar_event);
+        this.switchAddCalendarEvent.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                LinearLayout layoutDate = (LinearLayout) findViewById(R.id.maintenance_insertion_inner_frag_extraordinary);
+                if (b)
+                    layoutDate.setVisibility(View.VISIBLE);
+                else
+                    layoutDate.setVisibility(View.INVISIBLE);
+            }
+        });
     }
 
     private void initDatePickerEvent(){
@@ -217,7 +278,10 @@ public class MaintenanceInsertion extends ActionBarActivity {
         // Handle action bar item clicks here.
         int id = item.getItemId();
         if (id == R.id.done) {
-            Toast.makeText(getApplicationContext(), "Done button", Toast.LENGTH_SHORT).show();
+            if( checkField() ) {
+                save();
+                Toast.makeText(getApplicationContext(), "Done button", Toast.LENGTH_SHORT).show();
+            }
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -284,7 +348,8 @@ public class MaintenanceInsertion extends ActionBarActivity {
             switch (msg.what){
                 case GPSService.Protocol.SEND_LOCATION:{
                     Bundle receivedBundle = msg.getData();
-                    String address = receivedBundle.getString(GPSService.Protocol.RETRIVED_ADDRESS);
+                    String address = receivedBundle.getString(GPSService.Protocol.RETRIEVED_ADDRESS);
+                    locationFromGPS = receivedBundle.getParcelable(GPSService.Protocol.RETRIEVED_LOCATION);
                     editCurrentPlace.setText(address);
                     break;
                 }
