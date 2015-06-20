@@ -62,7 +62,7 @@
             <ImageView
                 android:layout_width="36dp"
                 android:layout_height="36dp"
-                android:background="@drawable/ic_placeholder"
+                android:background="@drawable/ic_maps_local_gas_station_48dp"
                 android:contentDescription="fucking fuel"/>
             <Spinner
                 android:id="@+id/vehicle_insertion_spinner_fuel"
@@ -79,7 +79,7 @@
             <ImageView
                 android:layout_width="36dp"
                 android:layout_height="36dp"
-                android:background="@drawable/ic_placeholder"
+                android:background="@drawable/ic_calendar_event_48dp"
                 android:contentDescription="fucking date"/>
             <EditText
                 android:id="@+id/vehicle_insertion_purchase_data"
