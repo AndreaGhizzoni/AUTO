@@ -33,6 +33,7 @@
     <string name="activity_maintenance_insertion_amount_missing">Importo del costo mancante.</string>
     <string name="activity_maintenance_insertion_maintenance_type_missing">Tipo del costo non Selezionato.</string>
     <string name="activity_maintenance_insertion_calendar_date_missing">Data del calendario mancante.</string>
+    <string name="activity_maintenance_insertion_calendar_date_parse_error">Date non in formato gg/mm/aaaa.</string>
     <string name="activity_maintenance_insertion_maintenance_saved_success">Costo salvato correttamente!</string>
     <string name="activity_maintenance_insertion_maintenance_saved_fail">Errore nel salvataggio del Costo.</string>
 

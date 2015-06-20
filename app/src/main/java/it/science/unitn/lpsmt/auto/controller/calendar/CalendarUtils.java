@@ -15,7 +15,6 @@ import java.util.TimeZone;
 
 import it.science.unitn.lpsmt.auto.ui.MainActivity;
 
-import static android.provider.CalendarContract.Events._ID;
 import static android.provider.CalendarContract.Events.ALL_DAY;
 import static android.provider.CalendarContract.Events.CALENDAR_ID;
 import static android.provider.CalendarContract.Events.CONTENT_URI;
@@ -24,16 +23,23 @@ import static android.provider.CalendarContract.Events.DTEND;
 import static android.provider.CalendarContract.Events.DTSTART;
 import static android.provider.CalendarContract.Events.EVENT_LOCATION;
 import static android.provider.CalendarContract.Events.EVENT_TIMEZONE;
-import static android.provider.CalendarContract.Events.RDATE;
-import static android.provider.CalendarContract.Events.TITLE;
 import static android.provider.CalendarContract.Events.HAS_ALARM;
+import static android.provider.CalendarContract.Events.TITLE;
+import static android.provider.CalendarContract.Events._ID;
+import static android.provider.CalendarContract.Events.RRULE;
 
 /**
  * TODO add doc
  */
 public class CalendarUtils {
-    private static CalendarUtils instance;
+    public static final int REMINDER_ONE_DAY = (24*60);
+    public static final int REMINDER_FIVE_DAYS = REMINDER_ONE_DAY * 5;
+    public static final int REMINDER_FIFTEEN_DAYS = REMINDER_ONE_DAY * 15;
 
+    private static final String FREQ_COUNT = "COUNT=20";
+    public static final String FREQ_YEARLY = "FREQ=YEARLY;"+FREQ_COUNT;
+
+    private static CalendarUtils instance;
     private static final Integer DEFAULT_CALENDAR_ID = 1;
     private Context context;
 
@@ -77,7 +83,7 @@ public class CalendarUtils {
         ContentResolver cr = this.context.getContentResolver();
         Cursor cursor = cr.query(
             CONTENT_URI,
-            new String[]{CALENDAR_ID, _ID, TITLE, EVENT_LOCATION, DESCRIPTION, DTSTART, DTEND, RDATE},
+            new String[]{CALENDAR_ID, _ID, TITLE, EVENT_LOCATION, DESCRIPTION, DTSTART, DTEND, RRULE},
             _ID+" = ?",
             new String[]{eventID+""},
             null
@@ -96,7 +102,7 @@ public class CalendarUtils {
             h.description = cursor.getString(4);
             h.dStart = new Date(cursor.getLong(5));
             h.dEnd = new Date(cursor.getLong(6));
-            h.rDate = new Date(cursor.getLong(7));
+            h.rRule = cursor.getString(7);
         }
         cursor.close();
         return h;
@@ -114,13 +120,13 @@ public class CalendarUtils {
         return data.eventID;
     }
 
-    public long putEventWithReminder( CalendarUtils.Holder data ){
+    public long putEventWithReminder( CalendarUtils.Holder data, int nDaysBeforeReminder ){
         long eventID = putEvent(data);
         ContentResolver cr = context.getContentResolver();
         // String to access default google calendar of device for reminder setting.
         ContentValues rv = new ContentValues();
         rv.put(CalendarContract.Reminders.EVENT_ID, eventID);
-        rv.put(CalendarContract.Reminders.MINUTES, (60*24)*2); // 2 days
+        rv.put(CalendarContract.Reminders.MINUTES, nDaysBeforeReminder);
         rv.put(CalendarContract.Reminders.METHOD, CalendarContract.Reminders.METHOD_ALERT);
         //Setting reminder in calendar on Event.
         Uri reminderUri = cr.insert(CalendarContract.Reminders.CONTENT_URI, rv);
@@ -143,7 +149,7 @@ public class CalendarUtils {
         public String description;
         public Date dStart;
         public Date dEnd;
-        public Date rDate;
+        public String rRule;
         public boolean hasAlarm;
 
         private ContentValues toContentValue(){
@@ -155,12 +161,13 @@ public class CalendarUtils {
             if( reminderID != null )
                 cv.put(CalendarContract.Reminders._ID, reminderID);
             cv.put(TITLE, title);
-            cv.put(EVENT_LOCATION, location);
+            if( location != null )
+                cv.put(EVENT_LOCATION, location);
             cv.put(DESCRIPTION, description);
             cv.put(DTSTART, dStart.getTime());
             cv.put(DTEND, dEnd.getTime());
-            if( rDate != null )
-                cv.put(RDATE, rDate.getTime());
+            if( rRule != null )
+                cv.put(RRULE, rRule);
             cv.put(HAS_ALARM, hasAlarm ? 1 : 0);
             cv.put(EVENT_TIMEZONE, TimeZone.getDefault().getDisplayName());
             return cv;

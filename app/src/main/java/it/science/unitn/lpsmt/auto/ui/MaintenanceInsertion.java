@@ -27,9 +27,14 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
+import it.science.unitn.lpsmt.auto.controller.calendar.CalendarUtils;
 import it.science.unitn.lpsmt.auto.controller.dao.DAOCost;
 import it.science.unitn.lpsmt.auto.controller.dao.DAOVehicle;
 import it.science.unitn.lpsmt.auto.model.Maintenance;
@@ -91,22 +96,28 @@ public class MaintenanceInsertion extends ActionBarActivity {
     }
 
     private void save(){
-        Vehicle v = vehicleList.get(this.spinnerVehicle.getSelectedItemPosition()-1);
+        // get the vehicle from the spinner
+        Vehicle v = vehicleList.get(this.spinnerVehicle.getSelectedItemPosition() - 1);
 
+        // build a place from the location and the address from GPSService
         Place p = null;
         if( !editCurrentPlace.getText().toString().isEmpty() ){
             p = new Place(Const.NO_DB_ID_SET, editCurrentPlace.getText().toString(), locationFromGPS);
         }
 
+        // get the cost name form edit
         String name = this.editName.getText().toString();
 
+        // get the amount from edit
         Float amount = Float.parseFloat(this.editAmount.getText().toString());
 
+        // get the notes if is not empty
         String notes = "";
         if( !this.editNotes.getText().toString().isEmpty() ){
             notes = this.editNotes.getText().toString();
         }
 
+        // parse the maintenance type because metalanguages support I can not use Type.valueOf()
         Maintenance.Type t;
         int pos = this.spinnerMaintenanceType.getSelectedItemPosition()-1;
         if( pos == 0 )
@@ -115,12 +126,53 @@ public class MaintenanceInsertion extends ActionBarActivity {
             t = Maintenance.Type.ORDINARY;
         else t = Maintenance.Type.TAX;
 
-        Integer calendarID = 1;// stub
+        // create the calendar event if the switch is enabled.
+        Long calendarID = null;// stub
         if( this.switchAddCalendarEvent.isChecked() ){
-            // set calendar id
+            String date = this.editCalendarDate.getText().toString();
+            CalendarUtils.Holder h = new CalendarUtils.Holder();
+            h.title = "[AUTO] "+name;
+            if( p != null ) h.location = p.getAddress();
+            h.description = notes;
+            SimpleDateFormat f = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+            Date dStart;
+            try {
+                dStart = f.parse(date);
+            } catch (ParseException ignored){
+                displayToast(R.string.activity_maintenance_insertion_calendar_date_parse_error);
+                return;
+            }
+            h.dStart = dStart;
+            h.dEnd = dStart;
+            switch( t ){
+                case ORDINARY: {
+                    h.rRule = CalendarUtils.FREQ_YEARLY;
+                    h.hasAlarm = true;
+                    calendarID = CalendarUtils.getInstance().putEventWithReminder(
+                            h,
+                            CalendarUtils.REMINDER_FIVE_DAYS
+                    );
+                    break;
+                }
+                case TAX: {
+                    h.rRule = CalendarUtils.FREQ_YEARLY;
+                    h.hasAlarm = true;
+                    calendarID = CalendarUtils.getInstance().putEventWithReminder(
+                            h,
+                            CalendarUtils.REMINDER_FIFTEEN_DAYS
+                    );
+                    break;
+                }
+                case EXTRAORDINARY: {
+                    h.hasAlarm = false;
+                    calendarID = CalendarUtils.getInstance().putEvent(h);
+                    break;
+                }
+            }
         }
 
-        Maintenance m = new Maintenance(Const.NO_DB_ID_SET, v, amount, notes, name, t, p, calendarID);
+        // create the maintenance object and save it
+        Maintenance m = new Maintenance(Const.NO_DB_ID_SET, v, amount, notes, name, t, p, calendarID.intValue() );
         new DAOCost().save(m);
     }
 
