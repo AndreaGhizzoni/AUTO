@@ -68,6 +68,7 @@
     <dimen name="activity_maintenance_insertion_date_height">45dp</dimen>
     <dimen name="activity_maintenance_insertion_date_icon_width">36dp</dimen>
     <dimen name="activity_maintenance_insertion_date_icon_height">36dp</dimen>
+    <dimen name="activity_maintenance_insertion_date_switch_margin_left">10dp</dimen>
 
     <!-- MAIN FRAGMENT DIMENSIONS-->
     <dimen name="frag_main_linear_layout_padding">20dp</dimen>

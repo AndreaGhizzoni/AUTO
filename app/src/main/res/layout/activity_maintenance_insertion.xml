@@ -153,7 +153,7 @@
             android:textColor="@color/black"/>
         <!-- add a calendar date -->
         <LinearLayout
-            android:id="@+id/maintenance_insertion_inner_frag_extraordinary"
+            android:id="@+id/maintenance_insertion_calendar_event"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="@dimen/activity_maintenance_insertion_date_height"
@@ -164,7 +164,7 @@
                 android:background="@drawable/ic_calendar_event_48dp"
                 android:contentDescription="@string/content_descriptor_maintenance_insertion_calendar_icon"/>
             <EditText
-                android:id="@+id/maintenance_insertion_inner_frag_extraordinary_date"
+                android:id="@+id/maintenance_insertion_calendar_event_edit"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
@@ -175,9 +175,9 @@
                  android:layout_width="wrap_content"
                  android:layout_height="match_parent"
                  android:layout_weight="0"
-                 android:layout_marginLeft="@dimen/activity_maintenance_insertion_place_switch_margin_left"
-                 android:layout_marginStart="@dimen/activity_maintenance_insertion_place_switch_margin_left"
-                 android:text="Today"
+                 android:layout_marginLeft="@dimen/activity_maintenance_insertion_date_switch_margin_left"
+                 android:layout_marginStart="@dimen/activity_maintenance_insertion_date_switch_margin_left"
+                 android:text="@string/activity_maintenance_insertion_today"
                  android:textColor="@color/black"/>
         </LinearLayout>
 

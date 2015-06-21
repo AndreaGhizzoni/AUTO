@@ -26,6 +26,7 @@
     <string name="title_activity_vehicle_insertion">Nuovo Veicolo</string>
 
     <string name="activity_maintenance_insertion_place">Qui</string>
+    <string name="activity_maintenance_insertion_today">Oggi</string>
     <string name="activity_maintenance_insertion_select_type">Seleziona un Tipo</string>
     <string name="activity_maintenance_insertion_add_calendar">Aggiungi Evento al Calendario</string>
     <string name="activity_maintenance_insertion_date">Data:</string>

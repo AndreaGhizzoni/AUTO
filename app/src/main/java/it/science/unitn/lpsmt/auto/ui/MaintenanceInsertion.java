@@ -280,7 +280,7 @@ public class MaintenanceInsertion extends ActionBarActivity {
         this.switchAddCalendarEvent.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                LinearLayout layoutDate = (LinearLayout) findViewById(R.id.maintenance_insertion_inner_frag_extraordinary);
+                LinearLayout layoutDate = (LinearLayout) findViewById(R.id.maintenance_insertion_calendar_event);
                 if (b)
                     layoutDate.setVisibility(View.VISIBLE);
                 else
@@ -290,7 +290,7 @@ public class MaintenanceInsertion extends ActionBarActivity {
     }
 
     private void initDatePickerEvent(){
-        this.editCalendarDate = (EditText)findViewById(R.id.maintenance_insertion_inner_frag_extraordinary_date);
+        this.editCalendarDate = (EditText)findViewById(R.id.maintenance_insertion_calendar_event_edit);
         this.editCalendarDate.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
@@ -304,14 +304,14 @@ public class MaintenanceInsertion extends ActionBarActivity {
         this.switchTodayDate.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                EditText edt = (EditText)findViewById(R.id.maintenance_insertion_inner_frag_extraordinary_date);
+                EditText edt = (EditText)findViewById(R.id.maintenance_insertion_calendar_event_edit);
                 if (b) {
                     final Calendar c = Calendar.getInstance();
                     int year = c.get(Calendar.YEAR);
                     int month = c.get(Calendar.MONTH);
                     int day = c.get(Calendar.DAY_OF_MONTH);
                     String format = "%d/%d/%d";
-                    String date = String.format(format, day, month+1, year);
+                    String date = String.format(format, day, month + 1, year);
                     edt.setText(date);
                 }else{
                     edt.setText("");
@@ -408,7 +408,7 @@ public class MaintenanceInsertion extends ActionBarActivity {
             String format = "%d/%d/%d";
             String date = String.format(format, day, month+1, year);
             EditText edt = (EditText) getActivity()
-                    .findViewById(R.id.maintenance_insertion_inner_frag_extraordinary_date);
+                    .findViewById(R.id.maintenance_insertion_calendar_event_edit);
             edt.setText(date);
         }
     }

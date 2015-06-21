@@ -26,6 +26,7 @@
     <string name="title_activity_vehicle_insertion">New Vehicle</string>
 
     <string name="activity_maintenance_insertion_place">Here</string>
+    <string name="activity_maintenance_insertion_today">Today</string>
     <string name="activity_maintenance_insertion_select_type">Select a Type</string>
     <string name="activity_maintenance_insertion_add_calendar">Add a Calendar Event</string>
     <string name="activity_maintenance_insertion_date">Date:</string>
