@@ -8,6 +8,27 @@
     <dimen name="activity_main_drawer_height">100dp</dimen>
     <dimen name="activity_main_drawer_divider_height">0dp</dimen>
 
+    <!-- VEHICLE INSERTION ACTIVITY -->
+    <dimen name="activity_vehicle_insertion_name_height">45dp</dimen>
+    <dimen name="activity_vehicle_insertion_name_margin_bottom">10dp</dimen>
+    <dimen name="activity_vehicle_insertion_name_icon_width">36dp</dimen>
+    <dimen name="activity_vehicle_insertion_name_icon_height">36dp</dimen>
+
+    <dimen name="activity_vehicle_insertion_plate_height">45dp</dimen>
+    <dimen name="activity_vehicle_insertion_plate_margin_bottom">10dp</dimen>
+    <dimen name="activity_vehicle_insertion_plate_icon_width">36dp</dimen>
+    <dimen name="activity_vehicle_insertion_plate_icon_height">36dp</dimen>
+
+    <dimen name="activity_vehicle_insertion_fuel_height">45dp</dimen>
+    <dimen name="activity_vehicle_insertion_fuel_margin_bottom">10dp</dimen>
+    <dimen name="activity_vehicle_insertion_fuel_icon_width">36dp</dimen>
+    <dimen name="activity_vehicle_insertion_fuel_icon_height">36dp</dimen>
+
+    <dimen name="activity_vehicle_insertion_purchase_data_height">45dp</dimen>
+    <dimen name="activity_vehicle_insertion_purchase_data_margin_bottom">10dp</dimen>
+    <dimen name="activity_vehicle_insertion_purchase_data_icon_width">36dp</dimen>
+    <dimen name="activity_vehicle_insertion_purchase_data_icon_height">36dp</dimen>
+
     <!-- MAINTENANCE INSERTION ACTIVITY -->
     <dimen name="activity_maintenance_insertion_spinner_vehicle_height">70dp</dimen>
     <dimen name="activity_maintenance_insertion_spinner_vehicle_margin_bottom">10dp</dimen>

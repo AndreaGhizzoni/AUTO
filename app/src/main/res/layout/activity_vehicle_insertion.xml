@@ -17,13 +17,13 @@
 
         <!-- name of vehicle -->
         <LinearLayout
-            android:layout_height="45dp"
-            android:layout_marginBottom="10dp"
+            android:layout_height="@dimen/activity_vehicle_insertion_name_height"
+            android:layout_marginBottom="@dimen/activity_vehicle_insertion_name_margin_bottom"
             android:layout_width="match_parent"
             android:orientation="horizontal">
             <ImageView
-                android:layout_width="36dp"
-                android:layout_height="36dp"
+                android:layout_width="@dimen/activity_vehicle_insertion_name_icon_width"
+                android:layout_height="@dimen/activity_vehicle_insertion_name_icon_height"
                 android:background="@drawable/ic_car_48dp"
                 android:contentDescription="@string/content_descriptor_vehicle_insertion_name_icon"/>
             <EditText
@@ -36,13 +36,13 @@
 
         <!-- plate of vehicle -->
         <LinearLayout
-            android:layout_height="45dp"
-            android:layout_marginBottom="10dp"
+            android:layout_height="@dimen/activity_vehicle_insertion_plate_height"
+            android:layout_marginBottom="@dimen/activity_vehicle_insertion_plate_margin_bottom"
             android:layout_width="match_parent"
             android:orientation="horizontal">
             <ImageView
-                android:layout_width="36dp"
-                android:layout_height="36dp"
+                android:layout_width="@dimen/activity_vehicle_insertion_plate_icon_width"
+                android:layout_height="@dimen/activity_vehicle_insertion_plate_icon_height"
                 android:background="@drawable/ic_placeholder"
                 android:contentDescription="@string/content_descriptor_vehicle_insertion_plate_icon"/>
             <EditText
@@ -55,13 +55,13 @@
 
         <!-- vehicle fuel -->
         <LinearLayout
-            android:layout_height="45dp"
-            android:layout_marginBottom="10dp"
+            android:layout_height="@dimen/activity_vehicle_insertion_fuel_height"
+            android:layout_marginBottom="@dimen/activity_vehicle_insertion_fuel_margin_bottom"
             android:layout_width="match_parent"
             android:orientation="horizontal">
             <ImageView
-                android:layout_width="36dp"
-                android:layout_height="36dp"
+                android:layout_width="@dimen/activity_vehicle_insertion_fuel_icon_width"
+                android:layout_height="@dimen/activity_vehicle_insertion_fuel_icon_height"
                 android:background="@drawable/ic_maps_local_gas_station_48dp"
                 android:contentDescription="@string/content_descriptor_vehicle_insertion_fuel_icon"/>
             <Spinner
@@ -72,13 +72,13 @@
 
         <!-- purchase data vehicle -->
         <LinearLayout
-            android:layout_height="45dp"
-            android:layout_marginBottom="10dp"
+            android:layout_height="@dimen/activity_vehicle_insertion_purchase_data_height"
+            android:layout_marginBottom="@dimen/activity_vehicle_insertion_purchase_data_margin_bottom"
             android:layout_width="match_parent"
             android:orientation="horizontal">
             <ImageView
-                android:layout_width="36dp"
-                android:layout_height="36dp"
+                android:layout_width="@dimen/activity_vehicle_insertion_purchase_data_icon_width"
+                android:layout_height="@dimen/activity_vehicle_insertion_purchase_data_icon_height"
                 android:background="@drawable/ic_calendar_event_48dp"
                 android:contentDescription="@string/content_descriptor_vehicle_insertion_purchase_date_icon"/>
             <EditText
