@@ -9,6 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import it.science.unitn.lpsmt.auto.controller.CostDAO;
 import it.science.unitn.lpsmt.auto.controller.dao.DAOCost;
@@ -42,6 +43,16 @@ public class DeadLineCardViewAdapter extends RecyclerView.Adapter<DeadLineCardVi
 
     public boolean isAdapterEmpty(){ return this.deadlines.isEmpty(); }
 
+    public String getPaymentSymbol(){
+        Locale def = Locale.getDefault();
+        if( def.equals(Locale.ITALY) )
+            return " €";
+        else if( def.equals(Locale.US) )
+            return " $";
+        else
+            return "";
+    }
+
 //==================================================================================================
 //  OVERRIDE
 //==================================================================================================
@@ -56,8 +67,8 @@ public class DeadLineCardViewAdapter extends RecyclerView.Adapter<DeadLineCardVi
     public void onBindViewHolder(ViewHolder holder, int position) {
         Maintenance m = this.deadlines.get(position);
         holder.maintenanceAssociated = m;
-        holder.name.setText( m.getName() );
-        holder.dateAndAmount.setText( m.getCalendarID()+"  -  "+m.getAmount() );
+        holder.name.setText(m.getName());
+        holder.amount.setText(m.getAmount()+getPaymentSymbol());
     }
 
     @Override
@@ -69,7 +80,7 @@ public class DeadLineCardViewAdapter extends RecyclerView.Adapter<DeadLineCardVi
     public static class ViewHolder extends RecyclerView.ViewHolder{
         public Maintenance maintenanceAssociated;
         public TextView name;
-        public TextView dateAndAmount;
+        public TextView amount;
         public ViewHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -88,7 +99,7 @@ public class DeadLineCardViewAdapter extends RecyclerView.Adapter<DeadLineCardVi
                 }
             });
             name = (TextView) itemView.findViewById(R.id.card_view_deadlines_name);
-            dateAndAmount = (TextView) itemView.findViewById(R.id.card_view_deadlines_dataAndAmount);
+            amount = (TextView) itemView.findViewById(R.id.card_view_deadlines_amount);
         }
     }
 }

@@ -24,9 +24,10 @@ import static android.provider.CalendarContract.Events.DTSTART;
 import static android.provider.CalendarContract.Events.EVENT_LOCATION;
 import static android.provider.CalendarContract.Events.EVENT_TIMEZONE;
 import static android.provider.CalendarContract.Events.HAS_ALARM;
+import static android.provider.CalendarContract.Events.RDATE;
+import static android.provider.CalendarContract.Events.RRULE;
 import static android.provider.CalendarContract.Events.TITLE;
 import static android.provider.CalendarContract.Events._ID;
-import static android.provider.CalendarContract.Events.RRULE;
 
 /**
  * TODO add doc
@@ -78,13 +79,13 @@ public class CalendarUtils {
      * @param eventID
      * @return
      */
-    public CalendarUtils.Holder getEventDataById( Integer eventID ){
+    public Holder getEventDataById( Integer eventID ){
         // https://goo.gl/C0hXD1
         ContentResolver cr = this.context.getContentResolver();
         Cursor cursor = cr.query(
             CONTENT_URI,
-            new String[]{CALENDAR_ID, _ID, TITLE, EVENT_LOCATION, DESCRIPTION, DTSTART, DTEND, RRULE},
-            _ID+" = ?",
+            new String[]{"_id", TITLE, EVENT_LOCATION, DESCRIPTION, DTSTART, DTEND, RRULE, RDATE},
+            CALENDAR_ID+" = ?",
             new String[]{eventID+""},
             null
         );
@@ -93,16 +94,17 @@ public class CalendarUtils {
             return null;
 
         cursor.moveToFirst();
-        CalendarUtils.Holder h = new CalendarUtils.Holder();
+        Holder h = new Holder();
         while( cursor.moveToNext() ){
-            h.calendarID = cursor.getInt(0);
-            h.eventID = cursor.getLong(1);
-            h.title = cursor.getString(2);
-            h.location = cursor.getString(3);
-            h.description = cursor.getString(4);
-            h.dStart = new Date(cursor.getLong(5));
-            h.dEnd = new Date(cursor.getLong(6));
-            h.rRule = cursor.getString(7);
+            h.calendarID = DEFAULT_CALENDAR_ID;
+            h.eventID = cursor.getLong(0);
+            h.title = cursor.getString(1);
+            h.location = cursor.getString(2);
+            h.description = cursor.getString(3);
+            h.dStart = new Date(cursor.getLong(4));
+            h.dEnd = new Date(cursor.getLong(5));
+            h.rRule = cursor.getString(6);
+            h.rDate = new Date(cursor.getLong(7));
         }
         cursor.close();
         return h;
@@ -150,6 +152,7 @@ public class CalendarUtils {
         public Date dStart;
         public Date dEnd;
         public String rRule;
+        public Date rDate;
         public boolean hasAlarm;
 
         private ContentValues toContentValue(){
@@ -168,6 +171,8 @@ public class CalendarUtils {
             cv.put(DTEND, dEnd.getTime());
             if( rRule != null )
                 cv.put(RRULE, rRule);
+            if( rDate != null )
+                cv.put(RDATE, rDate.getTime());
             cv.put(HAS_ALARM, hasAlarm ? 1 : 0);
             cv.put(EVENT_TIMEZONE, TimeZone.getDefault().getDisplayName());
             return cv;

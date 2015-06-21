@@ -24,6 +24,11 @@ public final class Date {
         return d== null? null : dateFormat.format(d);
     }
 
+    public static String getStringFromDate( java.util.Date d, String format ){
+        SimpleDateFormat sdf = new SimpleDateFormat(format, Locale.getDefault());
+        return d == null? null : sdf.format(d);
+    }
+
     /**
      * TODO add doc
      * @param s
