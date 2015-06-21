@@ -61,7 +61,12 @@ public class VehicleInsertedCardViewAdapter extends RecyclerView.Adapter<Vehicle
     public void onBindViewHolder(ViewHolder holder, int position) {
         Vehicle v = this.vehicles.get(position);
         SimpleDateFormat s = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-        holder.name.setText( v.getName()+"  "+getFuel(v.getFuel())+"  -  "+s.format(v.getPurchaseDate()) );
+        String vehicleString = v.getName()+"  "+getFuel(v.getFuel());
+        if( v.getPurchaseDate() != null )
+            vehicleString = vehicleString+"  -  "+s.format(v.getPurchaseDate());
+        else
+            vehicleString = "  -  Purchase data not set.";
+        holder.name.setText( vehicleString );
         holder.data.setText( v.getPlate() );
         holder.associatedVehicle = v;
     }

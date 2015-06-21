@@ -217,7 +217,7 @@ public class Vehicle {
                     NAME+" text not null, "+
                     PLATE+" text not null, "+
                     FUEL+" text not null, "+
-                    PURCHASE_DATA+" datetime not null "+
+                    PURCHASE_DATA+" datetime "+
                 ");";
     }
 }
