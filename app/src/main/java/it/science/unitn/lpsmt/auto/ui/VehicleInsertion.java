@@ -60,7 +60,7 @@ public class VehicleInsertion extends ActionBarActivity {
             try {
                 purchaseDate = sdf.parse(this.editPurchaseDate.getText().toString());
             } catch (ParseException e) {
-                // toast
+                displayToast(R.string.activity_vehicle_insertion_purchase_date_parse_error);
                 return false;
             }
         }
@@ -72,17 +72,17 @@ public class VehicleInsertion extends ActionBarActivity {
 
     private boolean checkFields(){
         if( this.editName.getText().toString().isEmpty() ){
-            // toast
+            displayToast(R.string.activity_vehicle_insertion_name_missing);
             return false;
         }
 
         if( this.editPlate.getText().toString().isEmpty() ){
-            // toast
+            displayToast(R.string.activity_vehicle_insertion_plate_missing);
             return false;
         }
 
         if( this.spinnerFuel.getSelectedItemPosition() == 0 ){
-            // toast
+            displayToast(R.string.activity_vehicle_insertion_fuel_not_selected);
             return false;
         }
 
@@ -121,6 +121,7 @@ public class VehicleInsertion extends ActionBarActivity {
         Toast.makeText(getApplicationContext(), getResources().getString(resources),
                 Toast.LENGTH_LONG).show();
     }
+
 //==================================================================================================
 //  OVERRIDE
 //==================================================================================================
@@ -144,7 +145,11 @@ public class VehicleInsertion extends ActionBarActivity {
         int id = item.getItemId();
         if (id == R.id.done) {
             if( checkFields() && save() ) {
-                Toast.makeText(getApplicationContext(), "Done button", Toast.LENGTH_SHORT).show();
+                Toast.makeText(
+                    getApplicationContext(),
+                    R.string.activity_vehicle_insertion_vehicle_save_success,
+                    Toast.LENGTH_SHORT
+                ).show();
                 setResult(Activity.RESULT_OK);
                 finish();
             }

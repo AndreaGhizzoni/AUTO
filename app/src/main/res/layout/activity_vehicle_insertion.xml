@@ -25,7 +25,7 @@
                 android:layout_width="36dp"
                 android:layout_height="36dp"
                 android:background="@drawable/ic_car_48dp"
-                android:contentDescription="fucking car"/>
+                android:contentDescription="@string/content_descriptor_vehicle_insertion_name_icon"/>
             <EditText
                 android:id="@+id/vehicle_insertion_name"
                 android:layout_width="match_parent"
@@ -44,7 +44,7 @@
                 android:layout_width="36dp"
                 android:layout_height="36dp"
                 android:background="@drawable/ic_placeholder"
-                android:contentDescription="fucking plate"/>
+                android:contentDescription="@string/content_descriptor_vehicle_insertion_plate_icon"/>
             <EditText
                 android:id="@+id/vehicle_insertion_plate"
                 android:layout_width="match_parent"
@@ -63,7 +63,7 @@
                 android:layout_width="36dp"
                 android:layout_height="36dp"
                 android:background="@drawable/ic_maps_local_gas_station_48dp"
-                android:contentDescription="fucking fuel"/>
+                android:contentDescription="@string/content_descriptor_vehicle_insertion_fuel_icon"/>
             <Spinner
                 android:id="@+id/vehicle_insertion_spinner_fuel"
                 android:layout_width="match_parent"
@@ -80,7 +80,7 @@
                 android:layout_width="36dp"
                 android:layout_height="36dp"
                 android:background="@drawable/ic_calendar_event_48dp"
-                android:contentDescription="fucking date"/>
+                android:contentDescription="@string/content_descriptor_vehicle_insertion_purchase_date_icon"/>
             <EditText
                 android:id="@+id/vehicle_insertion_purchase_data"
                 android:layout_width="match_parent"
