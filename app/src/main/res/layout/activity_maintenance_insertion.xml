@@ -165,10 +165,20 @@
                 android:contentDescription="@string/content_descriptor_maintenance_insertion_calendar_icon"/>
             <EditText
                 android:id="@+id/maintenance_insertion_inner_frag_extraordinary_date"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_weight="2"
                 android:inputType="date"
                 android:textColor="@color/black"/>
+            <Switch
+                 android:id="@+id/maintenance_insertion_switch_current_date"
+                 android:layout_width="wrap_content"
+                 android:layout_height="match_parent"
+                 android:layout_weight="0"
+                 android:layout_marginLeft="@dimen/activity_maintenance_insertion_place_switch_margin_left"
+                 android:layout_marginStart="@dimen/activity_maintenance_insertion_place_switch_margin_left"
+                 android:text="Today"
+                 android:textColor="@color/black"/>
         </LinearLayout>
 
     </LinearLayout>

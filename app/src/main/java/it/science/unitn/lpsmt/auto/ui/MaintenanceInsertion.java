@@ -61,6 +61,7 @@ public class MaintenanceInsertion extends ActionBarActivity {
     private Spinner spinnerMaintenanceType;
     private Switch switchAddCalendarEvent;
     private EditText editCalendarDate;
+    private Switch switchTodayDate;
 
     // filed for gps service
     private ServiceConnection mConnection = new MyServiceConnection();
@@ -298,6 +299,27 @@ public class MaintenanceInsertion extends ActionBarActivity {
         });
     }
 
+    private void initSwitchToday(){
+        this.switchTodayDate = (Switch)findViewById(R.id.maintenance_insertion_switch_current_date);
+        this.switchTodayDate.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                EditText edt = (EditText)findViewById(R.id.maintenance_insertion_inner_frag_extraordinary_date);
+                if (b) {
+                    final Calendar c = Calendar.getInstance();
+                    int year = c.get(Calendar.YEAR);
+                    int month = c.get(Calendar.MONTH);
+                    int day = c.get(Calendar.DAY_OF_MONTH);
+                    String format = "%d/%d/%d";
+                    String date = String.format(format, day, month+1, year);
+                    edt.setText(date);
+                }else{
+                    edt.setText("");
+                }
+            }
+        });
+    }
+
     private void showDatePickerDialog(){
         DialogFragment newFragment = new DatePickerFragment();
         newFragment.show(getSupportFragmentManager(), "datePicker");
@@ -320,6 +342,7 @@ public class MaintenanceInsertion extends ActionBarActivity {
         this.initSpinnerTypeMaintenance();
         this.initSwitchAddCalendarEvent();
         this.initDatePickerEvent();
+        this.initSwitchToday();
     }
 
     @Override
