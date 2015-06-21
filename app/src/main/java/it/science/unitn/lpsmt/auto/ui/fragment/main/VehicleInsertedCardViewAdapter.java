@@ -64,8 +64,6 @@ public class VehicleInsertedCardViewAdapter extends RecyclerView.Adapter<Vehicle
         String vehicleString = v.getName()+"  "+getFuel(v.getFuel());
         if( v.getPurchaseDate() != null )
             vehicleString = vehicleString+"  -  "+s.format(v.getPurchaseDate());
-        else
-            vehicleString = "  -  Purchase data not set.";
         holder.name.setText( vehicleString );
         holder.data.setText( v.getPlate() );
         holder.associatedVehicle = v;
