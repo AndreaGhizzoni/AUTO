@@ -3,12 +3,14 @@ package it.science.unitn.lpsmt.auto.ui;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -17,7 +19,9 @@ import android.widget.Toast;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Locale;
 
@@ -93,14 +97,14 @@ public class VehicleInsertion extends ActionBarActivity {
         this.editName = (EditText)findViewById(R.id.vehicle_insertion_name);
         this.editPlate = (EditText)findViewById(R.id.vehicle_insertion_plate);
 
-        this.spinnerFuel = (Spinner)findViewById(R.id.vehicle_insertion_spinner_fuel);
-        ArrayAdapter<CharSequence> spinnerAdapter = new ArrayAdapter<>(
-            getApplicationContext(),R.layout.spinner_item
+        ArrayList<CharSequence> lst = new ArrayList<>();
+        lst.add("select a fuel");
+        Collections.addAll(lst, getResources().getStringArray(R.array.fuel));
+        CustomArrayAdapter<CharSequence> spinnerAdapter = new CustomArrayAdapter<>(
+            getApplicationContext(), lst.toArray(new CharSequence[lst.size()])
         );
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerAdapter.add("select a fuel");
-        for( String s : getResources().getStringArray(R.array.fuel) )
-            spinnerAdapter.add(s);
+
+        this.spinnerFuel = (Spinner)findViewById(R.id.vehicle_insertion_spinner_fuel);
         this.spinnerFuel.setAdapter(spinnerAdapter);
 
         this.editPurchaseDate = (EditText)findViewById(R.id.vehicle_insertion_purchase_data);
@@ -180,6 +184,17 @@ public class VehicleInsertion extends ActionBarActivity {
             String date = String.format(format, day, month+1, year);
             EditText edt = (EditText) getActivity().findViewById(R.id.vehicle_insertion_purchase_data);
             edt.setText(date);
+        }
+    }
+
+    static class CustomArrayAdapter<T> extends ArrayAdapter<T>{
+        public CustomArrayAdapter(Context ctx, T [] objects){
+            super(ctx, R.layout.spinner_item, objects);
+        }
+
+        @Override
+        public View getDropDownView(int position, View convertView, ViewGroup parent){
+            return super.getView(position, convertView, parent);
         }
     }
 }

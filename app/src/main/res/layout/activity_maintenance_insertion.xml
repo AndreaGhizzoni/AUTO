@@ -176,7 +176,7 @@
                  android:layout_height="match_parent"
                  android:layout_weight="0"
                  android:layout_marginLeft="@dimen/activity_maintenance_insertion_date_switch_margin_left"
-                 android:layout_marginStart="@dimen/activity_maintenance_insertion_date_switch_margin_left"
+                 android:layout_marginStart="@dimen/activity_maintenance_insertion_place_switch_margin_left"
                  android:text="@string/activity_maintenance_insertion_today"
                  android:textColor="@color/black"/>
         </LinearLayout>

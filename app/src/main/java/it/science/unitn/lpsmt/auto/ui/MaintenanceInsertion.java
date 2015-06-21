@@ -19,6 +19,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
@@ -30,7 +31,9 @@ import android.widget.Toast;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -212,21 +215,20 @@ public class MaintenanceInsertion extends ActionBarActivity {
 //  INIT METHODS
 //==================================================================================================
     private void initSpinnerVehicleAssociated(){
-        ArrayAdapter<CharSequence> spinnerAdapter = new ArrayAdapter<>(
-            getApplicationContext(),
-            R.layout.spinner_item
-        );
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ArrayList<String> list = new ArrayList<>();
         if( new DAOVehicle().countObject() != 0 ) {
-            spinnerAdapter.add(getResources().getString(R.string.frag_view_costs_no_vehicle_selected));
+            list.add(getResources().getString(R.string.frag_view_costs_no_vehicle_selected));
             vehicleList = new DAOVehicle().getAll();
             for( Vehicle i : vehicleList ){
-                spinnerAdapter.add(i.getName());
+                list.add(i.getName());
             }
         }else {
-            spinnerAdapter.add(getResources().getString(R.string.frag_main_no_vehicle_inserted));
+            list.add(getResources().getString(R.string.frag_main_no_vehicle_inserted));
             // TODO disable the form
         }
+        CustomArrayAdapter<CharSequence> spinnerAdapter = new CustomArrayAdapter<>(
+            getApplicationContext(), list.toArray(new CharSequence[list.size()])
+        );
 
         spinnerVehicle = (Spinner) findViewById(R.id.maintenance_insertion_vehicle_associated);
         spinnerVehicle.setAdapter(spinnerAdapter);
@@ -262,15 +264,12 @@ public class MaintenanceInsertion extends ActionBarActivity {
     }
 
     private void initSpinnerTypeMaintenance(){
-        ArrayAdapter<CharSequence> spinnerAdapter = new ArrayAdapter<>(
-            getApplicationContext(),
-            R.layout.spinner_item
+        ArrayList<String> list = new ArrayList<>();
+        list.add(getResources().getString(R.string.activity_maintenance_insertion_select_type));
+        Collections.addAll(list, getResources().getStringArray(R.array.maintenance_type));
+        CustomArrayAdapter<CharSequence> spinnerAdapter = new CustomArrayAdapter<>(
+            getApplicationContext(), list.toArray(new CharSequence[list.size()])
         );
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerAdapter.add(getResources().getString(R.string.activity_maintenance_insertion_select_type));
-        for( String s : getResources().getStringArray(R.array.maintenance_type) )
-            spinnerAdapter.add(s);
-
         spinnerMaintenanceType = (Spinner) findViewById(R.id.maintenance_insertion_type);
         spinnerMaintenanceType.setAdapter(spinnerAdapter);
     }
@@ -448,6 +447,17 @@ public class MaintenanceInsertion extends ActionBarActivity {
         @Override
         public void onServiceDisconnected(ComponentName name){
             mService = null;
+        }
+    }
+
+    static class CustomArrayAdapter<T> extends ArrayAdapter<T>{
+        public CustomArrayAdapter(Context ctx, T [] objects){
+            super(ctx, R.layout.spinner_item, objects);
+        }
+
+        @Override
+        public View getDropDownView(int position, View convertView, ViewGroup parent){
+            return super.getView(position, convertView, parent);
         }
     }
 }
