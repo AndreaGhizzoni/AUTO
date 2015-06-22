@@ -22,6 +22,7 @@
     </string-array>
 
     <string name="app_name">AUTO</string>
+
     <string name="title_activity_maintenance_insertion">Nuovo Costo</string>
     <string name="title_activity_vehicle_insertion">Nuovo Veicolo</string>
     <string name="title_activity_refuel_insertion">Nuovo Rifornimento</string>
@@ -100,5 +101,8 @@
     <string name="frag_view_costs_no_cost_associated">Nessun costo associato a questo Veicolo</string>
     <string name="frag_view_costs_no_vehicle_selected">Seleziona un Veicolo</string>
 
+    <string name="refuel_card_view_adapter_amount" formatted="false">%s Euro a %s E/l</string>
+
     <string name="menu_done">Salva</string>
+    <string name="menu_tts">Riconoscimento Vocale</string>
 </resources>
