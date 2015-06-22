@@ -30,13 +30,20 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import it.science.unitn.lpsmt.auto.controller.dao.DAOCost;
 import it.science.unitn.lpsmt.auto.controller.dao.DAOVehicle;
+import it.science.unitn.lpsmt.auto.model.Place;
+import it.science.unitn.lpsmt.auto.model.Refuel;
 import it.science.unitn.lpsmt.auto.model.Vehicle;
+import it.science.unitn.lpsmt.auto.model.util.Const;
 import it.science.unitn.lpsmt.auto.ui.service.GPSService;
 import lpsmt.science.unitn.it.auto.R;
 
@@ -66,11 +73,67 @@ public class RefuelInsertion extends ActionBarActivity {
 //  CHECK AND SAVING METHODS
 //==================================================================================================
     private boolean save(){
+        // get the associated vehicle
+        Vehicle v = this.vehicleList.get(this.spinnerVehicleAssociated.getSelectedItemPosition()-1);
 
+        // build new Place
+        Place p = new Place(Const.NO_DB_ID_SET, this.editCurrentPlace.getText().toString(), this.locationFromGPS);
+
+        // get the km
+        Integer km = Integer.parseInt(this.editKM.getText().toString());
+
+        // get the amount
+        Float amount = Float.parseFloat(this.editAmount.getText().toString());
+
+        // get the price per liter
+        Float ppl = Float.parseFloat(this.editPpl.getText().toString());
+
+        // get the data
+        SimpleDateFormat f = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        Date atData;
+        try {
+            atData = f.parse(this.editData.getText().toString());
+        } catch (ParseException i){
+            displayToast(R.string.activity_refuel_insertion_refuel_data_parse_error);
+            return false;
+        }
+
+        // get the notes
+        String notes = "";
+        if( !this.editNotes.getText().toString().isEmpty() ){
+            notes = this.editNotes.getText().toString();
+        }
+
+        Refuel r = new Refuel(Const.NO_DB_ID_SET, v, amount, notes, ppl, atData, km, p );
+        new DAOCost().save(r);
         return true;
     }
 
     private boolean checkFields(){
+        if( this.spinnerVehicleAssociated.getSelectedItemPosition() == 0 ) {
+            displayToast(R.string.activity_refuel_insertion_vehicle_not_selected);
+            return false;
+        }
+
+        if( this.editKM.getText().toString().isEmpty() ){
+            displayToast(R.string.activity_refuel_insertion_vehicle_km_missing);
+            return false;
+        }
+
+        if( this.editAmount.getText().toString().isEmpty() ){
+            displayToast(R.string.activity_refuel_insertion_refuel_amount_missing);
+            return false;
+        }
+
+        if( this.editPpl.getText().toString().isEmpty() ){
+            displayToast(R.string.activity_refuel_insertion_refuel_price_per_liter_missing);
+            return false;
+        }
+
+        if( this.editData.getText().toString().isEmpty() ){
+            displayToast(R.string.activity_refuel_insertion_refuel_data_missing);
+            return false;
+        }
 
         return true;
     }
@@ -85,16 +148,21 @@ public class RefuelInsertion extends ActionBarActivity {
 
     private void promptSpeechInput() {
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
-                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent.putExtra(
+            RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+            RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
+        );
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
-        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Say somethings.");
+        intent.putExtra(
+            RecognizerIntent.EXTRA_PROMPT,
+            getResources().getString(R.string.activity_refuel_insertion_tts_text)
+        );
         try {
             startActivityForResult(intent, STT_REQUEST_CODE);
         } catch (ActivityNotFoundException a) {
             Toast.makeText(
                 getApplicationContext(),
-                "STT not supported",
+                getResources().getString(R.string.activity_refuel_insertion_tts_error)
                 Toast.LENGTH_SHORT
             ).show();
         }
@@ -102,6 +170,11 @@ public class RefuelInsertion extends ActionBarActivity {
 
     private void parseTTS( String tts ){
         this.editNotes.setText(tts);
+    }
+
+    private void displayToast(int resources){
+        Toast.makeText(getApplicationContext(), getResources().getString(resources),
+                Toast.LENGTH_LONG).show();
     }
 
 //==================================================================================================
