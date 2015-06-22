@@ -44,7 +44,7 @@
             <ImageView
                 android:layout_width="@dimen/activity_vehicle_insertion_plate_icon_width"
                 android:layout_height="@dimen/activity_vehicle_insertion_plate_icon_height"
-                android:background="@drawable/ic_placeholder"
+                android:background="@drawable/ic_plate_48dp"
                 android:contentDescription="@string/content_descriptor_vehicle_insertion_plate_icon"/>
             <EditText
                 android:id="@+id/vehicle_insertion_plate"

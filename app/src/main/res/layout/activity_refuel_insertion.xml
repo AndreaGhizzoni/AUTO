@@ -68,7 +68,7 @@
             <ImageView
                 android:layout_width="36dp"
                 android:layout_height="36dp"
-                android:background="@drawable/ic_placeholder"
+                android:background="@drawable/ic_mileage_48dp"
                 android:contentDescription="fucking km"/>
             <EditText
                 android:id="@+id/refuel_insertion_km"
