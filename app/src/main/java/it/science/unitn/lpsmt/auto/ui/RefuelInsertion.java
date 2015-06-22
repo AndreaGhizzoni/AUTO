@@ -159,7 +159,7 @@ public class RefuelInsertion extends ActionBarActivity {
             RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
         );
         // The STT enigne will work to recognize Italian. This is mostly out of laziness, just to prove the concept
-        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.ITALIAN);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "it-IT");
         intent.putExtra(
                 RecognizerIntent.EXTRA_PROMPT,
                 getResources().getString(R.string.activity_refuel_insertion_tts_text)
