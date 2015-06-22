@@ -15,7 +15,7 @@ public class PlaceTest extends TestCase {
     public void testStress(){
         Place p = getPlaceInstance();
 
-        // test set id
+        // menu_action_delete_and_modify set id
         p.setId(null);
         assertTrue(
             "I can pass null to setId and will set NO_DB_ID_SET.",
@@ -27,11 +27,11 @@ public class PlaceTest extends TestCase {
             fail("I can pass a constant less then NO_DB_ID_SET.");
         }catch (IllegalArgumentException ex){}
 
-        // test set get tag
+        // menu_action_delete_and_modify set get tag
         p.setGeoTag(null);
         assertTrue("I can set a null location as geo tag.", p.getGeoTag() == null);
 
-        // test set address
+        // menu_action_delete_and_modify set address
         try{
             p.setAddress(null);
             fail("I can not set a null address.");

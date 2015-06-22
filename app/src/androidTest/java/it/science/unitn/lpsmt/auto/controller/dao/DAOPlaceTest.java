@@ -17,8 +17,8 @@ public class DAOPlaceTest extends AndroidTestCase{
     @Override
     public void setUp() throws Exception{
         super.setUp();
-        // >>>>> NB <<<<< remember to uninstall the test application
-        // from the device before run this test
+        // >>>>> NB <<<<< remember to uninstall the menu_action_delete_and_modify application
+        // from the device before run this menu_action_delete_and_modify
         this.daoPlace = new DAOPlace(getContext());
     }
 
@@ -39,7 +39,7 @@ public class DAOPlaceTest extends AndroidTestCase{
             !idFromDB.equals(Const.NO_DB_ID_SET)
         );
 
-        // test if there is at least one place stored
+        // menu_action_delete_and_modify if there is at least one place stored
         int placeStored = this.daoPlace.countObject();
         assertTrue("There must be at least one Place stored.", placeStored != 0);
 
@@ -53,10 +53,10 @@ public class DAOPlaceTest extends AndroidTestCase{
         int newPlacesStored = this.daoPlace.countObject();
         assertTrue("I can not save the same object twice.", placeStored == newPlacesStored);
 
-        // test the deleting procedure
+        // menu_action_delete_and_modify the deleting procedure
         this.daoPlace.delete(fromDB);
 
-        // test if there isn't the place deleted before
+        // menu_action_delete_and_modify if there isn't the place deleted before
         Place nullPlace = this.daoPlace.get(toStore.getId());
         assertTrue("Try to get a deleted place from DB, will returns null.", nullPlace == null);
     }

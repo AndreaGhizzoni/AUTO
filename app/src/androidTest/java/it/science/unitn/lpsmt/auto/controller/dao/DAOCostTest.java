@@ -22,8 +22,8 @@ public class DAOCostTest extends AndroidTestCase {
     @Override
     public void setUp() throws Exception{
         super.setUp();
-        // >>>>> NB <<<<< remember to uninstall the test application
-        // from the device before run this test
+        // >>>>> NB <<<<< remember to uninstall the menu_action_delete_and_modify application
+        // from the device before run this menu_action_delete_and_modify
         this.daoCost = new DAOCost(getContext());
     }
 
@@ -44,7 +44,7 @@ public class DAOCostTest extends AndroidTestCase {
                 !idFromDB.equals(Const.NO_DB_ID_SET)
         );
 
-        // test if there is at least one Cost stored
+        // menu_action_delete_and_modify if there is at least one Cost stored
         int costStored = this.daoCost.countObject();
         assertTrue("There must be at least on Cost stored.", costStored != 0);
 
@@ -75,7 +75,7 @@ public class DAOCostTest extends AndroidTestCase {
             !idFromDB.equals(Const.NO_DB_ID_SET)
         );
 
-        // test if there is at least one Cost stored
+        // menu_action_delete_and_modify if there is at least one Cost stored
         int costStored = this.daoCost.countObject();
         assertTrue("There must be at least on Cost stored.", costStored != 0);
 

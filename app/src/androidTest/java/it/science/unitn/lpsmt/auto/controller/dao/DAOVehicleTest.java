@@ -18,8 +18,8 @@ public class DAOVehicleTest extends AndroidTestCase {
     @Override
     public void setUp() throws Exception {
         super.setUp();
-        // >>>>> NB <<<<< remember to uninstall the test application
-        // from the device before run this test
+        // >>>>> NB <<<<< remember to uninstall the menu_action_delete_and_modify application
+        // from the device before run this menu_action_delete_and_modify
         daoVehicle = new DAOVehicle(getContext());
     }
 
@@ -30,13 +30,13 @@ public class DAOVehicleTest extends AndroidTestCase {
     }
 
     public void testIODB(){
-        // test the storing procedure.
+        // menu_action_delete_and_modify the storing procedure.
         Vehicle toStore = getVehicleInstance();
 
         Long idFromDB = this.daoVehicle.save(toStore);
         assertTrue("Id from DB must be different from NO_DB_ID_SET", !idFromDB.equals(Const.NO_DB_ID_SET));
 
-        // test if there is at least one vehicle stored
+        // menu_action_delete_and_modify if there is at least one vehicle stored
         int vehicleStored = this.daoVehicle.countObject();
         assertTrue("There must be at least one Vehicle stored.", vehicleStored >= 1);
 
@@ -54,7 +54,7 @@ public class DAOVehicleTest extends AndroidTestCase {
         idFromDB = this.daoVehicle.save(Vehicle.Default.get());
         assertTrue("I can not save default vehicle into DB", idFromDB.equals(Const.NO_DB_ID_SET));
 
-        // test the deleting procedure
+        // menu_action_delete_and_modify the deleting procedure
         this.daoVehicle.delete(fromDb);
         assertFalse("The deleted vehicle doesn't exists anymore.", this.daoVehicle.exists(fromDb.getId()));
 

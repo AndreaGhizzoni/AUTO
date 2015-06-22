@@ -1,20 +1,27 @@
 package it.science.unitn.lpsmt.auto.ui.fragment.main;
 
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.view.ActionMode;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Locale;
 
 import it.science.unitn.lpsmt.auto.controller.VehicleDAO;
 import it.science.unitn.lpsmt.auto.controller.dao.DAOVehicle;
+import it.science.unitn.lpsmt.auto.controller.util.DateUtils;
 import it.science.unitn.lpsmt.auto.model.Vehicle;
 import it.science.unitn.lpsmt.auto.ui.MainActivity;
 import it.science.unitn.lpsmt.auto.ui.fragment.view.ViewCostsFragment;
@@ -60,10 +67,9 @@ public class VehicleInsertedCardViewAdapter extends RecyclerView.Adapter<Vehicle
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Vehicle v = this.vehicles.get(position);
-        SimpleDateFormat s = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
         String vehicleString = v.getName()+"  "+getFuel(v.getFuel());
         if( v.getPurchaseDate() != null )
-            vehicleString = vehicleString+"  -  "+s.format(v.getPurchaseDate());
+            vehicleString = vehicleString+"  -  "+DateUtils.getStringFromDate(v.getPurchaseDate(), "dd/MM/yyyy");
         holder.name.setText( vehicleString );
         holder.data.setText( v.getPlate() );
         holder.associatedVehicle = v;
@@ -87,14 +93,16 @@ public class VehicleInsertedCardViewAdapter extends RecyclerView.Adapter<Vehicle
 //==================================================================================================
 //  INNER CLASS
 //==================================================================================================
+    public ActionMode.Callback mActionMode;
+    public Drawable itemBG;
     /**
      *  Holder for card data
      */
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         public Vehicle associatedVehicle;
         public TextView name;
         public TextView data;
-        public ViewHolder(View itemView) {
+        public ViewHolder(final View itemView) {
             super(itemView);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -107,13 +115,68 @@ public class VehicleInsertedCardViewAdapter extends RecyclerView.Adapter<Vehicle
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
-                     Toast.makeText(view.getContext(), "Long press on Vehicle id: "+associatedVehicle.getId(),
-                            Toast.LENGTH_LONG).show();
-                    return false;
+                    if(mActionMode == null)
+                        mActionMode = new MyActionMode(itemView);
+                    view.startActionMode(mActionMode);
+                    itemBG = itemView.getBackground();
+                    itemView.setBackgroundColor(Color.rgb(197,202,233));
+                    return true;
                 }
             });
             name = (TextView) itemView.findViewById(R.id.card_view_vehicle_name);
             data = (TextView) itemView.findViewById(R.id.card_view_vehicle_data);
+        }
+    }
+
+    // https://goo.gl/1jIz4a
+    public class MyActionMode implements ActionMode.Callback{
+        private View itemView;
+        public MyActionMode( View itemView ){
+            this.itemView = itemView;
+        }
+
+        @Override // Called when the action mode is created; startActionMode() was called
+        public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
+            actionMode.setTitle("Actions");
+            actionMode.getMenuInflater().inflate(R.menu.menu_action_delete_and_modify, menu);
+            return true;
+        }
+
+        @Override // Called each time the action mode is shown.
+        public boolean onPrepareActionMode(ActionMode actionMode, Menu menu) {
+            return false;
+        }
+
+        @Override // Called when the user selects a contextual menu item
+        public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem) {
+            switch( menuItem.getItemId() ){
+                case R.id.modify:{
+                    Toast.makeText(
+                        VehicleInsertedCardViewAdapter.this.context,
+                        "modify action",
+                        Toast.LENGTH_LONG
+                    ).show();
+                    actionMode.finish();
+                    return true;
+                }
+                case R.id.delete:{
+                    Toast.makeText(
+                        VehicleInsertedCardViewAdapter.this.context,
+                        "delete action",
+                        Toast.LENGTH_LONG
+                    ).show();
+                    actionMode.finish();
+                    return true;
+                }
+                default: return false;
+            }
+        }
+
+        @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+        @Override // Called when the user exits the action mode
+        public void onDestroyActionMode(ActionMode actionMode) {
+            mActionMode = null;
+            this.itemView.setBackground(itemBG);
         }
     }
 }
