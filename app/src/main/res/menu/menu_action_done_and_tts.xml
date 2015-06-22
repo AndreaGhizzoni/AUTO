@@ -1,0 +1,18 @@
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="it.science.unitn.lpsmt.auto.ui.RefuelInsertion">
+
+    <item
+        android:id="@+id/done"
+        android:icon="@drawable/ic_action_done_48dp"
+        android:title="@string/menu_done"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/tts"
+        android:icon="@drawable/ic_action_settings_voice_48dp"
+        android:title="TextToSpeech"
+        app:showAsAction="ifRoom"/>
+</menu>

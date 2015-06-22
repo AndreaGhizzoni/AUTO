@@ -28,10 +28,10 @@
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name="it.science.unitn.lpsmt.auto.ui.VehicleInsertion"
             android:label="@string/title_activity_vehicle_insertion"
@@ -40,7 +40,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="android.support.v7.app.ActionBarActivity" />
         </activity>
-
         <activity
             android:name="it.science.unitn.lpsmt.auto.ui.MaintenanceInsertion"
             android:label="@string/title_activity_maintenance_insertion"
@@ -53,7 +52,16 @@
         <service
             android:name="it.science.unitn.lpsmt.auto.ui.service.GPSService"
             android:enabled="true"
-            android:exported="true"/>
+            android:exported="true" />
+
+        <activity
+            android:name="it.science.unitn.lpsmt.auto.ui.RefuelInsertion"
+            android:label="@string/title_activity_refule_insertion"
+            android:parentActivityName="android.support.v7.app.ActionBarActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="android.support.v7.app.ActionBarActivity" />
+        </activity>
     </application>
 
 </manifest>

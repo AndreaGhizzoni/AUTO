@@ -83,4 +83,8 @@
     <string name="frag_view_costs_no_vehicle_selected">Select a Vehicle</string>
 
     <string name="menu_done">Done</string>
+    <string name="title_activity_refule_insertion">RefuleInsertion</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
 </resources>
