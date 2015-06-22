@@ -1,9 +1,21 @@
 package it.science.unitn.lpsmt.auto.ui;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.ActivityNotFoundException;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
+import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.IBinder;
+import android.os.Message;
+import android.os.Messenger;
+import android.os.RemoteException;
+import android.speech.RecognizerIntent;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -16,19 +28,24 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Switch;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import it.science.unitn.lpsmt.auto.controller.dao.DAOVehicle;
 import it.science.unitn.lpsmt.auto.model.Vehicle;
+import it.science.unitn.lpsmt.auto.ui.service.GPSService;
 import lpsmt.science.unitn.it.auto.R;
 
 public class RefuelInsertion extends ActionBarActivity {
     public static final int REQUEST_CODE = 1010;
+    public static final int STT_REQUEST_CODE = 1011;
 
     private List<Vehicle> vehicleList;
+    private Location locationFromGPS;
 
     // gui components
     private Spinner spinnerVehicleAssociated;
@@ -40,9 +57,55 @@ public class RefuelInsertion extends ActionBarActivity {
     private EditText editData;
     private EditText editNotes;
 
+    // filed for gps service
+    private ServiceConnection mConnection = new MyServiceConnection();
+    private Messenger mMessenger = new Messenger(new ServiceHandler());
+    private Messenger mService;
 
 //==================================================================================================
-//  METHOD
+//  CHECK AND SAVING METHODS
+//==================================================================================================
+    private boolean save(){
+
+        return true;
+    }
+
+    private boolean checkFields(){
+
+        return true;
+    }
+
+//==================================================================================================
+//  UTILITIES METHODS
+//==================================================================================================
+    private void showDatePickerDialog(){
+        DialogFragment newFragment = new DatePickerFragment();
+        newFragment.show(getSupportFragmentManager(), "datePicker");
+    }
+
+    private void promptSpeechInput() {
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Say somethings.");
+        try {
+            startActivityForResult(intent, STT_REQUEST_CODE);
+        } catch (ActivityNotFoundException a) {
+            Toast.makeText(
+                getApplicationContext(),
+                "STT not supported",
+                Toast.LENGTH_SHORT
+            ).show();
+        }
+    }
+
+    private void parseTTS( String tts ){
+        this.editNotes.setText(tts);
+    }
+
+//==================================================================================================
+//  INIT METHODS
 //==================================================================================================
     private void initSpinnerVehicleAssociated(){
         ArrayList<String> list = new ArrayList<>();
@@ -77,8 +140,8 @@ public class RefuelInsertion extends ActionBarActivity {
         this.switchGetCurrentPlace.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
               @Override
               public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-//                  if (b) doBind();
-//                  else doUnBind();
+                  if (b) doBind();
+                  else doUnBind();
                   editCurrentPlace.setEnabled(!b);
               }
           }
@@ -119,7 +182,7 @@ public class RefuelInsertion extends ActionBarActivity {
         this.editData.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
-                if(b) showDatePickerDialog();
+                if (b) showDatePickerDialog();
             }
         });
     }
@@ -128,9 +191,27 @@ public class RefuelInsertion extends ActionBarActivity {
         this.editNotes = (EditText)findViewById(R.id.refuel_insertion_notes);
     }
 
-    private void showDatePickerDialog(){
-        DialogFragment newFragment = new DatePickerFragment();
-        newFragment.show(getSupportFragmentManager(), "datePicker");
+//==================================================================================================
+//  GPS SERVICE METHODS
+//==================================================================================================
+    private void doBind(){
+        Intent gps = new Intent( getApplicationContext(), GPSService.class );
+        getApplicationContext().bindService(gps, mConnection, Context.BIND_AUTO_CREATE);
+    }
+
+    private void doUnBind(){
+       if( this.switchGetCurrentPlace.isChecked() ) {
+           if( this.mService != null ){
+               Message msg = Message.obtain(null, GPSService.Protocol.REQUEST_UNBIND);
+               msg.replyTo = mMessenger;
+               try {
+                   mService.send(msg);
+               } catch (RemoteException e) {
+                   Toast.makeText(getApplicationContext(), e.getMessage(),Toast.LENGTH_LONG).show();
+               }
+               getApplicationContext().unbindService(mConnection);
+           }
+       }
     }
 
 //==================================================================================================
@@ -153,6 +234,38 @@ public class RefuelInsertion extends ActionBarActivity {
     }
 
     @Override
+    protected void onPause(){
+        super.onPause();
+        if(this.switchGetCurrentPlace.isChecked()) {
+            doUnBind();
+        }
+    }
+
+    @Override
+    protected void onRestart(){
+        super.onRestart();
+        if(this.switchGetCurrentPlace.isChecked())
+            doBind();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if( resultCode == Activity.RESULT_OK ){
+            switch( requestCode ){
+                case STT_REQUEST_CODE:{
+                    if( data == null ) {
+                        Toast.makeText(getApplicationContext(), "date == null", Toast.LENGTH_LONG).show();
+                    }else{
+                        ArrayList<String> res = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                        parseTTS(res.get(0));
+                    }
+                    break;
+                }
+            }
+        }
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_action_done_and_tts, menu);
         return true;
@@ -163,11 +276,19 @@ public class RefuelInsertion extends ActionBarActivity {
         int id = item.getItemId();
         switch( id ){
             case R.id.done:{
-
+                if( checkFields() && save() ){
+                    Toast.makeText(
+                        getApplicationContext(),
+                        "Done button",
+                        Toast.LENGTH_SHORT
+                    ).show();
+                }
+                setResult(Activity.RESULT_OK);
+                finish();
                 return true;
             }
             case R.id.tts:{
-
+                promptSpeechInput();
                 return true;
             }
             default: return super.onOptionsItemSelected(item);
@@ -210,4 +331,39 @@ public class RefuelInsertion extends ActionBarActivity {
         }
     }
 
+    private class ServiceHandler extends Handler {
+        @Override
+        public void handleMessage( Message msg ){
+            switch (msg.what){
+                case GPSService.Protocol.SEND_LOCATION:{
+                    Bundle receivedBundle = msg.getData();
+                    String address = receivedBundle.getString(GPSService.Protocol.RETRIEVED_ADDRESS);
+                    locationFromGPS = receivedBundle.getParcelable(GPSService.Protocol.RETRIEVED_LOCATION);
+                    editCurrentPlace.setText(address);
+                    break;
+                }
+                default: super.handleMessage(msg);
+            }
+        }
+    }
+
+    private class MyServiceConnection implements ServiceConnection {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            mService = new Messenger(service);
+            Message msg = Message.obtain(null, GPSService.Protocol.REQUEST_BIND);
+            msg.replyTo = mMessenger;
+            try {
+                mService.send(msg);
+            } catch (RemoteException e) {
+                Toast.makeText(
+                    RefuelInsertion.this.getApplicationContext(),
+                    e.getMessage(), Toast.LENGTH_LONG
+                ).show();
+            }
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name){ mService = null; }
+    }
 }
