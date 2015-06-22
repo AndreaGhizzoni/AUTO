@@ -83,7 +83,7 @@
             android:id="@+id/btnAddRefuel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            fab:fab_icon="@drawable/ic_maps_local_gas_station_48dp"
+            fab:fab_icon="@drawable/ic_refuel_add_48dp"
             fab:fab_size="mini"
             fab:fab_colorNormal="@color/white"
             fab:fab_colorPressed="@color/half_black" />
@@ -101,7 +101,7 @@
             android:id="@+id/btnAddCost"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            fab:fab_icon="@drawable/ic_editor_attach_money_48dp"
+            fab:fab_icon="@drawable/ic_cost_add_48dp"
             fab:fab_size="mini"
             fab:fab_colorNormal="@color/white"
             fab:fab_colorPressed="@color/half_black" />
