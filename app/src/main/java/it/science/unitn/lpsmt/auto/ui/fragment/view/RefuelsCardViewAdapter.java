@@ -43,7 +43,7 @@ public class RefuelsCardViewAdapter extends RecyclerView.Adapter<RefuelsCardView
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        int rowLayout = R.layout.adapter_frag_main_last_refuels;
+        int rowLayout = R.layout.adapter_frag_view_refuels;
         View v = LayoutInflater.from(parent.getContext()).inflate(rowLayout, parent, false);
         return new ViewHolder(v);
     }
