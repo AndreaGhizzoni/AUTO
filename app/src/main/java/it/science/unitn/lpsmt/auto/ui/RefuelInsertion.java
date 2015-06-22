@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import lpsmt.science.unitn.it.auto.R;
 
 public class RefuelInsertion extends ActionBarActivity {
+    public static final int REQUEST_CODE = 1010;
 
 
 
@@ -29,9 +30,20 @@ public class RefuelInsertion extends ActionBarActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
+        switch( id ){
+            case R.id.done:{
+
+                return true;
+            }
+            case R.id.tts:{
+
+                return true;
+            }
+            default: return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
+
+//==================================================================================================
+//  INNER CLASS
+//==================================================================================================
 }

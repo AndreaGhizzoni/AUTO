@@ -100,6 +100,13 @@ public class MainActivity extends ActionBarActivity{
                 break;
             }
 
+            case 2:{
+                Intent i = new Intent(this, RefuelInsertion.class);
+                startActivityForResult(i, RefuelInsertion.REQUEST_CODE);
+                skip = true;
+                break;
+            }
+
             case 3:{ // maintenance insertion activity
                 Intent i = new Intent(this, MaintenanceInsertion.class);
                 startActivityForResult(i, MaintenanceInsertion.RESULT_CODE);

@@ -2,7 +2,6 @@ package it.science.unitn.lpsmt.auto.ui.fragment.main;
 
 import android.app.Fragment;
 import android.content.Intent;
-import android.location.Location;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,20 +9,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
-import java.util.Date;
-import java.util.List;
-
-import it.science.unitn.lpsmt.auto.controller.dao.DAOCost;
-import it.science.unitn.lpsmt.auto.controller.dao.DAOVehicle;
-import it.science.unitn.lpsmt.auto.model.Place;
-import it.science.unitn.lpsmt.auto.model.Refuel;
-import it.science.unitn.lpsmt.auto.model.Vehicle;
-import it.science.unitn.lpsmt.auto.model.util.Const;
 import it.science.unitn.lpsmt.auto.ui.MainActivity;
 import lpsmt.science.unitn.it.auto.R;
 
@@ -130,19 +119,20 @@ public class MainFragment extends Fragment {
         public void onClick(View view) {
             switch ( view.getId() ){
                 case R.id.btnAddRefuel:{
-                    List<Vehicle> list = new DAOVehicle().getAll();
-                    if( list.size() != 0 ) {
-                        Vehicle v = list.get(0);
-                        Location l = new Location(it.science.unitn.lpsmt.auto.controller.util.Const.LOCATION_PROVIDER);
-                        Place p = new Place(Const.NO_DB_ID_SET, "MyAddress", l);
-                        Refuel r = new Refuel(Const.NO_DB_ID_SET, v, 30f, 1.324f, new Date(), 30000, p);
-                        DAOCost dao = new DAOCost();
-                        dao.save(r);
-                        Toast.makeText(view.getContext(), "Refuel saved.", Toast.LENGTH_LONG ).show();
-                    }else{
-                        Toast.makeText(view.getContext(), "No Vehicle to save the refuel.",
-                                Toast.LENGTH_LONG ).show();
-                    }
+                    MainActivity.getApp().selectFragment(2, null);
+//                    List<Vehicle> list = new DAOVehicle().getAll();
+//                    if( list.size() != 0 ) {
+//                        Vehicle v = list.get(0);
+//                        Location l = new Location(it.science.unitn.lpsmt.auto.controller.util.Const.LOCATION_PROVIDER);
+//                        Place p = new Place(Const.NO_DB_ID_SET, "MyAddress", l);
+//                        Refuel r = new Refuel(Const.NO_DB_ID_SET, v, 30f, 1.324f, new Date(), 30000, p);
+//                        DAOCost dao = new DAOCost();
+//                        dao.save(r);
+//                        Toast.makeText(view.getContext(), "Refuel saved.", Toast.LENGTH_LONG ).show();
+//                    }else{
+//                        Toast.makeText(view.getContext(), "No Vehicle to save the refuel.",
+//                                Toast.LENGTH_LONG ).show();
+//                    }
                     break;
                 }
                 case R.id.btnAddCost:{

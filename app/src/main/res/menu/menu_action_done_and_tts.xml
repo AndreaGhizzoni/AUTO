@@ -12,7 +12,7 @@
 
     <item
         android:id="@+id/tts"
-        android:icon="@drawable/ic_action_settings_voice_48dp"
+        android:icon="@drawable/ic_voice_48dp"
         android:title="TextToSpeech"
         app:showAsAction="ifRoom"/>
 </menu>
