@@ -53,8 +53,8 @@ public class RefuelsCardViewAdapter extends RecyclerView.Adapter<RefuelsCardView
         Refuel r = this.refuels.get(position);
         holder.refuelAssociated = r;
         holder.address.setText( r.getPlace().getAddress() );
-        holder.amount.setText( r.getAmount()+" euro at "+r.getPricePerLiter()+" euro/liter");
-        holder.vehicle.setText( r.getVehicle().getName()+" - "+r.getVehicle().getPlate() );
+        String format = context.getResources().getString(R.string.refuel_card_view_adapter_amount);
+        holder.amount.setText( String.format(format, r.getAmount()+"", r.getPricePerLiter()+"") );
     }
 
     @Override
@@ -67,7 +67,6 @@ public class RefuelsCardViewAdapter extends RecyclerView.Adapter<RefuelsCardView
         public Refuel refuelAssociated;
         public TextView address;
         public TextView amount;
-        public TextView vehicle;
         public ViewHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -87,7 +86,6 @@ public class RefuelsCardViewAdapter extends RecyclerView.Adapter<RefuelsCardView
             });
             address = (TextView) itemView.findViewById(R.id.card_view_last_refuel_address);
             amount  = ( TextView ) itemView.findViewById(R.id.card_view_last_refuel_amount);
-            vehicle = ( TextView ) itemView.findViewById(R.id.card_view_last_refuel_vehicle);
         }
     }
 }

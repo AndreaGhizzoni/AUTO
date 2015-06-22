@@ -7,7 +7,7 @@
     <item
         android:id="@+id/tts"
         android:icon="@drawable/ic_voice_48dp"
-        android:title="TextToSpeech"
+        android:title="@string/menu_tts"
         app:showAsAction="ifRoom"/>
 
     <item
