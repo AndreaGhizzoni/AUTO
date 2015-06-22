@@ -64,6 +64,7 @@ public class RefuelInsertion extends ActionBarActivity {
     private Switch switchGetCurrentPlace;
     private EditText editAmount;
     private EditText editPpl;
+    private Switch switchToday;
     private EditText editDate;
     private EditText editNotes;
 
@@ -155,7 +156,9 @@ public class RefuelInsertion extends ActionBarActivity {
             RecognizerIntent.EXTRA_LANGUAGE_MODEL,
             RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
         );
-        // The STT enigne will work to recognize Italian. This is mostly out of laziness, just to prove the concept
+
+        // The STT engine will work to recognize Italian.
+        // This is mostly out of laziness, just to prove the concept
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "it-IT");
         intent.putExtra(
                 RecognizerIntent.EXTRA_PROMPT,
@@ -173,49 +176,43 @@ public class RefuelInsertion extends ActionBarActivity {
     }
 
     // Match expressions like "(Oggi) ho fatto 10 euro (e 50) di benzina a 1 euro (e 20) al litro"
-    private void parseTTS( String tts ){
-        //tts is the best matching tts
+    private void parseSTT( String stt ){
+        //stt is the best matching stt
         ArrayDeque<String> userSpeech = new ArrayDeque<>();
-
-        StringTokenizer tokenizer = new StringTokenizer(tts, " ");
-        while (tokenizer.hasMoreTokens()){
-            String token = tokenizer.nextToken();
-            userSpeech.add(token);
-        }
+        StringTokenizer tokenizer = new StringTokenizer(stt, " ");
+        while (tokenizer.hasMoreTokens())
+            userSpeech.add(tokenizer.nextToken());
 
         // Check for the first item
         String first = userSpeech.pop();
         if (first.equals("oggi"))
-            this.editDate.setText(today());
-        else if (first.equals("ieri"))
+            this.switchToday.setChecked(true);
+        else if (first.equals("ieri")) {
+            this.switchToday.setChecked(false);
             this.editDate.setText(yesterday());
-
-        //Toast.makeText(getApplicationContext(),userSpeech.toString(),Toast.LENGTH_LONG).show();
+        }
 
         // Go on until there is nothing left on the stack
         String s;
-        while (!(userSpeech.isEmpty())){
+        while( !userSpeech.isEmpty() ){
             s = userSpeech.pop();
 
             // Match price expressions
             if (s.matches("\\d+") || s.equals("un")){
-                // Saving the value of the integer part of the cost
+                // Saving the integer and fractional part of the cost
                 float intPart;
+                float fractPart = 0.0f;
 
                 // STT engine quirk: "un" is parsed as a word rather than a number
-                if (s.equals("un"))
-                    intPart = 1.0f;
-                else
-                    intPart = Float.parseFloat(s);
+                if( s.equals("un") ) intPart = 1.0f;
+                else intPart = Float.parseFloat(s);
 
                 // Discard "euro"
                 userSpeech.pop();
 
                 // Now, look for a fractional cost
                 s = userSpeech.peek();
-
-                float fractPart = 0.0f;
-                if (s.equals("e")){
+                if( s.equals("e") ){
                     // Discard "e"
                     userSpeech.pop();
 
@@ -224,19 +221,22 @@ public class RefuelInsertion extends ActionBarActivity {
                     fractPart = Float.parseFloat("0." + s);
                 }
 
-                if (this.editAmount.getText().toString().equals(""))
+                // if this.editAmount is not empty, fill this.editPpl
+                if( this.editAmount.getText().toString().isEmpty() )
                     this.editAmount.setText((intPart + fractPart) + "");
                 else
                     this.editPpl.setText((intPart + fractPart) + "");
             }
         }
-
-        this.editNotes.setText(tts);
     }
 
     private void displayToast(int resources){
         Toast.makeText(getApplicationContext(), getResources().getString(resources),
                 Toast.LENGTH_LONG).show();
+    }
+
+    private void displayToast(String message){
+        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
     }
 
     private String today(){
@@ -250,18 +250,15 @@ public class RefuelInsertion extends ActionBarActivity {
 
     private String yesterday(){
         Calendar c = Calendar.getInstance();
-
         c.add(Calendar.DATE, -1);
-
         int year = c.get(Calendar.YEAR);
         int month = c.get(Calendar.MONTH);
         int day = c.get(Calendar.DAY_OF_MONTH);
         String format = "%d/%d/%d";
-
         return String.format(format, day, month + 1, year);
     }
 
-    //==================================================================================================
+//==================================================================================================
 //  INIT METHODS
 //==================================================================================================
     private void initSpinnerVehicleAssociated(){
@@ -314,8 +311,8 @@ public class RefuelInsertion extends ActionBarActivity {
     }
 
     private void initSwitchToday(){
-        Switch s = (Switch)findViewById(R.id.refuel_insertion_switch_current_date);
-        s.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        this.switchToday = (Switch)findViewById(R.id.refuel_insertion_switch_current_date);
+        this.switchToday.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 EditText edt = (EditText) findViewById(R.id.refuel_insertion_data_edit);
@@ -408,12 +405,24 @@ public class RefuelInsertion extends ActionBarActivity {
                         Toast.makeText(getApplicationContext(), "date == null", Toast.LENGTH_LONG).show();
                     }else{
                         ArrayList<String> res = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-                        parseTTS(res.get(0));
+                        parseSTT(res.get(0));
                     }
                     break;
                 }
             }
+        }//Result code for various error.
+        else if( resultCode == RecognizerIntent.RESULT_AUDIO_ERROR){
+            displayToast("Audio Error");
+        }else if(resultCode == RecognizerIntent.RESULT_CLIENT_ERROR){
+            displayToast("Client Error");
+        }else if(resultCode == RecognizerIntent.RESULT_NETWORK_ERROR){
+            displayToast("Network Error");
+        }else if(resultCode == RecognizerIntent.RESULT_NO_MATCH){
+            displayToast("No Match");
+        }else if(resultCode == RecognizerIntent.RESULT_SERVER_ERROR){
+            displayToast("Server Error");
         }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
