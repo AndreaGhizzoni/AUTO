@@ -113,7 +113,7 @@
             <ImageView
                 android:layout_width="@dimen/activity_maintenance_insertion_text_notes_icon_width"
                 android:layout_height="@dimen/activity_maintenance_insertion_text_notes_icon_height"
-                android:background="@drawable/ic_note_add_black_48dp"
+                android:background="@drawable/ic_note_add_48dp"
                 android:contentDescription="@string/content_descriptor_maintenance_insertion_notes_icon"/>
             <EditText
                 android:id="@+id/maintenance_insertion_notes"
