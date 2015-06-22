@@ -149,7 +149,7 @@
             <ImageView
                 android:layout_width="36dp"
                 android:layout_height="36dp"
-                android:background="@drawable/ic_note_add_black_48dp"
+                android:background="@drawable/ic_note_add_48dp"
                 android:contentDescription="fucking note"/>
             <EditText
                 android:id="@+id/refuel_insertion_notes"
