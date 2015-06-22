@@ -3,11 +3,8 @@ package it.science.unitn.lpsmt.auto.controller.calendar;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
-import android.database.Cursor;
 import android.net.Uri;
 import android.provider.CalendarContract;
-import android.text.format.DateUtils;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -15,7 +12,6 @@ import java.util.TimeZone;
 
 import it.science.unitn.lpsmt.auto.ui.MainActivity;
 
-import static android.provider.CalendarContract.Events.ALL_DAY;
 import static android.provider.CalendarContract.Events.CALENDAR_ID;
 import static android.provider.CalendarContract.Events.CONTENT_URI;
 import static android.provider.CalendarContract.Events.DESCRIPTION;
@@ -56,65 +52,10 @@ public class CalendarUtils {
 
     private CalendarUtils(){ this.context = MainActivity.getApp().getApplicationContext(); }
 
-    /**
-     * https://goo.gl/CyLlXx
-     * This method build the Intent object to create a new calendar event.
-     * @return
-     */
-    public Intent newEvent( String title ){
-        Intent i = new Intent(Intent.ACTION_INSERT, CONTENT_URI);
-        i.putExtra(TITLE, title);
-        Calendar c = Calendar.getInstance();
-        i.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, c.getTimeInMillis());
-        i.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, c.getTimeInMillis()+DateUtils.DAY_IN_MILLIS);
-        i.putExtra(ALL_DAY, false);
-//        i.putExtra(RRULE, "FREQ=DAILY");
-        //check out event location
-        //add description
-        return i;
-    }
-
-    /**
-     * TODO add doc
-     * @param eventID
-     * @return
-     */
-    public Holder getEventDataById( Integer eventID ){
-        // https://goo.gl/C0hXD1
-        ContentResolver cr = this.context.getContentResolver();
-        Cursor cursor = cr.query(
-            CONTENT_URI,
-            new String[]{"_id", TITLE, EVENT_LOCATION, DESCRIPTION, DTSTART, DTEND, RRULE, RDATE},
-            CALENDAR_ID+" = ?",
-            new String[]{eventID+""},
-            null
-        );
-
-        if( cursor.getCount() == 0 )
-            return null;
-
-        cursor.moveToFirst();
-        Holder h = new Holder();
-        while( cursor.moveToNext() ){
-            h.calendarID = DEFAULT_CALENDAR_ID;
-            h.eventID = cursor.getLong(0);
-            h.title = cursor.getString(1);
-            h.location = cursor.getString(2);
-            h.description = cursor.getString(3);
-            h.dStart = new Date(cursor.getLong(4));
-            h.dEnd = new Date(cursor.getLong(5));
-            h.rRule = cursor.getString(6);
-            h.rDate = new Date(cursor.getLong(7));
-        }
-        cursor.close();
-        return h;
-    }
-
     public long putEvent( CalendarUtils.Holder data ){
         ContentResolver cr = context.getContentResolver();
         ContentValues cv = data.toContentValue();
         cv.put(CALENDAR_ID, DEFAULT_CALENDAR_ID);
-
         // Set Event in calendar.
         Uri eventUri = cr.insert(CONTENT_URI, cv);
         // Getting ID of event in Long.
@@ -134,6 +75,25 @@ public class CalendarUtils {
         Uri reminderUri = cr.insert(CalendarContract.Reminders.CONTENT_URI, rv);
         data.reminderID = Long.parseLong(reminderUri.getLastPathSegment());
         return eventID;
+    }
+
+    public static String today(){
+        Calendar c = Calendar.getInstance();
+        int year = c.get(Calendar.YEAR);
+        int month = c.get(Calendar.MONTH);
+        int day = c.get(Calendar.DAY_OF_MONTH);
+        String format = "%d/%d/%d";
+        return String.format(format, day, month + 1, year);
+    }
+
+    public static String yesterday(){
+        Calendar c = Calendar.getInstance();
+        c.add(Calendar.DATE, -1);
+        int year = c.get(Calendar.YEAR);
+        int month = c.get(Calendar.MONTH);
+        int day = c.get(Calendar.DAY_OF_MONTH);
+        String format = "%d/%d/%d";
+        return String.format(format, day, month + 1, year);
     }
 
 //==================================================================================================

@@ -40,6 +40,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.StringTokenizer;
 
+import it.science.unitn.lpsmt.auto.controller.calendar.CalendarUtils;
 import it.science.unitn.lpsmt.auto.controller.dao.DAOCost;
 import it.science.unitn.lpsmt.auto.controller.dao.DAOVehicle;
 import it.science.unitn.lpsmt.auto.model.Place;
@@ -189,7 +190,7 @@ public class RefuelInsertion extends ActionBarActivity {
             this.switchToday.setChecked(true);
         else if (first.equals("ieri")) {
             this.switchToday.setChecked(false);
-            this.editDate.setText(yesterday());
+            this.editDate.setText(CalendarUtils.yesterday());
         }
 
         // Go on until there is nothing left on the stack
@@ -237,25 +238,6 @@ public class RefuelInsertion extends ActionBarActivity {
 
     private void displayToast(String message){
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
-    }
-
-    private String today(){
-        Calendar c = Calendar.getInstance();
-        int year = c.get(Calendar.YEAR);
-        int month = c.get(Calendar.MONTH);
-        int day = c.get(Calendar.DAY_OF_MONTH);
-        String format = "%d/%d/%d";
-        return String.format(format, day, month + 1, year);
-    }
-
-    private String yesterday(){
-        Calendar c = Calendar.getInstance();
-        c.add(Calendar.DATE, -1);
-        int year = c.get(Calendar.YEAR);
-        int month = c.get(Calendar.MONTH);
-        int day = c.get(Calendar.DAY_OF_MONTH);
-        String format = "%d/%d/%d";
-        return String.format(format, day, month + 1, year);
     }
 
 //==================================================================================================
@@ -316,8 +298,8 @@ public class RefuelInsertion extends ActionBarActivity {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 EditText edt = (EditText) findViewById(R.id.refuel_insertion_data_edit);
-                if (b) {
-                    edt.setText(today());
+                if( b ){
+                    edt.setText(CalendarUtils.today());
                 } else {
                     edt.setText("");
                 }
