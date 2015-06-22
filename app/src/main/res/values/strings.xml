@@ -64,8 +64,14 @@
     <string name="activity_refuel_insertion_refuel_data_parse_error">Refuel data not in form dd/mm/yyyy.</string>
     <string name="activity_refuel_insertion_refuel_save_success">Refuel Saved.</string>
     <string name="activity_refuel_insertion_refuel_save_fail">Error to save Refuel.</string>
-    <string name="activity_refuel_insertion_tts_text">Say somethings…</string>
+    <string name="activity_refuel_insertion_tts_text">Say something…</string>
     <string name="activity_refuel_insertion_tts_error">Speech to Text not supported on your Device.</string>
+    <string name="activity_refuel_insertion_station_address_hint">Gas Station Address</string>
+    <string name="activity_refuel_insertion_mileage_hint">Mileage since last refuel</string>
+    <string name="activity_refuel_insertion_refuel_amount_hint">Total spent</string>
+    <string name="activity_refuel_insertion_price_per_liter_hint">Price per liter</string>
+    <string name="activity_refuel_insertion_refuel_date_hint">Refuel date</string>
+    <string name="activity_refuel_insertion_notes_hint">Notes</string>
 
     <string name="async_task_google_login_dialog_title">Google Login.</string>
     <string name="async_task_google_login_try_to_connect">Try to login with Google Account.</string>
