@@ -18,7 +18,6 @@ import android.os.RemoteException;
 import android.speech.RecognizerIntent;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
