@@ -51,7 +51,8 @@
                  android:layout_height="match_parent"
                  android:layout_weight="2"
                  android:inputType="text"
-                 android:textColor="@color/black"/>
+                 android:textColor="@color/black"
+                 android:hint="@string/activity_maintenance_insertion_place_hint"/>
              <Switch
                  android:id="@+id/maintenance_insertion_switch_current_place"
                  android:layout_width="wrap_content"
@@ -79,7 +80,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:inputType="text"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"
+                android:hint="@string/activity_maintenance_insertion_name_hint"/>
         </LinearLayout>
 
         <!-- text field to insert the amount -->
@@ -98,7 +100,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:inputType="numberDecimal"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"
+                android:hint="@string/activity_maintenance_insertion_amount_hint"/>
         </LinearLayout>
 
         <!-- text field of notes-->
@@ -119,7 +122,8 @@
                 android:minHeight="@dimen/activity_maintenance_insertion_text_notes_height"
                 android:isScrollContainer="true"
                 android:inputType="textMultiLine"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"
+                android:hint="@string/activity_maintenance_insertion_notes_hint"/>
         </LinearLayout>
 
         <!-- spinner to select the type -->

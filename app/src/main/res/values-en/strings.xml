@@ -38,7 +38,11 @@
     <string name="activity_maintenance_insertion_calendar_date_missing">Calendar date missing.</string>
     <string name="activity_maintenance_insertion_calendar_date_parse_error">Calendar date not in form dd/mm/yyyy.</string>
     <string name="activity_maintenance_insertion_maintenance_saved_success">Cost saved!</string>
-    <string name="activity_maintenance_insertion_maintenance_saved_fail">Error to save the Cost.</string>
+    <string name="activity_maintenance_insertion_maintenance_saved_fail">Error saving cost.</string>
+    <string name="activity_maintenance_insertion_place_hint">Mechanic Address</string> <!-- TO-DO: "mechanic" doesn't sound right :| -->
+    <string name="activity_maintenance_insertion_name_hint">Name of cost</string>
+    <string name="activity_maintenance_insertion_amount_hint">Amount paid</string>
+    <string name="activity_maintenance_insertion_notes_hint">Notes</string>
 
     <string name="activity_vehicle_insertion_select_fuel">Select a Fuel Type</string>
     <string name="activity_vehicle_insertion_name_missing">Name of vehicle missing.</string>
@@ -47,6 +51,9 @@
     <string name="activity_vehicle_insertion_purchase_date_parse_error">Purchase date not in form dd/mm/yyyy.</string>
     <string name="activity_vehicle_insertion_vehicle_save_success">Vehicle saved!</string>
     <string name="activity_vehicle_insertion_vehicle_save_fail">Error to save a Vehicle.</string>
+    <string name="activity_vehicle_insertion_vehicle_name_hint">Name of Vehicle</string>
+    <string name="activity_vehicle_insertion_vehicle_plate_hint">Plate</string>
+    <string name="activity_vehicle_insertion_vehicle_purchase_date_hint">Date of purchase</string>
 
     <string name="async_task_google_login_dialog_title">Google Login.</string>
     <string name="async_task_google_login_try_to_connect">Try to login with Google Account.</string>
