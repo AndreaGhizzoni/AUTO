@@ -67,7 +67,7 @@
     <string name="activity_refuel_insertion_tts_text">Say something…</string>
     <string name="activity_refuel_insertion_tts_error">Speech to Text not supported on your Device.</string>
     <string name="activity_refuel_insertion_station_address_hint">Gas Station Address</string>
-    <string name="activity_refuel_insertion_mileage_hint">Mileage since last refuel</string>
+    <string name="activity_refuel_insertion_mileage_hint">Mileage</string>
     <string name="activity_refuel_insertion_refuel_amount_hint">Total spent</string>
     <string name="activity_refuel_insertion_price_per_liter_hint">Price per liter</string>
     <string name="activity_refuel_insertion_refuel_date_hint">Refuel date</string>
