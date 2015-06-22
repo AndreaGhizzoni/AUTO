@@ -158,7 +158,8 @@ public class RefuelInsertion extends ActionBarActivity {
             RecognizerIntent.EXTRA_LANGUAGE_MODEL,
             RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
         );
-        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
+        // The STT enigne will work to recognize Italian. This is mostly out of laziness, just to prove the concept
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.ITALIAN);
         intent.putExtra(
                 RecognizerIntent.EXTRA_PROMPT,
                 getResources().getString(R.string.activity_refuel_insertion_tts_text)
@@ -174,6 +175,7 @@ public class RefuelInsertion extends ActionBarActivity {
         }
     }
 
+    // Match expressions like "(Oggi) ho fatto 10 euro (e 50) di benzina a 1 euro (e 20) al litro"
     private void parseTTS( String tts ){
         //tts is the best matching tts
         ArrayDeque<String> userSpeech = new ArrayDeque<>();
@@ -198,14 +200,12 @@ public class RefuelInsertion extends ActionBarActivity {
         while (!(userSpeech.isEmpty())){
             s = userSpeech.pop();
 
-
-            // Match total price
+            // Match price expressions
             if (s.matches("\\d+") || s.equals("un")){
                 // Saving the value of the integer part of the cost
-                Log.d(TAG, s);
-
                 float intPart;
 
+                // STT engine quirk: "un" is parsed as a word rather than a number
                 if (s.equals("un"))
                     intPart = 1.0f;
                 else

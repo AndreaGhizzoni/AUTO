@@ -64,7 +64,7 @@
     <string name="activity_refuel_insertion_refuel_data_parse_error">Data del rifornimento non nel formato gg/mm/aaaa.</string>
     <string name="activity_refuel_insertion_refuel_save_success">Rifornimento Salvato.</string>
     <string name="activity_refuel_insertion_refuel_save_fail">Errore nel salvataggio del Rifornimento.</string>
-    <string name="activity_refuel_insertion_tts_text">Dimmi qualcosa…</string>
+    <string name="activity_refuel_insertion_tts_text">Dimmi il tuo ultimo rifornimento</string>
     <string name="activity_refuel_insertion_tts_error">Riconoscimento Vocale non disponibile.</string>
     <string name="activity_refuel_insertion_station_address_hint">Indirizzo benzinaio</string>
     <string name="activity_refuel_insertion_mileage_hint">Km del Veicolo</string>
