@@ -98,7 +98,7 @@ public class VehicleInsertion extends ActionBarActivity {
         this.editPlate = (EditText)findViewById(R.id.vehicle_insertion_plate);
 
         ArrayList<CharSequence> lst = new ArrayList<>();
-        lst.add("select a fuel");
+        lst.add(getResources().getString(R.string.activity_vehicle_insertion_select_fuel));
         Collections.addAll(lst, getResources().getStringArray(R.array.fuel));
         CustomArrayAdapter<CharSequence> spinnerAdapter = new CustomArrayAdapter<>(
             getApplicationContext(), lst.toArray(new CharSequence[lst.size()])

@@ -38,6 +38,8 @@
     <string name="activity_maintenance_insertion_calendar_date_parse_error">Date non in formato gg/mm/aaaa.</string>
     <string name="activity_maintenance_insertion_maintenance_saved_success">Costo salvato correttamente!</string>
     <string name="activity_maintenance_insertion_maintenance_saved_fail">Errore nel salvataggio del Costo.</string>
+
+    <string name="activity_vehicle_insertion_select_fuel">Seleziona un tipo di Carburante</string>
     <string name="activity_vehicle_insertion_name_missing">Nome del Veicolo mancante.</string>
     <string name="activity_vehicle_insertion_plate_missing">Targa del veicolo mancante.</string>
     <string name="activity_vehicle_insertion_fuel_not_selected">Tipo di carburante non selezionato.</string>
@@ -78,4 +80,6 @@
 
     <string name="frag_view_costs_no_cost_associated">Nessun costo associato a questo Veicolo</string>
     <string name="frag_view_costs_no_vehicle_selected">Seleziona un Veicolo</string>
+
+    <string name="menu_done">Salva</string>
 </resources>

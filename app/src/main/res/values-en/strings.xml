@@ -39,6 +39,7 @@
     <string name="activity_maintenance_insertion_maintenance_saved_success">Cost saved!</string>
     <string name="activity_maintenance_insertion_maintenance_saved_fail">Error to save the Cost.</string>
 
+    <string name="activity_vehicle_insertion_select_fuel">Select a Fuel Type</string>
     <string name="activity_vehicle_insertion_name_missing">Name of vehicle missing.</string>
     <string name="activity_vehicle_insertion_plate_missing">Plate of vehicle missing.</string>
     <string name="activity_vehicle_insertion_fuel_not_selected">Fuel not selected.</string>
@@ -79,4 +80,6 @@
 
     <string name="frag_view_costs_no_cost_associated">No costs associated to this Vehicle</string>
     <string name="frag_view_costs_no_vehicle_selected">Select a Vehicle</string>
+
+    <string name="menu_done">Done</string>
 </resources>
