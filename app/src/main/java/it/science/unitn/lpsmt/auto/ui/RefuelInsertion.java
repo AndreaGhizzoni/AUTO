@@ -162,7 +162,7 @@ public class RefuelInsertion extends ActionBarActivity {
         } catch (ActivityNotFoundException a) {
             Toast.makeText(
                 getApplicationContext(),
-                getResources().getString(R.string.activity_refuel_insertion_tts_error)
+                getResources().getString(R.string.activity_refuel_insertion_tts_error),
                 Toast.LENGTH_SHORT
             ).show();
         }
@@ -355,9 +355,9 @@ public class RefuelInsertion extends ActionBarActivity {
                         "Done button",
                         Toast.LENGTH_SHORT
                     ).show();
+                    setResult(Activity.RESULT_OK);
+                    finish();
                 }
-                setResult(Activity.RESULT_OK);
-                finish();
                 return true;
             }
             case R.id.tts:{

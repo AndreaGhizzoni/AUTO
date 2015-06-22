@@ -61,7 +61,7 @@
     <string name="activity_refuel_insertion_refuel_amount_missing">Amount of Refuel missing.</string>
     <string name="activity_refuel_insertion_refuel_price_per_liter_missing">Price per Liter missing.</string>
     <string name="activity_refuel_insertion_refuel_data_missing">Refuel data missing.</string>
-    <string name="activity_refuel_insertion_refuel_data_parse_error">Error parsing Refuel data.</string>
+    <string name="activity_refuel_insertion_refuel_data_parse_error">Refuel data not in form dd/mm/yyyy.</string>
     <string name="activity_refuel_insertion_refuel_save_success">Refuel Saved.</string>
     <string name="activity_refuel_insertion_refuel_save_fail">Error to save Refuel.</string>
     <string name="activity_refuel_insertion_tts_text">Say somethings…</string>

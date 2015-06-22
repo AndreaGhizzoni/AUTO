@@ -50,21 +50,21 @@
     <string name="activity_vehicle_insertion_fuel_not_selected">Tipo di carburante non selezionato.</string>
     <string name="activity_vehicle_insertion_purchase_date_parse_error">Data di acquisto non in formato gg/mm/aaaa</string>
     <string name="activity_vehicle_insertion_vehicle_save_success">Veicolo salvato!</string>
-    <string name="activity_vehicle_insertion_vehicle_save_fail">Errore nel salvataggio del veicolo.</string>
+    <string name="activity_vehicle_insertion_vehicle_save_fail">Errore nel salvataggio del Veicolo.</string>
     <string name="activity_vehicle_insertion_vehicle_name_hint">Nome del veicolo</string>
     <string name="activity_vehicle_insertion_vehicle_plate_hint">Targa</string>
     <string name="activity_vehicle_insertion_vehicle_purchase_date_hint">Data d\'acquisto</string>
 
-    <string name="activity_refuel_insertion_vehicle_not_selected">Vehicle not selected.</string>
-    <string name="activity_refuel_insertion_vehicle_km_missing">Km of vehicle missing.</string>
-    <string name="activity_refuel_insertion_refuel_amount_missing">Amount of Refuel missing.</string>
-    <string name="activity_refuel_insertion_refuel_price_per_liter_missing">Price per Liter missing.</string>
-    <string name="activity_refuel_insertion_refuel_data_missing">Refuel data missing.</string>
-    <string name="activity_refuel_insertion_refuel_data_parse_error">Error parsing Refuel data.</string>
-    <string name="activity_refuel_insertion_refuel_save_success">Refuel Saved.</string>
-    <string name="activity_refuel_insertion_refuel_save_fail">Error to save Refuel.</string>
-    <string name="activity_refuel_insertion_tts_text">Say somethings…</string>
-    <string name="activity_refuel_insertion_tts_error">Speech to Text not supported on your Device.</string>
+    <string name="activity_refuel_insertion_vehicle_not_selected">Veicolo non selezionato.</string>
+    <string name="activity_refuel_insertion_vehicle_km_missing">Km del Veicolo mancanti.</string>
+    <string name="activity_refuel_insertion_refuel_amount_missing">Totale del rifornimento mancante.</string>
+    <string name="activity_refuel_insertion_refuel_price_per_liter_missing">Prezzo al Litro mancante.</string>
+    <string name="activity_refuel_insertion_refuel_data_missing">Data del rifornimento.</string>
+    <string name="activity_refuel_insertion_refuel_data_parse_error">Data del rifornimento non nel formato gg/mm/aaaa.</string>
+    <string name="activity_refuel_insertion_refuel_save_success">Rifornimento Salvato.</string>
+    <string name="activity_refuel_insertion_refuel_save_fail">Errore nel salvataggio del Rifornimento.</string>
+    <string name="activity_refuel_insertion_tts_text">Dimmi qualcosa…</string>
+    <string name="activity_refuel_insertion_tts_error">Riconoscimento Vocale non disponibile.</string>
 
     <string name="async_task_google_login_dialog_title">Accesso con Google</string>
     <string name="async_task_google_login_try_to_connect">Tentativo di accesso all\'Account Google.</string>
