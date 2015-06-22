@@ -67,7 +67,7 @@
     <string name="activity_refuel_insertion_tts_text">Dimmi qualcosa…</string>
     <string name="activity_refuel_insertion_tts_error">Riconoscimento Vocale non disponibile.</string>
     <string name="activity_refuel_insertion_station_address_hint">Indirizzo benzinaio</string>
-    <string name="activity_refuel_insertion_mileage_hint">km dall\'ultimo rifornimento</string>
+    <string name="activity_refuel_insertion_mileage_hint">Km del Veicolo</string>
     <string name="activity_refuel_insertion_refuel_amount_hint">Spesa totale</string>
     <string name="activity_refuel_insertion_price_per_liter_hint">Prezzo al litro</string>
     <string name="activity_refuel_insertion_refuel_date_hint">Data rifornmento</string>
