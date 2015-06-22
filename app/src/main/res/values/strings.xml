@@ -107,7 +107,7 @@
     <string name="frag_view_costs_no_cost_associated">No costs associated to this Vehicle</string>
     <string name="frag_view_costs_no_vehicle_selected">Select a Vehicle</string>
 
-    <string name="refuel_card_view_adapter_amount" formatted="false">%s Euro at %s E/l</string>
+    <string name="refuel_card_view_adapter_amount" formatted="false">%s  -  %s Euro at %s E/l</string>
 
     <string name="menu_done">Done</string>
     <string name="menu_tts">Speech to Text</string>

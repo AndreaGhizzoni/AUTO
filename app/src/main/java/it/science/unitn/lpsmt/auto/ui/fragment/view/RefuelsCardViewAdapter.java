@@ -8,8 +8,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import it.science.unitn.lpsmt.auto.model.Refuel;
 import lpsmt.science.unitn.it.auto.R;
@@ -54,7 +56,8 @@ public class RefuelsCardViewAdapter extends RecyclerView.Adapter<RefuelsCardView
         holder.refuelAssociated = r;
         holder.address.setText( r.getPlace().getAddress() );
         String format = context.getResources().getString(R.string.refuel_card_view_adapter_amount);
-        holder.amount.setText( String.format(format, r.getAmount()+"", r.getPricePerLiter()+"") );
+        String d = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(r.getDate());
+        holder.amount.setText( String.format(format, d, r.getAmount()+"", r.getPricePerLiter()+"") );
     }
 
     @Override
