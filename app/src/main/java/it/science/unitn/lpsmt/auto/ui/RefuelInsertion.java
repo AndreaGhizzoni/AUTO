@@ -18,6 +18,7 @@ import android.os.RemoteException;
 import android.speech.RecognizerIntent;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,11 +33,15 @@ import android.widget.Toast;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Queue;
+import java.util.Stack;
+import java.util.StringTokenizer;
 
 import it.science.unitn.lpsmt.auto.controller.dao.DAOCost;
 import it.science.unitn.lpsmt.auto.controller.dao.DAOVehicle;
@@ -48,6 +53,7 @@ import it.science.unitn.lpsmt.auto.ui.service.GPSService;
 import lpsmt.science.unitn.it.auto.R;
 
 public class RefuelInsertion extends ActionBarActivity {
+    public static String TAG = RefuelInsertion.class.getSimpleName();
     public static final int REQUEST_CODE = 1010;
     public static final int STT_REQUEST_CODE = 1011;
 
@@ -61,7 +67,7 @@ public class RefuelInsertion extends ActionBarActivity {
     private Switch switchGetCurrentPlace;
     private EditText editAmount;
     private EditText editPpl;
-    private EditText editData;
+    private EditText editDate;
     private EditText editNotes;
 
     // filed for gps service
@@ -92,7 +98,7 @@ public class RefuelInsertion extends ActionBarActivity {
         SimpleDateFormat f = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
         Date atData;
         try {
-            atData = f.parse(this.editData.getText().toString());
+            atData = f.parse(this.editDate.getText().toString());
         } catch (ParseException i){
             displayToast(R.string.activity_refuel_insertion_refuel_data_parse_error);
             return false;
@@ -130,7 +136,7 @@ public class RefuelInsertion extends ActionBarActivity {
             return false;
         }
 
-        if( this.editData.getText().toString().isEmpty() ){
+        if( this.editDate.getText().toString().isEmpty() ){
             displayToast(R.string.activity_refuel_insertion_refuel_data_missing);
             return false;
         }
@@ -154,8 +160,8 @@ public class RefuelInsertion extends ActionBarActivity {
         );
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
         intent.putExtra(
-            RecognizerIntent.EXTRA_PROMPT,
-            getResources().getString(R.string.activity_refuel_insertion_tts_text)
+                RecognizerIntent.EXTRA_PROMPT,
+                getResources().getString(R.string.activity_refuel_insertion_tts_text)
         );
         try {
             startActivityForResult(intent, STT_REQUEST_CODE);
@@ -169,6 +175,65 @@ public class RefuelInsertion extends ActionBarActivity {
     }
 
     private void parseTTS( String tts ){
+        //tts is the best matching tts
+        ArrayDeque<String> userSpeech = new ArrayDeque<>();
+
+        StringTokenizer tokenizer = new StringTokenizer(tts, " ");
+        while (tokenizer.hasMoreTokens()){
+            String token = tokenizer.nextToken();
+            userSpeech.add(token);
+        }
+
+        // Check for the first item
+        String first = userSpeech.pop();
+        if (first.equals("oggi"))
+            this.editDate.setText(today());
+        else if (first.equals("ieri"))
+            this.editDate.setText(yesterday());
+
+        //Toast.makeText(getApplicationContext(),userSpeech.toString(),Toast.LENGTH_LONG).show();
+
+        // Go on until there is nothing left on the stack
+        String s;
+        while (!(userSpeech.isEmpty())){
+            s = userSpeech.pop();
+
+
+            // Match total price
+            if (s.matches("\\d+") || s.equals("un")){
+                // Saving the value of the integer part of the cost
+                Log.d(TAG, s);
+
+                float intPart;
+
+                if (s.equals("un"))
+                    intPart = 1.0f;
+                else
+                    intPart = Float.parseFloat(s);
+
+                // Discard "euro"
+                userSpeech.pop();
+
+                // Now, look for a fractional cost
+                s = userSpeech.peek();
+
+                float fractPart = 0.0f;
+                if (s.equals("e")){
+                    // Discard "e"
+                    userSpeech.pop();
+
+                    //Match the fractional amount
+                    s = userSpeech.pop();
+                    fractPart = Float.parseFloat("0." + s);
+                }
+
+                if (this.editAmount.getText().toString().equals(""))
+                    this.editAmount.setText((intPart + fractPart) + "");
+                else
+                    this.editPpl.setText((intPart + fractPart) + "");
+            }
+        }
+
         this.editNotes.setText(tts);
     }
 
@@ -177,7 +242,29 @@ public class RefuelInsertion extends ActionBarActivity {
                 Toast.LENGTH_LONG).show();
     }
 
-//==================================================================================================
+    private String today(){
+        Calendar c = Calendar.getInstance();
+        int year = c.get(Calendar.YEAR);
+        int month = c.get(Calendar.MONTH);
+        int day = c.get(Calendar.DAY_OF_MONTH);
+        String format = "%d/%d/%d";
+        return String.format(format, day, month + 1, year);
+    }
+
+    private String yesterday(){
+        Calendar c = Calendar.getInstance();
+
+        c.add(Calendar.DATE, -1);
+
+        int year = c.get(Calendar.YEAR);
+        int month = c.get(Calendar.MONTH);
+        int day = c.get(Calendar.DAY_OF_MONTH);
+        String format = "%d/%d/%d";
+
+        return String.format(format, day, month + 1, year);
+    }
+
+    //==================================================================================================
 //  INIT METHODS
 //==================================================================================================
     private void initSpinnerVehicleAssociated(){
@@ -236,13 +323,7 @@ public class RefuelInsertion extends ActionBarActivity {
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 EditText edt = (EditText) findViewById(R.id.refuel_insertion_data_edit);
                 if (b) {
-                    final Calendar c = Calendar.getInstance();
-                    int year = c.get(Calendar.YEAR);
-                    int month = c.get(Calendar.MONTH);
-                    int day = c.get(Calendar.DAY_OF_MONTH);
-                    String format = "%d/%d/%d";
-                    String date = String.format(format, day, month + 1, year);
-                    edt.setText(date);
+                    edt.setText(today());
                 } else {
                     edt.setText("");
                 }
@@ -251,8 +332,8 @@ public class RefuelInsertion extends ActionBarActivity {
     }
 
     private void initEditTextDate(){
-        this.editData = (EditText)findViewById(R.id.refuel_insertion_data_edit);
-        this.editData.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        this.editDate = (EditText)findViewById(R.id.refuel_insertion_data_edit);
+        this.editDate.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
                 if (b) showDatePickerDialog();
