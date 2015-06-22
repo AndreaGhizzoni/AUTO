@@ -352,7 +352,7 @@ public class RefuelInsertion extends ActionBarActivity {
                 if( checkFields() && save() ){
                     Toast.makeText(
                         getApplicationContext(),
-                        "Done button",
+                        getResources().getString(R.string.activity_refuel_insertion_refuel_save_success),
                         Toast.LENGTH_SHORT
                     ).show();
                     setResult(Activity.RESULT_OK);
