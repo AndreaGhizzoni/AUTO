@@ -12,6 +12,7 @@ import java.util.List;
 
 import it.science.unitn.lpsmt.auto.controller.CostDAO;
 import it.science.unitn.lpsmt.auto.controller.util.Converter;
+import it.science.unitn.lpsmt.auto.controller.util.DateUtils;
 import it.science.unitn.lpsmt.auto.model.Cost;
 import it.science.unitn.lpsmt.auto.model.Maintenance;
 import it.science.unitn.lpsmt.auto.model.Place;
@@ -280,7 +281,7 @@ public class DAOCost implements CostDAO {
 
                 if(clazz.equals(Refuel.class.getSimpleName().toLowerCase())){
                     Float pricePerLiter = c.getFloat(5);
-                    Date d = it.science.unitn.lpsmt.auto.controller.util.Date.
+                    Date d = DateUtils.
                             getDateFromString(c.getString(6));
                     Integer atKm = c.getInt(7);
                     tmp = new Refuel(id, v, amount, notes, pricePerLiter, d, atKm, place);

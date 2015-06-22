@@ -15,8 +15,8 @@ import it.science.unitn.lpsmt.auto.model.Refuel;
 import it.science.unitn.lpsmt.auto.model.Vehicle;
 
 import static it.science.unitn.lpsmt.auto.controller.util.Const.LOCATION_PROVIDER;
-import static it.science.unitn.lpsmt.auto.controller.util.Date.getDateFromString;
-import static it.science.unitn.lpsmt.auto.controller.util.Date.getStringFromDate;
+import static it.science.unitn.lpsmt.auto.controller.util.DateUtils.getDateFromString;
+import static it.science.unitn.lpsmt.auto.controller.util.DateUtils.getStringFromDate;
 
 /**
  * TODO add doc
