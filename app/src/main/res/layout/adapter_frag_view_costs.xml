@@ -16,24 +16,23 @@
         android:layout_margin="@dimen/adapter_card_view_main_linear_layout_margin">
 
         <ImageView
+            android:id="@+id/adapter_frag_view_costs_image"
             android:layout_margin="8dp"
             android:layout_width="@dimen/card_view_icon_width"
             android:layout_height="@dimen/card_view_min_height"
-            android:background="@drawable/ic_maps_local_gas_station_48dp"
-            android:contentDescription="@string/content_descriptor_adapter_last_refuels_icon"/>
+            android:contentDescription="fucking icon"/>
 
         <LinearLayout
-            android:id="@+id/card_view_last_refuels_strings"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/card_view_last_refuel_address"
+                android:id="@+id/adapter_frag_view_cost_text_top"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/card_view_inner_text_height" />
             <TextView
-                android:id="@+id/card_view_last_refuel_amount"
+                android:id="@+id/adapter_frag_view_cost_text_bottom"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/card_view_inner_text_height" />
         </LinearLayout>

@@ -109,6 +109,7 @@
 
     <string name="frag_view_costs_no_cost_associated">Nessun costo associato a questo Veicolo</string>
     <string name="frag_view_costs_no_vehicle_selected">Seleziona un Veicolo</string>
+    <string name="frag_view_costs_no_place">Nessun Indirizzo</string>
 
     <string name="refuel_card_view_adapter_amount" formatted="false">%s  -  %s € a %s €/l</string>
     <string name="deadline_no_note">Nessuna Nota</string>

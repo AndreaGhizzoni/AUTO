@@ -14,9 +14,8 @@ import android.widget.Spinner;
 
 import java.util.List;
 
-import it.science.unitn.lpsmt.auto.controller.dao.DAOCost;
 import it.science.unitn.lpsmt.auto.controller.dao.DAOVehicle;
-import it.science.unitn.lpsmt.auto.model.Refuel;
+import it.science.unitn.lpsmt.auto.model.Cost;
 import it.science.unitn.lpsmt.auto.model.Vehicle;
 import lpsmt.science.unitn.it.auto.R;
 
@@ -110,8 +109,8 @@ public class ViewCostsFragment extends Fragment {
                 recyclerViewAdapter.setData(null);
                 getActivity().findViewById(R.id.frag_view_costs_no_cost).setVisibility(View.INVISIBLE);
             }else{
-                Vehicle i = vehicleList.get(pos-1);
-                List<Refuel> r = new DAOCost().getAllRefuelWhereVehicleIs(i);
+                Vehicle i = vehicleList.get(pos - 1);
+                List<Cost> r = i.getCosts();
                 if( r.isEmpty() ){
                     getActivity().findViewById(R.id.frag_view_costs_no_cost).setVisibility(View.VISIBLE);
                     getActivity().findViewById(R.id.frag_view_costs_recycle_view).setVisibility(View.INVISIBLE);
