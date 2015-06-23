@@ -139,7 +139,7 @@ public class MaintenanceInsertion extends ActionBarActivity {
         else t = Maintenance.Type.TAX;
 
         // create the calendar event if the switch is enabled.
-        Long calendarID = null;// stub
+        Long calendarID = -1l;// stub
         if( this.switchAddCalendarEvent.isChecked() ){
             String date = this.editCalendarDate.getText().toString();
             CalendarUtils.Holder h = new CalendarUtils.Holder();
@@ -184,7 +184,7 @@ public class MaintenanceInsertion extends ActionBarActivity {
         }
 
         // create the maintenance object and save it
-        Maintenance m = new Maintenance(Const.NO_DB_ID_SET, v, amount, notes, name, t, p, calendarID.intValue() );
+        Maintenance m = new Maintenance(Const.NO_DB_ID_SET, v, amount, notes, name, t, p, calendarID==null? null:calendarID.intValue() );
         new DAOCost().save(m);
         return true;
     }
