@@ -26,6 +26,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import it.science.unitn.lpsmt.auto.controller.dao.DAOVehicle;
+import it.science.unitn.lpsmt.auto.controller.util.DateUtils;
 import it.science.unitn.lpsmt.auto.model.Vehicle;
 import it.science.unitn.lpsmt.auto.model.util.Const;
 import lpsmt.science.unitn.it.auto.R;
@@ -33,6 +34,9 @@ import lpsmt.science.unitn.it.auto.R;
 // TODO maybe implements method to save the app instance when is put onPause
 public class VehicleInsertion extends ActionBarActivity {
     public static final int RESULT_CODE = 1001;
+    public static final String UPDATE_VEHICLE = "update_id";
+
+    private Vehicle vehicleToUpdate;
 
     // gui components
     private EditText editName;
@@ -41,7 +45,7 @@ public class VehicleInsertion extends ActionBarActivity {
     private EditText editPurchaseDate;
 
 //==================================================================================================
-//  METHOD
+//  SAVING METHOD
 //==================================================================================================
     private boolean save(){
         String n = this.editName.getText().toString();
@@ -93,6 +97,9 @@ public class VehicleInsertion extends ActionBarActivity {
         return true;
     }
 
+//==================================================================================================
+//  INIT METHOD
+//==================================================================================================
     private void initComponents(){
         this.editName = (EditText)findViewById(R.id.vehicle_insertion_name);
         this.editPlate = (EditText)findViewById(R.id.vehicle_insertion_plate);
@@ -116,6 +123,35 @@ public class VehicleInsertion extends ActionBarActivity {
         });
     }
 
+    private void populateWithVehicleToUpdate(){
+        this.editName.setText( this.vehicleToUpdate.getName() );
+        this.editPlate.setText( this.vehicleToUpdate.getPlate() );
+        if( this.vehicleToUpdate.getPurchaseDate() != null ){
+            this.editPurchaseDate.setText(DateUtils.getStringFromDate(vehicleToUpdate.getPurchaseDate(), "dd/MM/yyyy"));
+        }
+        switch( this.vehicleToUpdate.getFuel() ){
+            case GASOLINE: {
+                this.spinnerFuel.setSelection(1);
+                break;
+            }
+            case LPG: {
+                this.spinnerFuel.setSelection(2);
+                break;
+            }
+            case NATURAL_GAS: {
+                this.spinnerFuel.setSelection(3);
+                break;
+            }
+            case PETROL: {
+                this.spinnerFuel.setSelection(4);
+                break;
+            }
+        }
+    }
+
+//==================================================================================================
+//  UTILITIES METHOD
+//==================================================================================================
     private void showDatePickerDialog(){
         DialogFragment newFragment = new DatePickerFragment();
         newFragment.show(getSupportFragmentManager(), "datePicker");
@@ -135,6 +171,12 @@ public class VehicleInsertion extends ActionBarActivity {
         setContentView(R.layout.activity_vehicle_insertion);
 
         this.initComponents();
+        Bundle args = getIntent().getExtras();
+        if( args != null && args.containsKey(UPDATE_VEHICLE) ){
+            Long id = (Long) args.get(UPDATE_VEHICLE);
+            vehicleToUpdate = new DAOVehicle().get(id);
+            this.populateWithVehicleToUpdate();
+        }
     }
 
     @Override
@@ -147,17 +189,22 @@ public class VehicleInsertion extends ActionBarActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.done) {
-            if( checkFields() && save() ) {
-                Toast.makeText(
-                    getApplicationContext(),
-                    R.string.activity_vehicle_insertion_vehicle_save_success,
-                    Toast.LENGTH_SHORT
-                ).show();
-                setResult(Activity.RESULT_OK);
-                finish();
+        if (id == R.id.done){
+            if( vehicleToUpdate != null ){
+
+                return true;
+            }else{
+                if (checkFields() && save()) {
+                    Toast.makeText(
+                            getApplicationContext(),
+                            R.string.activity_vehicle_insertion_vehicle_save_success,
+                            Toast.LENGTH_SHORT
+                    ).show();
+                    setResult(Activity.RESULT_OK);
+                    finish();
+                }
+                return true;
             }
-            return true;
         }
         return super.onOptionsItemSelected(item);
     }
