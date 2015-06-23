@@ -77,7 +77,7 @@ public class DeadLineCardViewAdapter extends RecyclerView.Adapter<DeadLineCardVi
     public void onBindViewHolder(ViewHolder holder, int position) {
         Maintenance m = this.deadlines.get(position);
         holder.maintenanceAssociated = m;
-        holder.name.setText(m.getName());
+        holder.name.setText(String.format("%s  -  %s", m.getVehicle().getName(), m.getName()));
         holder.amount.setText(m.getAmount()+getPaymentSymbol());
     }
 
