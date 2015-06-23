@@ -102,7 +102,11 @@ public class DeadLineCardViewAdapter extends RecyclerView.Adapter<DeadLineCardVi
                 @Override
                 public void onClick(View view) {
                     if (mode == null) {
-                        Toast.makeText(view.getContext(), "Maintenance id: " + maintenanceAssociated.getId(),
+                        String note = maintenanceAssociated.getNotes() == null ||
+                                maintenanceAssociated.getNotes().isEmpty() ?
+                                view.getResources().getString(R.string.deadline_no_note) :
+                                maintenanceAssociated.getNotes();
+                        Toast.makeText(view.getContext(), note ,
                                 Toast.LENGTH_LONG).show();
                     }
                 }

@@ -90,8 +90,11 @@ public class RefuelsCardViewAdapter extends RecyclerView.Adapter<RefuelsCardView
                 @Override
                 public void onClick(View view) {
                     if (mode == null) {
-                        Toast.makeText(view.getContext(), "Refuel id: " + refuelAssociated.getId(),
-                                Toast.LENGTH_LONG).show();
+                        String note = refuelAssociated.getNotes() == null ||
+                                refuelAssociated.getNotes().isEmpty() ?
+                                view.getResources().getString(R.string.deadline_no_note) :
+                                refuelAssociated.getNotes();
+                        Toast.makeText(view.getContext(), note, Toast.LENGTH_LONG).show();
                     }
                 }
             });
