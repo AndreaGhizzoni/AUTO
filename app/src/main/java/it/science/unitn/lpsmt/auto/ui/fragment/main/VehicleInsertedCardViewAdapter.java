@@ -178,12 +178,12 @@ public class VehicleInsertedCardViewAdapter extends RecyclerView.Adapter<Vehicle
                             @Override
                             public void onClick(DialogInterface dialog, int whichButton) {
                                 new DAOVehicle().delete(vehicleID);
+                                MainActivity.getApp().updateVehicleInFragment();
+                                MainActivity.getApp().updateDeadlineFragment();
                             }
                         })
                         .setNegativeButton(android.R.string.no, null).show();
                     actionMode.finish();
-                    MainActivity.getApp().updateVehicleInFragment();
-                    MainActivity.getApp().updateDeadlineFragment();
                     return true;
                 }
                 default: return false;
@@ -197,6 +197,4 @@ public class VehicleInsertedCardViewAdapter extends RecyclerView.Adapter<Vehicle
             item.setBackground(DEFAULT_BG);
         }
     }
-
-
 }
