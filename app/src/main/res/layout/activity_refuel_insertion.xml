@@ -56,7 +56,7 @@
                  android:layout_weight="0"
                  android:layout_marginLeft="10dp"
                  android:layout_marginStart="10dp"
-                 android:text="Here"
+                 android:text="@string/activity_maintenance_insertion_place"
                  android:textColor="@color/black"/>
         </LinearLayout>
 
@@ -141,7 +141,7 @@
                  android:layout_weight="0"
                  android:layout_marginLeft="10dp"
                  android:layout_marginStart="10dp"
-                 android:text="Today"
+                 android:text="@string/activity_maintenance_insertion_today"
                  android:textColor="@color/black"/>
         </LinearLayout>
 

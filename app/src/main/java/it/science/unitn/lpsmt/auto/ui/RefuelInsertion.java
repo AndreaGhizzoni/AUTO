@@ -56,12 +56,12 @@ public class RefuelInsertion extends ActionBarActivity {
     public static final int STT_REQUEST_CODE = 1011;
 
     private List<Vehicle> vehicleList;
-    private Location locationFromGPS;
+    private static Location locationFromGPS;
 
     // gui components
     private Spinner spinnerVehicleAssociated;
     private EditText editKM;
-    private EditText editCurrentPlace;
+    private static EditText editCurrentPlace;
     private Switch switchGetCurrentPlace;
     private EditText editAmount;
     private EditText editPpl;
@@ -473,7 +473,7 @@ public class RefuelInsertion extends ActionBarActivity {
         }
     }
 
-    private class ServiceHandler extends Handler {
+    private static class ServiceHandler extends Handler {
         @Override
         public void handleMessage( Message msg ){
             switch (msg.what){
@@ -482,6 +482,7 @@ public class RefuelInsertion extends ActionBarActivity {
                     String address = receivedBundle.getString(GPSService.Protocol.RETRIEVED_ADDRESS);
                     locationFromGPS = receivedBundle.getParcelable(GPSService.Protocol.RETRIEVED_LOCATION);
                     editCurrentPlace.setText(address);
+                    removeMessages(msg.what);
                     break;
                 }
                 default: super.handleMessage(msg);

@@ -421,6 +421,7 @@ public class MaintenanceInsertion extends ActionBarActivity {
                     String address = receivedBundle.getString(GPSService.Protocol.RETRIEVED_ADDRESS);
                     locationFromGPS = receivedBundle.getParcelable(GPSService.Protocol.RETRIEVED_LOCATION);
                     editCurrentPlace.setText(address);
+                    removeMessages(msg.what);
                     break;
                 }
                 default: super.handleMessage(msg);
