@@ -62,8 +62,6 @@ public class DAOVehicle implements VehicleDAO{
             return;
         if( newest == null || newest.isDefaultVehicle() )
             return;
-//        if( !old.getId().equals(newest.getId()) )
-//            return;
 
         db.beginTransaction();
         try{
