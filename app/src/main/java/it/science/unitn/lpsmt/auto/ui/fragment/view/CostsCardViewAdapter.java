@@ -201,7 +201,6 @@ public class CostsCardViewAdapter extends RecyclerView.Adapter<CostsCardViewAdap
                         })
                         .setNegativeButton(android.R.string.no, null).show();
                     actionMode.finish();
-                    actionMode.finish();
                     return true;
                 }
                 default: return false;
