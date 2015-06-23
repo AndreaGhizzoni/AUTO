@@ -423,7 +423,10 @@ public class RefuelInsertion extends ActionBarActivity {
                         try {
                             parseSTT(res.get(0));
                         } catch (Exception e) {
-                            Toast.makeText(this.getApplicationContext(), this.getResources().getString(R.string.activity_refuel_insertion_tts_notrecognized), Toast.LENGTH_LONG);
+                            Toast.makeText(
+                                    this.getApplicationContext(),
+                                    this.getResources().getString(R.string.activity_refuel_insertion_tts_notrecognized),
+                                    Toast.LENGTH_LONG).show();
                         }
                     }
                     break;
