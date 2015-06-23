@@ -23,13 +23,14 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-         <!-- MAIN ACTIVITY -->
+        <!-- MAIN ACTIVITY -->
         <activity
             android:name="it.science.unitn.lpsmt.auto.ui.MainActivity"
-            android:screenOrientation="locked"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:screenOrientation="locked" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -69,5 +70,11 @@
             android:name="it.science.unitn.lpsmt.auto.ui.service.GPSService"
             android:enabled="true"
             android:exported="true" />
+
+        <activity
+            android:name="it.science.unitn.lpsmt.auto.ui.ExportActivity"
+            android:label="@string/title_activity_export" >
+        </activity>
     </application>
+
 </manifest>

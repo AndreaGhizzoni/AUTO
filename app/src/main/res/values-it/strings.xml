@@ -26,6 +26,7 @@
     <string name="title_activity_maintenance_insertion">Nuovo Costo</string>
     <string name="title_activity_vehicle_insertion">Nuovo Veicolo</string>
     <string name="title_activity_refuel_insertion">Nuovo Rifornimento</string>
+    <string name="title_activity_export">Esportazione</string>
 
     <string name="activity_maintenance_insertion_place">Qui</string>
     <string name="activity_maintenance_insertion_today">Oggi</string>
