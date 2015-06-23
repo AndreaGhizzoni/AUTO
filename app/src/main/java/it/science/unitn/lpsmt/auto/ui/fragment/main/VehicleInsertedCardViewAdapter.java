@@ -101,7 +101,6 @@ public class VehicleInsertedCardViewAdapter extends RecyclerView.Adapter<Vehicle
      */
     public class ViewHolder extends RecyclerView.ViewHolder {
         public Vehicle associatedVehicle;
-
         public TextView name;
         public TextView data;
 
@@ -135,7 +134,6 @@ public class VehicleInsertedCardViewAdapter extends RecyclerView.Adapter<Vehicle
             name = (TextView) itemView.findViewById(R.id.card_view_vehicle_name);
             data = (TextView) itemView.findViewById(R.id.card_view_vehicle_data);
         }
-
     }
 
     // https://goo.gl/1jIz4a
