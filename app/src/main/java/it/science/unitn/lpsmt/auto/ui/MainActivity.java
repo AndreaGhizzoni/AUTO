@@ -128,6 +128,15 @@ public class MainActivity extends ActionBarActivity{
                 skip = false;
                 break;
             }
+
+            case 5:{
+                Intent i = new Intent(this, ExportActivity.class);
+                if( args != null )
+                    i.putExtras(args);
+                startActivity(i);
+                skip = true;
+                break;
+            }
         }
 
         if( !skip ) {
