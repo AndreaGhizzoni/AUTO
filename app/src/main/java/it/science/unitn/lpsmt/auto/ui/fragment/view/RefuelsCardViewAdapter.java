@@ -2,6 +2,7 @@ package it.science.unitn.lpsmt.auto.ui.fragment.view;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -21,6 +22,8 @@ import java.util.List;
 import java.util.Locale;
 
 import it.science.unitn.lpsmt.auto.model.Refuel;
+import it.science.unitn.lpsmt.auto.ui.MainActivity;
+import it.science.unitn.lpsmt.auto.ui.RefuelInsertion;
 import lpsmt.science.unitn.it.auto.R;
 
 /**
@@ -96,7 +99,7 @@ public class RefuelsCardViewAdapter extends RecyclerView.Adapter<RefuelsCardView
                 @Override
                 public boolean onLongClick(View view) {
                     if( mode == null ) {
-                        mode = new MyActionMode(itemView);
+                        mode = new MyActionMode(itemView, refuelAssociated.getId());
                         view.startActionMode(mode);
                         itemView.setBackgroundColor(Color.rgb(197, 202, 233));
                         return true;
@@ -113,7 +116,11 @@ public class RefuelsCardViewAdapter extends RecyclerView.Adapter<RefuelsCardView
     // https://goo.gl/1jIz4a
     public class MyActionMode implements ActionMode.Callback {
         private View item;
-        public MyActionMode(View item) { this.item = item; }
+        private Long refuelID;
+        public MyActionMode(View item, Long refuelID){
+            this.item = item;
+            this.refuelID = refuelID;
+        }
 
         @Override // Called when the action mode is created; startActionMode() was called
         public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
@@ -131,11 +138,9 @@ public class RefuelsCardViewAdapter extends RecyclerView.Adapter<RefuelsCardView
         public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem) {
             switch (menuItem.getItemId()) {
                 case R.id.modify: {
-                    Toast.makeText(
-                        RefuelsCardViewAdapter.this.context,
-                        "modify action",
-                        Toast.LENGTH_LONG
-                    ).show();
+                    Intent i = new Intent(MainActivity.getApp(), RefuelInsertion.class);
+                    i.putExtra(RefuelInsertion.UPDATE_REFUEL, refuelID);
+                    MainActivity.getApp().startActivity(i);
                     actionMode.finish();
                     return true;
                 }
