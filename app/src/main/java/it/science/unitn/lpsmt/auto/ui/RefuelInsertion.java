@@ -340,22 +340,21 @@ public class RefuelInsertion extends ActionBarActivity {
 //  GPS SERVICE METHODS
 //==================================================================================================
     private void doBind(){
+        this.mMessenger = new Messenger(new ServiceHandler());
         Intent gps = new Intent( getApplicationContext(), GPSService.class );
         getApplicationContext().bindService(gps, mConnection, Context.BIND_AUTO_CREATE);
     }
 
     private void doUnBind(){
-       if( this.switchGetCurrentPlace.isChecked() ) {
-           if( this.mService != null ){
-               Message msg = Message.obtain(null, GPSService.Protocol.REQUEST_UNBIND);
-               msg.replyTo = mMessenger;
-               try {
-                   mService.send(msg);
-               } catch (RemoteException e) {
-                   Toast.makeText(getApplicationContext(), e.getMessage(),Toast.LENGTH_LONG).show();
-               }
-               getApplicationContext().unbindService(mConnection);
+       if( this.mService != null ){
+           Message msg = Message.obtain(null, GPSService.Protocol.REQUEST_UNBIND);
+           msg.replyTo = mMessenger;
+           try {
+               mService.send(msg);
+           } catch (RemoteException e) {
+               Toast.makeText(getApplicationContext(), e.getMessage(),Toast.LENGTH_LONG).show();
            }
+           getApplicationContext().unbindService(mConnection);
        }
     }
 
@@ -508,7 +507,6 @@ public class RefuelInsertion extends ActionBarActivity {
                     String address = receivedBundle.getString(GPSService.Protocol.RETRIEVED_ADDRESS);
                     locationFromGPS = receivedBundle.getParcelable(GPSService.Protocol.RETRIEVED_LOCATION);
                     editCurrentPlace.setText(address);
-                    removeMessages(msg.what);
                     break;
                 }
                 default: super.handleMessage(msg);

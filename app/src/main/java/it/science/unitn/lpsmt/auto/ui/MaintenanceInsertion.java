@@ -59,8 +59,8 @@ public class MaintenanceInsertion extends ActionBarActivity {
     // graphical components necessary to save Maintenance object.
     private Spinner spinnerVehicle;
     private Switch switchGetCurrentPlace;
-    private EditText editCurrentPlace;
-    private Location locationFromGPS;
+    private static EditText editCurrentPlace;
+    private static Location locationFromGPS;
     private EditText editName;
     private EditText editAmount;
     private EditText editNotes;
@@ -202,22 +202,21 @@ public class MaintenanceInsertion extends ActionBarActivity {
 //  GPS SERVICE METHODS
 //==================================================================================================
     private void doBind(){
+        this.mMessenger = new Messenger(new ServiceHandler());
         Intent gps = new Intent( getApplicationContext(), GPSService.class );
         getApplicationContext().bindService(gps, mConnection, Context.BIND_AUTO_CREATE);
     }
 
     private void doUnBind(){
-       if( this.switchGetCurrentPlace.isChecked() ) {
-           if( this.mService != null ){
-               Message msg = Message.obtain(null, GPSService.Protocol.REQUEST_UNBIND);
-               msg.replyTo = mMessenger;
-               try {
-                   mService.send(msg);
-               } catch (RemoteException e) {
-                   Toast.makeText(getApplicationContext(), e.getMessage(),Toast.LENGTH_LONG).show();
-               }
-               getApplicationContext().unbindService(mConnection);
+       if( this.mService != null ){
+           Message msg = Message.obtain(null, GPSService.Protocol.REQUEST_UNBIND);
+           msg.replyTo = mMessenger;
+           try {
+               mService.send(msg);
+           } catch (RemoteException e) {
+               Toast.makeText(getApplicationContext(), e.getMessage(),Toast.LENGTH_LONG).show();
            }
+           getApplicationContext().unbindService(mConnection);
        }
     }
 
@@ -245,7 +244,7 @@ public class MaintenanceInsertion extends ActionBarActivity {
     }
 
     private void initEditTextCurrentPlace(){
-        this.editCurrentPlace = (EditText)findViewById(R.id.maintenance_insertion_place_edit);
+        editCurrentPlace = (EditText)findViewById(R.id.maintenance_insertion_place_edit);
     }
 
     private void initSwitchGetCurrentPlace(){
@@ -332,7 +331,7 @@ public class MaintenanceInsertion extends ActionBarActivity {
     private void populateWithMaintenanceToUpdate(){
         this.spinnerVehicle.setSelection( this.vehicleList.indexOf(maintenanceToUpdate.getVehicle())+1 );
         if( this.maintenanceToUpdate.getPlace() != null )
-            this.editCurrentPlace.setText( this.maintenanceToUpdate.getPlace().getAddress() );
+            editCurrentPlace.setText( this.maintenanceToUpdate.getPlace().getAddress() );
         this.editName.setText( this.maintenanceToUpdate.getName() );
         this.editAmount.setText( this.maintenanceToUpdate.getAmount().toString() );
         if( this.maintenanceToUpdate.getNotes() != null || !this.maintenanceToUpdate.getNotes().isEmpty() )
@@ -455,7 +454,7 @@ public class MaintenanceInsertion extends ActionBarActivity {
         }
     }
 
-    private class ServiceHandler extends Handler {
+    private static class ServiceHandler extends Handler {
         @Override
         public void handleMessage( Message msg ){
             switch (msg.what){
@@ -464,7 +463,6 @@ public class MaintenanceInsertion extends ActionBarActivity {
                     String address = receivedBundle.getString(GPSService.Protocol.RETRIEVED_ADDRESS);
                     locationFromGPS = receivedBundle.getParcelable(GPSService.Protocol.RETRIEVED_LOCATION);
                     editCurrentPlace.setText(address);
-                    removeMessages(msg.what);
                     break;
                 }
                 default: super.handleMessage(msg);
