@@ -157,8 +157,8 @@ public class RefuelInsertion extends ActionBarActivity {
     private void promptSpeechInput() {
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         intent.putExtra(
-            RecognizerIntent.EXTRA_LANGUAGE_MODEL,
-            RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
+                RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
         );
 
         // The STT engine will work to recognize Italian.
@@ -188,13 +188,18 @@ public class RefuelInsertion extends ActionBarActivity {
             userSpeech.add(tokenizer.nextToken());
 
         // Check for the first item
-        String first = userSpeech.pop();
-        if (first.equals("oggi"))
+
+        if (userSpeech.peek().equals("oggi")) {
+            userSpeech.pop();
             this.switchToday.setChecked(true);
-        else if (first.equals("ieri")) {
+        }
+        else if (userSpeech.peek().equals("ieri")) {
+            userSpeech.pop();
             this.switchToday.setChecked(false);
             this.editDate.setText(CalendarUtils.yesterday());
         }
+
+        this.editNotes.setText(stt);
 
         // Go on until there is nothing left on the stack
         String s;
@@ -207,29 +212,32 @@ public class RefuelInsertion extends ActionBarActivity {
                 float intPart;
                 float fractPart = 0.0f;
 
-                // STT engine quirk: "un" is parsed as a word rather than a number
-                if( s.equals("un") ) intPart = 1.0f;
+                // STT engine quirk: "un"/"uno" is parsed as a word rather than a number
+                if( s.equals("un") || s.equals("uno") ) intPart = 1.0f;
                 else intPart = Float.parseFloat(s);
 
-                // Discard "euro"
-                userSpeech.pop();
-
-                // Now, look for a fractional cost
-                s = userSpeech.peek();
-                if( s.equals("e") ){
-                    // Discard "e"
+                // Discard "euro" if it's there
+                if (userSpeech.peek().equals("euro"))
                     userSpeech.pop();
 
-                    //Match the fractional amount
-                    s = userSpeech.pop();
-                    fractPart = Float.parseFloat("0." + s);
+                // Now, look for a fractional cost, if there's still something in the deque
+                if (userSpeech.peek() != null) {
+                    s = userSpeech.peek();
+                    if (s.equals("e")) {
+                        // Discard "e"
+                        userSpeech.pop();
+
+                        //Match the fractional amount
+                        s = userSpeech.pop();
+                        fractPart = Float.parseFloat("0." + s);
+                    }
                 }
 
-                // if this.editAmount is not empty, fill this.editPpl
-                if( this.editAmount.getText().toString().isEmpty() )
-                    this.editAmount.setText((intPart + fractPart) + "");
-                else
-                    this.editPpl.setText((intPart + fractPart) + "");
+                    // if this.editAmount is not empty, fill this.editPpl
+                    if (this.editAmount.getText().toString().isEmpty())
+                        this.editAmount.setText((intPart + fractPart) + "");
+                    else
+                        this.editPpl.setText((intPart + fractPart) + "");
             }
         }
     }
