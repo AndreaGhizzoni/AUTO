@@ -220,6 +220,7 @@ public class VehicleInsertion extends ActionBarActivity {
                             R.string.activity_vehicle_insertion_vehicle_save_success,
                             Toast.LENGTH_SHORT
                         ).show();
+                        new DAOVehicle().save(newest);
                     }
                     setResult(Activity.RESULT_OK);
                     finish();
