@@ -79,8 +79,6 @@
     <dimen name="frag_main_text_view_margin_top">20dp</dimen>
     <dimen name="frag_main_fab_margin">10dp</dimen>
 
-    <dimen name="land_frag_main_relative_layout_left_width">285dp</dimen>
-    <dimen name="land_frag_main_relative_layout_right_width">260dp</dimen>
     <dimen name="land_frag_main_recycle_view_height">250dp</dimen>
     <dimen name="land_frag_main_margin_left">10dp</dimen>
 
