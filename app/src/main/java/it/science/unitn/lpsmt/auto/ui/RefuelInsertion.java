@@ -43,6 +43,7 @@ import java.util.StringTokenizer;
 import it.science.unitn.lpsmt.auto.controller.calendar.CalendarUtils;
 import it.science.unitn.lpsmt.auto.controller.dao.DAOCost;
 import it.science.unitn.lpsmt.auto.controller.dao.DAOVehicle;
+import it.science.unitn.lpsmt.auto.controller.util.DateUtils;
 import it.science.unitn.lpsmt.auto.model.Place;
 import it.science.unitn.lpsmt.auto.model.Refuel;
 import it.science.unitn.lpsmt.auto.model.Vehicle;
@@ -54,7 +55,9 @@ public class RefuelInsertion extends ActionBarActivity {
     public static String TAG = RefuelInsertion.class.getSimpleName();
     public static final int REQUEST_CODE = 1010;
     public static final int STT_REQUEST_CODE = 1011;
+    public static final String UPDATE_REFUEL = "update_refuel_id";
 
+    private Refuel refuelToUpdate;
     private List<Vehicle> vehicleList;
     private static Location locationFromGPS;
 
@@ -82,7 +85,7 @@ public class RefuelInsertion extends ActionBarActivity {
         Vehicle v = this.vehicleList.get(this.spinnerVehicleAssociated.getSelectedItemPosition()-1);
 
         // build new Place
-        Place p = new Place(Const.NO_DB_ID_SET, this.editCurrentPlace.getText().toString(), this.locationFromGPS);
+        Place p = new Place(Const.NO_DB_ID_SET, editCurrentPlace.getText().toString(), locationFromGPS);
 
         // get the km
         Integer km = Integer.parseInt(this.editKM.getText().toString());
@@ -268,7 +271,7 @@ public class RefuelInsertion extends ActionBarActivity {
     }
 
     private void initEditTextCurrentPlace(){
-        this.editCurrentPlace = (EditText)findViewById(R.id.refuel_insertion_place_edit);
+        editCurrentPlace = (EditText)findViewById(R.id.refuel_insertion_place_edit);
     }
 
     private void initSwitchGetCurrentPlace(){
@@ -321,26 +324,37 @@ public class RefuelInsertion extends ActionBarActivity {
         this.editNotes = (EditText)findViewById(R.id.refuel_insertion_notes);
     }
 
+    private void populateWithRefuelToUpdate(){
+        this.spinnerVehicleAssociated.setSelection(this.vehicleList.indexOf(this.refuelToUpdate.getVehicle()) + 1);
+        if( this.refuelToUpdate.getPlace() != null )
+            editCurrentPlace.setText(this.refuelToUpdate.getPlace().getAddress());
+        this.editKM.setText( this.refuelToUpdate.getKm().toString() );
+        this.editAmount.setText( this.refuelToUpdate.getAmount().toString() );
+        this.editPpl.setText( this.refuelToUpdate.getPricePerLiter().toString() );
+        this.editDate.setText(DateUtils.getStringFromDate( this.refuelToUpdate.getDate(), "dd/MM/yyyy") );
+        if( this.refuelToUpdate.getNotes() != null || !this.refuelToUpdate.getNotes().isEmpty() )
+            this.editNotes.setText(this.refuelToUpdate.getNotes());
+    }
+
 //==================================================================================================
 //  GPS SERVICE METHODS
 //==================================================================================================
     private void doBind(){
+        this.mMessenger = new Messenger(new ServiceHandler());
         Intent gps = new Intent( getApplicationContext(), GPSService.class );
         getApplicationContext().bindService(gps, mConnection, Context.BIND_AUTO_CREATE);
     }
 
     private void doUnBind(){
-       if( this.switchGetCurrentPlace.isChecked() ) {
-           if( this.mService != null ){
-               Message msg = Message.obtain(null, GPSService.Protocol.REQUEST_UNBIND);
-               msg.replyTo = mMessenger;
-               try {
-                   mService.send(msg);
-               } catch (RemoteException e) {
-                   Toast.makeText(getApplicationContext(), e.getMessage(),Toast.LENGTH_LONG).show();
-               }
-               getApplicationContext().unbindService(mConnection);
+       if( this.mService != null ){
+           Message msg = Message.obtain(null, GPSService.Protocol.REQUEST_UNBIND);
+           msg.replyTo = mMessenger;
+           try {
+               mService.send(msg);
+           } catch (RemoteException e) {
+               Toast.makeText(getApplicationContext(), e.getMessage(),Toast.LENGTH_LONG).show();
            }
+           getApplicationContext().unbindService(mConnection);
        }
     }
 
@@ -361,6 +375,12 @@ public class RefuelInsertion extends ActionBarActivity {
         this.initEditTextDate();
         this.initSwitchToday();
         this.initEditTextNotes();
+        Bundle args = getIntent().getExtras();
+        if( args != null && args.containsKey(UPDATE_REFUEL) ){
+            Long id = (Long)args.get(UPDATE_REFUEL);
+            this.refuelToUpdate = (Refuel) new DAOCost().get(id);
+            this.populateWithRefuelToUpdate();
+        }
     }
 
     @Override
@@ -418,16 +438,21 @@ public class RefuelInsertion extends ActionBarActivity {
         int id = item.getItemId();
         switch( id ){
             case R.id.done:{
-                if( checkFields() && save() ){
-                    Toast.makeText(
-                        getApplicationContext(),
-                        getResources().getString(R.string.activity_refuel_insertion_refuel_save_success),
-                        Toast.LENGTH_SHORT
-                    ).show();
-                    setResult(Activity.RESULT_OK);
-                    finish();
+                if( this.refuelToUpdate != null ){
+
+                    return true;
+                }else {
+                    if (checkFields() && save()) {
+                        Toast.makeText(
+                                getApplicationContext(),
+                                getResources().getString(R.string.activity_refuel_insertion_refuel_save_success),
+                                Toast.LENGTH_SHORT
+                        ).show();
+                        setResult(Activity.RESULT_OK);
+                        finish();
+                    }
+                    return true;
                 }
-                return true;
             }
             case R.id.tts:{
                 promptSpeechInput();
@@ -482,7 +507,6 @@ public class RefuelInsertion extends ActionBarActivity {
                     String address = receivedBundle.getString(GPSService.Protocol.RETRIEVED_ADDRESS);
                     locationFromGPS = receivedBundle.getParcelable(GPSService.Protocol.RETRIEVED_LOCATION);
                     editCurrentPlace.setText(address);
-                    removeMessages(msg.what);
                     break;
                 }
                 default: super.handleMessage(msg);

@@ -2,7 +2,6 @@ package it.science.unitn.lpsmt.auto.ui.fragment.main;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -163,9 +162,12 @@ public class VehicleInsertedCardViewAdapter extends RecyclerView.Adapter<Vehicle
         public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem) {
             switch (menuItem.getItemId()) {
                 case R.id.modify: {
-                    Intent i = new Intent(MainActivity.getApp(), VehicleInsertion.class);
-                    i.putExtra(VehicleInsertion.UPDATE_VEHICLE, vehicleID);
-                    MainActivity.getApp().startActivity(i);
+//                    Intent i = new Intent(MainActivity.getApp(), VehicleInsertion.class);
+//                    i.putExtra(VehicleInsertion.UPDATE_VEHICLE, vehicleID);
+//                    MainActivity.getApp().startActivity(i);
+                    Bundle args = new Bundle();
+                    args.putLong(VehicleInsertion.UPDATE_VEHICLE, vehicleID);
+                    MainActivity.getApp().selectFragment(1, args);
                     actionMode.finish();
                     return true;
                 }

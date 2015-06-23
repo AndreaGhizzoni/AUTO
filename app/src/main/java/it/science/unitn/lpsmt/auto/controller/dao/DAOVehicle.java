@@ -12,6 +12,7 @@ import java.util.List;
 import it.science.unitn.lpsmt.auto.controller.CostDAO;
 import it.science.unitn.lpsmt.auto.controller.VehicleDAO;
 import it.science.unitn.lpsmt.auto.controller.util.Converter;
+import it.science.unitn.lpsmt.auto.controller.util.DateUtils;
 import it.science.unitn.lpsmt.auto.model.Vehicle;
 import it.science.unitn.lpsmt.auto.model.util.Const;
 
@@ -52,6 +53,39 @@ public class DAOVehicle implements VehicleDAO{
             return id;
         }else{
             return alreadySaved.getId();
+        }
+    }
+
+    @Override
+    public void update(Vehicle old, Vehicle newest) {
+        if( old == null || old.isDefaultVehicle() || old.getId().equals(Const.NO_DB_ID_SET) )
+            return;
+        if( newest == null || newest.isDefaultVehicle() )
+            return;
+
+        db.beginTransaction();
+        try{
+            ContentValues cv = new ContentValues();
+            if( !old.getName().equals(newest.getName()) )
+                cv.put(Vehicle.SQLData.NAME, newest.getName());
+            if( !old.getPlate().equals(newest.getPlate()) )
+                cv.put(Vehicle.SQLData.PLATE, newest.getPlate());
+            if( !old.getFuel().equals(newest.getFuel()) )
+                cv.put(Vehicle.SQLData.FUEL, newest.getFuel().toString());
+            if( old.getPurchaseDate() != null && !old.getPurchaseDate().equals(newest.getPurchaseDate()) )
+                cv.put(Vehicle.SQLData.PURCHASE_DATA, DateUtils.getStringFromDate(newest.getPurchaseDate()));
+
+            db.update(
+                Vehicle.SQLData.TABLE_NAME,
+                cv,
+                Vehicle.SQLData.ID+" = ?",
+                new String[]{ old.getId()+"" }
+            );
+            db.setTransactionSuccessful();
+        }catch ( Throwable t){
+            Log.e(DAOVehicle.class.getSimpleName(), t.getMessage());
+        }finally {
+            db.endTransaction();
         }
     }
 

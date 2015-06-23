@@ -47,7 +47,7 @@ public class VehicleInsertion extends ActionBarActivity {
 //==================================================================================================
 //  SAVING METHOD
 //==================================================================================================
-    private boolean save(){
+    private Vehicle buildVehicleFromUserData(){
         String n = this.editName.getText().toString();
 
         String plate = this.editPlate.getText().toString();
@@ -69,13 +69,11 @@ public class VehicleInsertion extends ActionBarActivity {
                 purchaseDate = sdf.parse(this.editPurchaseDate.getText().toString());
             } catch (ParseException e) {
                 displayToast(R.string.activity_vehicle_insertion_purchase_date_parse_error);
-                return false;
+                return null;
             }
         }
 
-        Vehicle v = new Vehicle(Const.NO_DB_ID_SET, n, plate, f, purchaseDate);
-        new DAOVehicle().save(v);
-        return true;
+        return new Vehicle(Const.NO_DB_ID_SET, n, plate, f, purchaseDate);
     }
 
     private boolean checkFields(){
@@ -190,21 +188,30 @@ public class VehicleInsertion extends ActionBarActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.done){
-            if( vehicleToUpdate != null ){
-
-                return true;
-            }else{
-                if (checkFields() && save()) {
-                    Toast.makeText(
+            if( checkFields() ){
+                Vehicle newest = buildVehicleFromUserData();
+                if( newest == null ) {
+                    return false;
+                }else {
+                    if(vehicleToUpdate != null) {
+                        new DAOVehicle().update(vehicleToUpdate, newest);
+                        Toast.makeText(
+                            getApplicationContext(),
+                            "Vehicle update successfully!",
+                            Toast.LENGTH_SHORT
+                        ).show();
+                    } else {
+                        Toast.makeText(
                             getApplicationContext(),
                             R.string.activity_vehicle_insertion_vehicle_save_success,
                             Toast.LENGTH_SHORT
-                    ).show();
+                        ).show();
+                    }
                     setResult(Activity.RESULT_OK);
                     finish();
                 }
-                return true;
             }
+            return super.onOptionsItemSelected(item);
         }
         return super.onOptionsItemSelected(item);
     }
