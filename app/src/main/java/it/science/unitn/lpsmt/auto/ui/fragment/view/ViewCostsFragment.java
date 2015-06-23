@@ -28,7 +28,7 @@ public class ViewCostsFragment extends Fragment {
 
     private List<Vehicle> vehicleList;
     private Long idVehicleToDisplay = null;
-    private RefuelsCardViewAdapter recyclerViewAdapter;
+    private CostsCardViewAdapter recyclerViewAdapter;
     private Spinner spinner;
     private int spinnerCurrentPos = 0;
 
@@ -61,7 +61,7 @@ public class ViewCostsFragment extends Fragment {
         RecyclerView recyclerView = (RecyclerView) v.findViewById(R.id.frag_view_costs_recycle_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(v.getContext()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerViewAdapter = new RefuelsCardViewAdapter(v.getContext());
+        recyclerViewAdapter = new CostsCardViewAdapter(v.getContext());
         recyclerView.setAdapter(recyclerViewAdapter);
     }
 

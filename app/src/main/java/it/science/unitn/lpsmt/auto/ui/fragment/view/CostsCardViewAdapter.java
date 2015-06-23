@@ -36,12 +36,12 @@ import lpsmt.science.unitn.it.auto.R;
 /**
  * this is the card adapter for the Recycle view of MainFragment
  */
-public class RefuelsCardViewAdapter extends RecyclerView.Adapter<RefuelsCardViewAdapter.ViewHolder> {
+public class CostsCardViewAdapter extends RecyclerView.Adapter<CostsCardViewAdapter.ViewHolder> {
     private Context context;
 
     private ArrayList<Cost> costs = new ArrayList<>();
 
-    public RefuelsCardViewAdapter(Context c){
+    public CostsCardViewAdapter(Context c){
         this.context = c;
     }
 
@@ -189,8 +189,8 @@ public class RefuelsCardViewAdapter extends RecyclerView.Adapter<RefuelsCardView
                 }
                 case R.id.delete: {
                     new AlertDialog.Builder(MainActivity.getApp())
-                        .setTitle("Deleting this cost")
-                        .setMessage("Are you sure?")
+                        .setTitle(context.getResources().getString(R.string.cost_card_view_adapter_delete_dialog_title))
+                        .setMessage(context.getResources().getString(R.string.cost_card_view_adapter_delete_dialog_message))
                         .setIcon(R.drawable.ic_alert_48dp)
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             @Override
