@@ -57,12 +57,13 @@ public class DAOVehicle implements VehicleDAO{
     }
 
     @Override
-    public void update(Vehicle old, Vehicle newest) {
+    public int update(Vehicle old, Vehicle newest) {
         if( old == null || old.isDefaultVehicle() || old.getId().equals(Const.NO_DB_ID_SET) )
-            return;
+            return -1;
         if( newest == null || newest.isDefaultVehicle() )
-            return;
+            return -1;
 
+        int rowUpdated = 0;
         db.beginTransaction();
         try{
             ContentValues cv = new ContentValues();
@@ -75,18 +76,22 @@ public class DAOVehicle implements VehicleDAO{
             if( old.getPurchaseDate() != null && !old.getPurchaseDate().equals(newest.getPurchaseDate()) )
                 cv.put(Vehicle.SQLData.PURCHASE_DATA, DateUtils.getStringFromDate(newest.getPurchaseDate()));
 
-            db.update(
-                Vehicle.SQLData.TABLE_NAME,
-                cv,
-                Vehicle.SQLData.ID+" = ?",
-                new String[]{ old.getId()+"" }
-            );
+            if( cv.size() != 0 ) {
+                rowUpdated = db.update(
+                    Vehicle.SQLData.TABLE_NAME,
+                    cv,
+                    Vehicle.SQLData.ID + " = ?",
+                    new String[]{old.getId() + ""}
+                );
+            }
             db.setTransactionSuccessful();
         }catch ( Throwable t){
             Log.e(DAOVehicle.class.getSimpleName(), t.getMessage());
+            rowUpdated = -1;
         }finally {
             db.endTransaction();
         }
+        return rowUpdated;
     }
 
     @Override

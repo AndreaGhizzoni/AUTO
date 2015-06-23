@@ -22,9 +22,11 @@ public interface VehicleDAO {
 
     /**
      * TODO add doc
-     * @param v
+     * @param old
+     * @param newest
+     * @return
      */
-    void update( Vehicle old, Vehicle newest );
+    int update( Vehicle old, Vehicle newest );
 
     /**
      * TODO add doc

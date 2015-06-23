@@ -194,12 +194,26 @@ public class VehicleInsertion extends ActionBarActivity {
                     return false;
                 }else {
                     if(vehicleToUpdate != null) {
-                        new DAOVehicle().update(vehicleToUpdate, newest);
-                        Toast.makeText(
-                            getApplicationContext(),
-                            getResources().getString(R.string.activity_vehicle_insertion_vehicle_update_success),
-                            Toast.LENGTH_SHORT
-                        ).show();
+                        int rowUpdated = new DAOVehicle().update(vehicleToUpdate, newest);
+                        if( rowUpdated == -1 ) {
+                            Toast.makeText(
+                                    getApplicationContext(),
+                                    "error while update",
+                                    Toast.LENGTH_SHORT
+                            ).show();
+                        }else if( rowUpdated == 0 ){
+                            Toast.makeText(
+                                    getApplicationContext(),
+                                    "nothing to update",
+                                    Toast.LENGTH_SHORT
+                            ).show();
+                        }else{
+                            Toast.makeText(
+                                    getApplicationContext(),
+                                    getResources().getString(R.string.activity_vehicle_insertion_vehicle_update_success),
+                                    Toast.LENGTH_SHORT
+                            ).show();
+                        }
                     } else {
                         Toast.makeText(
                             getApplicationContext(),
