@@ -22,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/activity_maintenance_insertion_spinner_vehicle_height"
             android:layout_marginBottom="@dimen/activity_maintenance_insertion_spinner_vehicle_margin_bottom"
-            android:background="@color/white">
+            android:background="@color/secondary">
             <ImageView
                 android:layout_width="@dimen/activity_maintenance_insertion_spinner_vehicle_icon_width"
                 android:layout_height="@dimen/activity_maintenance_insertion_spinner_vehicle_icon_height"
