@@ -139,6 +139,22 @@ public class MainActivity extends ActionBarActivity{
         }
     }
 
+    public void updateVehicleInFragment(){
+        FragmentManager fm = getFragmentManager();
+        Fragment f = fm.findFragmentById(R.id.content);
+        if( f != null ){
+            ((MainFragment)f).updateVehicle();
+        }
+    }
+
+    public void updateDeadlineFragment(){
+        FragmentManager fm = getFragmentManager();
+        Fragment f = fm.findFragmentById(R.id.content);
+        if( f != null ){
+            ((MainFragment)f).updateDeadlines();
+        }
+    }
+
 //==================================================================================================
 //  OVERRIDE
 //==================================================================================================
@@ -174,19 +190,11 @@ public class MainActivity extends ActionBarActivity{
         if( resultCode == Activity.RESULT_OK ){
             switch( reqCode ){
                 case MaintenanceInsertion.RESULT_CODE:{
-                    FragmentManager fm = getFragmentManager();
-                    Fragment f = fm.findFragmentById(R.id.content);
-                    if( f != null ){
-                        ((MainFragment)f).updateDeadlines();
-                    }
+                    updateDeadlineFragment();
                     break;
                 }
                 case VehicleInsertion.RESULT_CODE:{
-                    FragmentManager fm = getFragmentManager();
-                    Fragment f = fm.findFragmentById(R.id.content);
-                    if( f != null ){
-                        ((MainFragment)f).updateVehicle();
-                    }
+                    updateVehicleInFragment();
                     break;
                 }
                 default: {

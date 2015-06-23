@@ -1,7 +1,9 @@
 package it.science.unitn.lpsmt.auto.ui.fragment.main;
 
 import android.annotation.TargetApi;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -14,7 +16,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -162,9 +163,6 @@ public class VehicleInsertedCardViewAdapter extends RecyclerView.Adapter<Vehicle
         public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem) {
             switch (menuItem.getItemId()) {
                 case R.id.modify: {
-//                    Intent i = new Intent(MainActivity.getApp(), VehicleInsertion.class);
-//                    i.putExtra(VehicleInsertion.UPDATE_VEHICLE, vehicleID);
-//                    MainActivity.getApp().startActivity(i);
                     Bundle args = new Bundle();
                     args.putLong(VehicleInsertion.UPDATE_VEHICLE, vehicleID);
                     MainActivity.getApp().selectFragment(1, args);
@@ -172,12 +170,20 @@ public class VehicleInsertedCardViewAdapter extends RecyclerView.Adapter<Vehicle
                     return true;
                 }
                 case R.id.delete: {
-                    Toast.makeText(
-                        VehicleInsertedCardViewAdapter.this.context,
-                        "delete action",
-                        Toast.LENGTH_LONG
-                    ).show();
+                    new AlertDialog.Builder(MainActivity.getApp())
+                        .setTitle("Deleting Vehicle")
+                        .setMessage("Are you sure? Deleting a vehicle will delete all the associated costs.")
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                new DAOVehicle().delete(vehicleID);
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, null).show();
                     actionMode.finish();
+                    MainActivity.getApp().updateVehicleInFragment();
+                    MainActivity.getApp().updateDeadlineFragment();
                     return true;
                 }
                 default: return false;
@@ -191,4 +197,6 @@ public class VehicleInsertedCardViewAdapter extends RecyclerView.Adapter<Vehicle
             item.setBackground(DEFAULT_BG);
         }
     }
+
+
 }
