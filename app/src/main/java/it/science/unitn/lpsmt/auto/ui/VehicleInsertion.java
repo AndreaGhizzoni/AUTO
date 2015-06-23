@@ -34,7 +34,7 @@ import lpsmt.science.unitn.it.auto.R;
 // TODO maybe implements method to save the app instance when is put onPause
 public class VehicleInsertion extends ActionBarActivity {
     public static final int RESULT_CODE = 1001;
-    public static final String UPDATE_VEHICLE = "update_id";
+    public static final String UPDATE_VEHICLE = "update_vehicle_id";
 
     private Vehicle vehicleToUpdate;
 
