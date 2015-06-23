@@ -18,8 +18,9 @@
         android:paddingEnd="@dimen/frag_main_linear_layout_padding">
 
         <RelativeLayout
-            android:layout_width="@dimen/land_frag_main_relative_layout_left_width"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="2"
             android:layout_marginTop="@dimen/frag_main_relative_layout_margin_top">
             <TextView
                 android:layout_width="match_parent"
@@ -42,8 +43,9 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:layout_width="@dimen/land_frag_main_relative_layout_right_width"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="2"
             android:layout_marginTop="@dimen/frag_main_relative_layout_margin_top"
             android:layout_marginLeft="@dimen/land_frag_main_margin_left"
             android:layout_marginStart="@dimen/land_frag_main_margin_left">
