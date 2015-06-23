@@ -111,4 +111,6 @@
 
     <string name="menu_done">Done</string>
     <string name="menu_tts">Speech to Text</string>
+    <string name="menu_edit">Edit</string>
+    <string name="menu_delete">Delete</string>
 </resources>
