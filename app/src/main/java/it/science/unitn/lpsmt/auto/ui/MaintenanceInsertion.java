@@ -20,6 +20,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
@@ -379,6 +380,7 @@ public class MaintenanceInsertion extends ActionBarActivity {
             this.maintenanceToUpdate = (Maintenance) new DAOCost().get(id);
             this.populateWithMaintenanceToUpdate();
         }
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
     }
 
     @Override
