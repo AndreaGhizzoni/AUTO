@@ -95,6 +95,7 @@ public class MainActivity extends ActionBarActivity{
 
             case 1:{
                 Intent i = new Intent(this, VehicleInsertion.class);
+                i.putExtras(args);
                 startActivityForResult(i, VehicleInsertion.RESULT_CODE);
                 skip = true;
                 break;

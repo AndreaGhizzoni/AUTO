@@ -22,6 +22,12 @@ public interface VehicleDAO {
 
     /**
      * TODO add doc
+     * @param v
+     */
+    void update( Vehicle old, Vehicle newest );
+
+    /**
+     * TODO add doc
      * @param id
      * @return
      */
