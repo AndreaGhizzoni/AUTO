@@ -115,12 +115,12 @@
     <string name="deadline_no_note">Nessuna Nota</string>
 
     <string name="cost_card_view_adapter_delete_dialog_title">Eliminazione di questo Costo</string>
-    <string name="cost_card_view_adapter_delete_dialog_message">Sei sicuro?</string>
+    <string name="dialog_message_are_you_sure">Sei sicuro?</string>
     <string name="vehicle_card_view_adapter_delete_dialog_title">Eliminazione di questo Veicolo</string>
     <string name="vehicle_card_view_adapter_delete_dialog_message">
         Sei Sicuro? L\'eliminazione di un Veicolo comporta la cancellazione di tutti i costi associati.
-        Are you sure? Deleting a vehicle will delete all the associated costs.
     </string>
+    <string name="dead_line_card_view_adapter_delete_dialog_title">Eliminazone di questa Scadenza</string>
 
     <string name="menu_done">Salva</string>
     <string name="menu_tts">Riconoscimento Vocale</string>

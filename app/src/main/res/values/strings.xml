@@ -115,11 +115,12 @@
     <string name="deadline_no_note">No notes</string>
 
     <string name="cost_card_view_adapter_delete_dialog_title">Deleting this Cost</string>
-    <string name="cost_card_view_adapter_delete_dialog_message">Are you sure ?</string>
+    <string name="dialog_message_are_you_sure">Are you sure ?</string>
     <string name="vehicle_card_view_adapter_delete_dialog_title">Deleting this Vehicle</string>
     <string name="vehicle_card_view_adapter_delete_dialog_message">
         Are you sure? Deleting a vehicle will delete all the associated costs.
     </string>
+    <string name="dead_line_card_view_adapter_delete_dialog_title">Deleting this Deadline</string>
 
     <string name="menu_done">Done</string>
     <string name="menu_tts">Speech to Text</string>

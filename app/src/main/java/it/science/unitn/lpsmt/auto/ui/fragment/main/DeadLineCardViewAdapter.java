@@ -1,7 +1,9 @@
 package it.science.unitn.lpsmt.auto.ui.fragment.main;
 
 import android.annotation.TargetApi;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -161,11 +163,18 @@ public class DeadLineCardViewAdapter extends RecyclerView.Adapter<DeadLineCardVi
                     return true;
                 }
                 case R.id.delete: {
-                    Toast.makeText(
-                        DeadLineCardViewAdapter.this.context,
-                        "delete action",
-                        Toast.LENGTH_LONG
-                    ).show();
+                    new AlertDialog.Builder(MainActivity.getApp())
+                        .setTitle(context.getResources().getString(R.string.dead_line_card_view_adapter_delete_dialog_title))
+                        .setMessage(context.getResources().getString(R.string.dialog_message_are_you_sure))
+                        .setIcon(R.drawable.ic_alert_48dp)
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                new DAOCost().delete(deadLineID);
+                                MainActivity.getApp().updateDeadlineFragment();
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, null).show();
                     actionMode.finish();
                     return true;
                 }

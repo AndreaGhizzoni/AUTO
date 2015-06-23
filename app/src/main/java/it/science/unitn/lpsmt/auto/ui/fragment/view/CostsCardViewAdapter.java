@@ -190,7 +190,7 @@ public class CostsCardViewAdapter extends RecyclerView.Adapter<CostsCardViewAdap
                 case R.id.delete: {
                     new AlertDialog.Builder(MainActivity.getApp())
                         .setTitle(context.getResources().getString(R.string.cost_card_view_adapter_delete_dialog_title))
-                        .setMessage(context.getResources().getString(R.string.cost_card_view_adapter_delete_dialog_message))
+                        .setMessage(context.getResources().getString(R.string.dialog_message_are_you_sure))
                         .setIcon(R.drawable.ic_alert_48dp)
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             @Override
