@@ -93,47 +93,55 @@ public class VehicleInsertedCardViewAdapter extends RecyclerView.Adapter<Vehicle
 //==================================================================================================
 //  INNER CLASS
 //==================================================================================================
-    public ActionMode.Callback mActionMode;
-    public Drawable itemBG;
+    public Drawable DEFAULT_BG;
+    public MyActionMode mode;
+
     /**
      *  Holder for card data
      */
     public class ViewHolder extends RecyclerView.ViewHolder {
         public Vehicle associatedVehicle;
+
         public TextView name;
         public TextView data;
+
         public ViewHolder(final View itemView) {
             super(itemView);
+            DEFAULT_BG = itemView.getBackground();
+
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Bundle args = new Bundle();
-                    args.putLong(ViewCostsFragment.ARG_VEHICLE_TO_DISPLAY, associatedVehicle.getId());
-                    MainActivity.getApp().selectFragment(4, args);
+                    if (mode == null) {
+                        Bundle args = new Bundle();
+                        args.putLong(ViewCostsFragment.ARG_VEHICLE_TO_DISPLAY, associatedVehicle.getId());
+                        MainActivity.getApp().selectFragment(4, args);
+                    }
                 }
             });
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
-                    if(mActionMode == null)
-                        mActionMode = new MyActionMode(itemView);
-                    view.startActionMode(mActionMode);
-                    itemBG = itemView.getBackground();
-                    itemView.setBackgroundColor(Color.rgb(197,202,233));
-                    return true;
+                    if (mode == null) {
+                        mode = new MyActionMode(itemView);
+                        view.startActionMode(mode);
+                        itemView.setBackgroundColor(Color.rgb(197, 202, 233));
+                        return true;
+                    }else{
+                        return false;
+                    }
                 }
             });
             name = (TextView) itemView.findViewById(R.id.card_view_vehicle_name);
             data = (TextView) itemView.findViewById(R.id.card_view_vehicle_data);
         }
+
     }
 
     // https://goo.gl/1jIz4a
-    public class MyActionMode implements ActionMode.Callback{
-        private View itemView;
-        public MyActionMode( View itemView ){
-            this.itemView = itemView;
-        }
+    public class MyActionMode implements ActionMode.Callback {
+        private View item;
+        public MyActionMode(View item) { this.item = item; }
 
         @Override // Called when the action mode is created; startActionMode() was called
         public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
@@ -149,8 +157,8 @@ public class VehicleInsertedCardViewAdapter extends RecyclerView.Adapter<Vehicle
 
         @Override // Called when the user selects a contextual menu item
         public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem) {
-            switch( menuItem.getItemId() ){
-                case R.id.modify:{
+            switch (menuItem.getItemId()) {
+                case R.id.modify: {
                     Toast.makeText(
                         VehicleInsertedCardViewAdapter.this.context,
                         "modify action",
@@ -159,7 +167,7 @@ public class VehicleInsertedCardViewAdapter extends RecyclerView.Adapter<Vehicle
                     actionMode.finish();
                     return true;
                 }
-                case R.id.delete:{
+                case R.id.delete: {
                     Toast.makeText(
                         VehicleInsertedCardViewAdapter.this.context,
                         "delete action",
@@ -175,8 +183,8 @@ public class VehicleInsertedCardViewAdapter extends RecyclerView.Adapter<Vehicle
         @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
         @Override // Called when the user exits the action mode
         public void onDestroyActionMode(ActionMode actionMode) {
-            mActionMode = null;
-            this.itemView.setBackground(itemBG);
+            mode = null;
+            item.setBackground(DEFAULT_BG);
         }
     }
 }
