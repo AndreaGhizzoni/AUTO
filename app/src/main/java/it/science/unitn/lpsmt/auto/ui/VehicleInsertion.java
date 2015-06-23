@@ -198,13 +198,13 @@ public class VehicleInsertion extends ActionBarActivity {
                         if( rowUpdated == -1 ) {
                             Toast.makeText(
                                     getApplicationContext(),
-                                    "error while update",
+                                    getResources().getString(R.string.activity_vehicle_insertion_vehicle_update_error),
                                     Toast.LENGTH_SHORT
                             ).show();
                         }else if( rowUpdated == 0 ){
                             Toast.makeText(
                                     getApplicationContext(),
-                                    "nothing to update",
+                                    getResources().getString(R.string.activity_vehicle_insertion_vehicle_update_nothing_todo),
                                     Toast.LENGTH_SHORT
                             ).show();
                         }else{

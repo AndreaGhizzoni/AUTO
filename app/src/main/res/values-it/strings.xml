@@ -51,6 +51,8 @@
     <string name="activity_vehicle_insertion_fuel_not_selected">Tipo di carburante non selezionato.</string>
     <string name="activity_vehicle_insertion_purchase_date_parse_error">Data di acquisto non in formato gg/mm/aaaa</string>
     <string name="activity_vehicle_insertion_vehicle_update_success">Veicolo aggiornato con successo!</string>
+    <string name="activity_vehicle_insertion_vehicle_update_nothing_todo">Niente da aggiornare…</string>
+    <string name="activity_vehicle_insertion_vehicle_update_error">Errore nell\'aggiornamento del Veicolo.</string>
     <string name="activity_vehicle_insertion_vehicle_save_success">Veicolo salvato!</string>
     <string name="activity_vehicle_insertion_vehicle_save_fail">Errore nel salvataggio del Veicolo.</string>
     <string name="activity_vehicle_insertion_vehicle_name_hint">Nome del veicolo</string>
