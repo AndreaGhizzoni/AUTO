@@ -197,7 +197,7 @@ public class VehicleInsertion extends ActionBarActivity {
                         new DAOVehicle().update(vehicleToUpdate, newest);
                         Toast.makeText(
                             getApplicationContext(),
-                            "Vehicle update successfully!",
+                            getResources().getString(R.string.activity_vehicle_insertion_vehicle_update_success),
                             Toast.LENGTH_SHORT
                         ).show();
                     } else {

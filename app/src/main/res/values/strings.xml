@@ -50,6 +50,7 @@
     <string name="activity_vehicle_insertion_plate_missing">Plate of vehicle missing.</string>
     <string name="activity_vehicle_insertion_fuel_not_selected">Fuel not selected.</string>
     <string name="activity_vehicle_insertion_purchase_date_parse_error">Purchase date not in form dd/mm/yyyy.</string>
+    <string name="activity_vehicle_insertion_vehicle_update_success">Vehicle update successfully!</string>
     <string name="activity_vehicle_insertion_vehicle_save_success">Vehicle saved!</string>
     <string name="activity_vehicle_insertion_vehicle_save_fail">Error to save a Vehicle.</string>
     <string name="activity_vehicle_insertion_vehicle_name_hint">Name of Vehicle</string>
