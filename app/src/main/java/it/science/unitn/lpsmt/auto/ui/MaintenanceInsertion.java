@@ -51,6 +51,9 @@ import lpsmt.science.unitn.it.auto.R;
 // TODO maybe implements method to save the app instance when is put onPause
 public class MaintenanceInsertion extends ActionBarActivity {
     public static final int RESULT_CODE = 1000;
+    public static final String UPDATE_MAINTENANCE = "update_maintenance_id";
+
+    private Maintenance maintenanceToUpdate;
     private List<Vehicle> vehicleList;
 
     // graphical components necessary to save Maintenance object.
@@ -64,13 +67,15 @@ public class MaintenanceInsertion extends ActionBarActivity {
     private Spinner spinnerMaintenanceType;
     private Switch switchAddCalendarEvent;
     private EditText editCalendarDate;
-    private Switch switchTodayDate;
 
     // filed for gps service
     private ServiceConnection mConnection = new MyServiceConnection();
     private Messenger mMessenger = new Messenger(new ServiceHandler());
     private Messenger mService;
 
+//==================================================================================================
+//  UTILITIES METHODS
+//==================================================================================================
     private boolean checkField(){
         if( this.spinnerVehicle.getSelectedItemPosition() == 0 ) {
             displayToast(R.string.activity_maintenance_insertion_vehicle_missing);
@@ -188,6 +193,11 @@ public class MaintenanceInsertion extends ActionBarActivity {
                 Toast.LENGTH_LONG).show();
     }
 
+    private void showDatePickerDialog(){
+        DialogFragment newFragment = new DatePickerFragment();
+        newFragment.show(getSupportFragmentManager(), "datePicker");
+    }
+
 //==================================================================================================
 //  GPS SERVICE METHODS
 //==================================================================================================
@@ -299,11 +309,11 @@ public class MaintenanceInsertion extends ActionBarActivity {
     }
 
     private void initSwitchToday(){
-        this.switchTodayDate = (Switch)findViewById(R.id.maintenance_insertion_switch_current_date);
-        this.switchTodayDate.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        Switch switchTodayDate = (Switch) findViewById(R.id.maintenance_insertion_switch_current_date);
+        switchTodayDate.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                EditText edt = (EditText)findViewById(R.id.maintenance_insertion_calendar_event_edit);
+                EditText edt = (EditText) findViewById(R.id.maintenance_insertion_calendar_event_edit);
                 if (b) {
                     final Calendar c = Calendar.getInstance();
                     int year = c.get(Calendar.YEAR);
@@ -312,16 +322,38 @@ public class MaintenanceInsertion extends ActionBarActivity {
                     String format = "%d/%d/%d";
                     String date = String.format(format, day, month + 1, year);
                     edt.setText(date);
-                }else{
+                } else {
                     edt.setText("");
                 }
             }
         });
     }
 
-    private void showDatePickerDialog(){
-        DialogFragment newFragment = new DatePickerFragment();
-        newFragment.show(getSupportFragmentManager(), "datePicker");
+    private void populateWithMaintenanceToUpdate(){
+        this.spinnerVehicle.setSelection( this.vehicleList.indexOf(maintenanceToUpdate.getVehicle())+1 );
+        if( this.maintenanceToUpdate.getPlace() != null )
+            this.editCurrentPlace.setText( this.maintenanceToUpdate.getPlace().getAddress() );
+        this.editName.setText( this.maintenanceToUpdate.getName() );
+        this.editAmount.setText( this.maintenanceToUpdate.getAmount().toString() );
+        if( this.maintenanceToUpdate.getNotes() != null || !this.maintenanceToUpdate.getNotes().isEmpty() )
+            this.editNotes.setText( this.maintenanceToUpdate.getNotes() );
+        switch( this.maintenanceToUpdate.getType() ){
+            case EXTRAORDINARY: {
+                this.spinnerMaintenanceType.setSelection(1);
+                break;
+            }
+            case ORDINARY:{
+                this.spinnerMaintenanceType.setSelection(2);
+                break;
+            }
+            case TAX: {
+                this.spinnerMaintenanceType.setSelection(3);
+                break;
+            }
+        }
+        if( this.maintenanceToUpdate.getCalendarID() != null ){
+            this.switchAddCalendarEvent.setChecked(true);
+        }
     }
 
 //==================================================================================================
@@ -342,6 +374,12 @@ public class MaintenanceInsertion extends ActionBarActivity {
         this.initSwitchAddCalendarEvent();
         this.initDatePickerEvent();
         this.initSwitchToday();
+        Bundle args = getIntent().getExtras();
+        if( args  != null && args.containsKey(UPDATE_MAINTENANCE) ){
+            Long id = (Long) args.get(UPDATE_MAINTENANCE);
+            this.maintenanceToUpdate = (Maintenance) new DAOCost().get(id);
+            this.populateWithMaintenanceToUpdate();
+        }
     }
 
     @Override
@@ -370,18 +408,23 @@ public class MaintenanceInsertion extends ActionBarActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here.
         int id = item.getItemId();
-        if (id == R.id.done) {
-            if( checkField() && save() ) {
-                Toast.makeText(
-                    getApplicationContext(),
-                    getResources().getString(R.string.activity_maintenance_insertion_maintenance_saved_success),
-                    Toast.LENGTH_LONG
-                ).show();
+        if (id == R.id.done){
+            if( this.maintenanceToUpdate != null ){
 
-                setResult(Activity.RESULT_OK);
-                finish();
+                return true;
+            }else {
+                if (checkField() && save()) {
+                    Toast.makeText(
+                        getApplicationContext(),
+                        getResources().getString(R.string.activity_maintenance_insertion_maintenance_saved_success),
+                        Toast.LENGTH_LONG
+                    ).show();
+
+                    setResult(Activity.RESULT_OK);
+                    finish();
+                }
+                return true;
             }
-            return true;
         }
         return super.onOptionsItemSelected(item);
     }
