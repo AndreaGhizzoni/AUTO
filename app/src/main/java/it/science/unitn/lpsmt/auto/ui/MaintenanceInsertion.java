@@ -47,6 +47,7 @@ import it.science.unitn.lpsmt.auto.model.Place;
 import it.science.unitn.lpsmt.auto.model.Vehicle;
 import it.science.unitn.lpsmt.auto.model.util.Const;
 import it.science.unitn.lpsmt.auto.ui.service.GPSService;
+import it.science.unitn.lpsmt.auto.ui.util.Preferences;
 import lpsmt.science.unitn.it.auto.R;
 
 // TODO maybe implements method to save the app instance when is put onPause
@@ -242,6 +243,10 @@ public class MaintenanceInsertion extends ActionBarActivity {
 
         spinnerVehicle = (Spinner) findViewById(R.id.maintenance_insertion_vehicle_associated);
         spinnerVehicle.setAdapter(spinnerAdapter);
+        Preferences p = Preferences.getInstance();
+        if(p.contains("last_vehicle_used") && spinnerAdapter.getCount() != 1){
+            this.spinnerVehicle.setSelection(p.pullInteger("last_vehicle_used") );
+        }
     }
 
     private void initEditTextCurrentPlace(){
@@ -420,7 +425,7 @@ public class MaintenanceInsertion extends ActionBarActivity {
                         getResources().getString(R.string.activity_maintenance_insertion_maintenance_saved_success),
                         Toast.LENGTH_LONG
                     ).show();
-
+                    Preferences.getInstance().put("last_vehicle_used", this.spinnerVehicle.getSelectedItemPosition());
                     setResult(Activity.RESULT_OK);
                     finish();
                 }

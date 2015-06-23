@@ -78,10 +78,12 @@ public class CostsCardViewAdapter extends RecyclerView.Adapter<CostsCardViewAdap
                 holder.icon.setImageResource(R.drawable.ic_editor_attach_money_48dp);
             else
                 holder.icon.setImageResource(R.drawable.ic_maintenance_48dp);
+            String place = "";
             if( m.getPlace() == null )
-                holder.textTop.setText(context.getResources().getString(R.string.frag_view_costs_no_place));
+                place = context.getResources().getString(R.string.frag_view_costs_no_place);
             else
-                holder.textTop.setText(m.getPlace().getAddress());
+                place = m.getPlace().getAddress();
+            holder.textTop.setText(String.format("%s  -  %s", m.getName(), place));
             String format = "%s  -  %s";
             holder.textBottom.setText(String.format(format, getMaintenanceType(m.getType()), m.getAmount()+""));
         }

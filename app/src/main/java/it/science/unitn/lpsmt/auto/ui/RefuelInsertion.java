@@ -50,6 +50,7 @@ import it.science.unitn.lpsmt.auto.model.Refuel;
 import it.science.unitn.lpsmt.auto.model.Vehicle;
 import it.science.unitn.lpsmt.auto.model.util.Const;
 import it.science.unitn.lpsmt.auto.ui.service.GPSService;
+import it.science.unitn.lpsmt.auto.ui.util.Preferences;
 import lpsmt.science.unitn.it.auto.R;
 
 public class RefuelInsertion extends ActionBarActivity {
@@ -273,6 +274,10 @@ public class RefuelInsertion extends ActionBarActivity {
 
         this.spinnerVehicleAssociated = (Spinner)findViewById(R.id.refuel_insertion_vehicle_associated);
         this.spinnerVehicleAssociated.setAdapter(spinnerAdapter);
+        Preferences p = Preferences.getInstance();
+        if(p.contains("last_vehicle_used")&& spinnerAdapter.getCount() != 1){
+            this.spinnerVehicleAssociated.setSelection(p.pullInteger("last_vehicle_used") );
+        }
     }
 
     private void initKm(){
@@ -458,6 +463,7 @@ public class RefuelInsertion extends ActionBarActivity {
                                 getResources().getString(R.string.activity_refuel_insertion_refuel_save_success),
                                 Toast.LENGTH_SHORT
                         ).show();
+                        Preferences.getInstance().put("last_vehicle_used", this.spinnerVehicleAssociated.getSelectedItemPosition());
                         setResult(Activity.RESULT_OK);
                         finish();
                     }

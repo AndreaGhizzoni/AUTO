@@ -4,10 +4,12 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.drive.Drive;
 import com.google.android.gms.location.LocationServices;
 
 import lpsmt.science.unitn.it.auto.R;
@@ -52,6 +54,8 @@ public class GoogleAuthAsyncTask extends AsyncTask<Void, Void, GoogleApiClient>/
         if( this.mGoogleApiClient == null ){
             this.mGoogleApiClient = new GoogleApiClient.Builder(this.activity)
                     .addApi(LocationServices.API)
+                    .addApi(Drive.API)
+                    .addScope(Drive.SCOPE_FILE)
                     .addConnectionCallbacks(this)
                     .addOnConnectionFailedListener(this)
                     .build();
@@ -79,6 +83,7 @@ public class GoogleAuthAsyncTask extends AsyncTask<Void, Void, GoogleApiClient>/
         String m = getString(R.string.async_task_google_connection_fail);
         this.dialog.setMessage(m);
         Toast.makeText(this.activity, m, Toast.LENGTH_SHORT).show();
+        Log.e(GoogleAuthAsyncTask.class.getSimpleName(), connectionResult.toString());
     }
 
     @Override
