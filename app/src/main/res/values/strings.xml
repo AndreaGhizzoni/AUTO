@@ -76,6 +76,7 @@
     <string name="activity_refuel_insertion_price_per_liter_hint">Price per liter</string>
     <string name="activity_refuel_insertion_refuel_date_hint">Refuel date</string>
     <string name="activity_refuel_insertion_notes_hint">Notes</string>
+    <string name="activity_refuel_insertion_tts_notrecognized">Speech not correctly recognized.</string>
 
     <string name="async_task_google_login_dialog_title">Google Login.</string>
     <string name="async_task_google_login_try_to_connect">Try to login with Google Account.</string>

@@ -45,6 +45,7 @@
     <string name="activity_maintenance_insertion_name_hint">Name of cost</string>
     <string name="activity_maintenance_insertion_amount_hint">Amount paid</string>
     <string name="activity_maintenance_insertion_notes_hint">Notes</string>
+    <string name="activity_refuel_insertion_tts_notrecognized">Speech not correctly recognized.</string>
 
     <string name="activity_vehicle_insertion_select_fuel">Select a Fuel Type</string>
     <string name="activity_vehicle_insertion_name_missing">Name of vehicle missing.</string>
