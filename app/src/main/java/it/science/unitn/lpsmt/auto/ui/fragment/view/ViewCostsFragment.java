@@ -30,6 +30,7 @@ public class ViewCostsFragment extends Fragment {
     private Long idVehicleToDisplay = null;
     private RefuelsCardViewAdapter recyclerViewAdapter;
     private Spinner spinner;
+    private int spinnerCurrentPos = 0;
 
     public ViewCostsFragment(){}
 
@@ -64,6 +65,20 @@ public class ViewCostsFragment extends Fragment {
         recyclerView.setAdapter(recyclerViewAdapter);
     }
 
+    public void updateCost(){
+        vehicleList = new DAOVehicle().getAll();
+        Vehicle i = vehicleList.get(spinnerCurrentPos);
+        List<Cost> r = i.getCosts();
+        if( r.isEmpty() ){
+            getActivity().findViewById(R.id.frag_view_costs_no_cost).setVisibility(View.VISIBLE);
+            getActivity().findViewById(R.id.frag_view_costs_recycle_view).setVisibility(View.INVISIBLE);
+        }else{
+            getActivity().findViewById(R.id.frag_view_costs_no_cost).setVisibility(View.INVISIBLE);
+            getActivity().findViewById(R.id.frag_view_costs_recycle_view).setVisibility(View.VISIBLE);
+            recyclerViewAdapter.setData(r);
+        }
+    }
+
 //==================================================================================================
 //  OVERRIDE
 //==================================================================================================
@@ -92,10 +107,10 @@ public class ViewCostsFragment extends Fragment {
                     break;
                 }
             }
-            int pos = vehicleList.indexOf(tmp)+1;
-            spinner.setSelection(pos);
+            spinnerCurrentPos = vehicleList.indexOf(tmp)+1;
+            spinner.setSelection(spinnerCurrentPos);
             // load the cost associated at vehicle "vehicleToDisplay
-            spinner.getOnItemSelectedListener().onItemSelected(null, null, pos, -1);
+            spinner.getOnItemSelectedListener().onItemSelected(null, null, spinnerCurrentPos, -1);
         }
     }
 
@@ -109,16 +124,8 @@ public class ViewCostsFragment extends Fragment {
                 recyclerViewAdapter.setData(null);
                 getActivity().findViewById(R.id.frag_view_costs_no_cost).setVisibility(View.INVISIBLE);
             }else{
-                Vehicle i = vehicleList.get(pos - 1);
-                List<Cost> r = i.getCosts();
-                if( r.isEmpty() ){
-                    getActivity().findViewById(R.id.frag_view_costs_no_cost).setVisibility(View.VISIBLE);
-                    getActivity().findViewById(R.id.frag_view_costs_recycle_view).setVisibility(View.INVISIBLE);
-                }else{
-                    getActivity().findViewById(R.id.frag_view_costs_no_cost).setVisibility(View.INVISIBLE);
-                    getActivity().findViewById(R.id.frag_view_costs_recycle_view).setVisibility(View.VISIBLE);
-                    recyclerViewAdapter.setData(r);
-                }
+                spinnerCurrentPos = pos -1;
+                updateCost();
             }
         }
 

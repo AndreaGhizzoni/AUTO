@@ -155,6 +155,14 @@ public class MainActivity extends ActionBarActivity{
         }
     }
 
+    public void updateCostAssociatedInViewCostFragment(){
+        FragmentManager fm = getFragmentManager();
+        Fragment f = fm.findFragmentById(R.id.content);
+        if( f != null ){
+            ((ViewCostsFragment)f).updateCost();
+        }
+    }
+
 //==================================================================================================
 //  OVERRIDE
 //==================================================================================================

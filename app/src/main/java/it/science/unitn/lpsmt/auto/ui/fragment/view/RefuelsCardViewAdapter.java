@@ -1,7 +1,9 @@
 package it.science.unitn.lpsmt.auto.ui.fragment.view;
 
 import android.annotation.TargetApi;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -21,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import it.science.unitn.lpsmt.auto.controller.dao.DAOCost;
 import it.science.unitn.lpsmt.auto.controller.util.DateUtils;
 import it.science.unitn.lpsmt.auto.model.Cost;
 import it.science.unitn.lpsmt.auto.model.Maintenance;
@@ -185,11 +188,19 @@ public class RefuelsCardViewAdapter extends RecyclerView.Adapter<RefuelsCardView
                     return true;
                 }
                 case R.id.delete: {
-                    Toast.makeText(
-                        RefuelsCardViewAdapter.this.context,
-                        "delete action",
-                        Toast.LENGTH_LONG
-                    ).show();
+                    new AlertDialog.Builder(MainActivity.getApp())
+                        .setTitle("Deleting this cost")
+                        .setMessage("Are you sure?")
+                        .setIcon(R.drawable.ic_alert_48dp)
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                new DAOCost().delete(costID);
+                                MainActivity.getApp().updateCostAssociatedInViewCostFragment();
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, null).show();
+                    actionMode.finish();
                     actionMode.finish();
                     return true;
                 }
