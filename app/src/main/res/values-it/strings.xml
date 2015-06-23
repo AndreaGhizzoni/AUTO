@@ -111,4 +111,6 @@
 
     <string name="menu_done">Salva</string>
     <string name="menu_tts">Riconoscimento Vocale</string>
+    <string name="menu_edit">Modifica</string>
+    <string name="menu_delete">Elimina</string>
 </resources>
