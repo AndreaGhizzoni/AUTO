@@ -27,7 +27,9 @@ import it.science.unitn.lpsmt.auto.model.util.Const;
 public class DAOCost implements CostDAO {
     private final SQLiteDatabase db;
 
-    public DAOCost(){ db = PersistenceDAO.getInstance().getWritableDatabase(); }
+    public DAOCost(){
+        db = PersistenceDAO.getInstance().getWritableDatabase();
+    }
 
     public DAOCost( Context testContext ){
         db = new PersistenceDAO(testContext).getWritableDatabase();
