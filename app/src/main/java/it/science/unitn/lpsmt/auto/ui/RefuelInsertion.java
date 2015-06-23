@@ -22,6 +22,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
@@ -389,6 +390,7 @@ public class RefuelInsertion extends ActionBarActivity {
             this.refuelToUpdate = (Refuel) new DAOCost().get(id);
             this.populateWithRefuelToUpdate();
         }
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
     }
 
     @Override

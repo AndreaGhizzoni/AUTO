@@ -111,6 +111,7 @@
     <string name="frag_view_costs_no_vehicle_selected">Seleziona un Veicolo</string>
 
     <string name="refuel_card_view_adapter_amount" formatted="false">%s  -  %s € a %s €/l</string>
+    <string name="deadline_no_note">Nessuna Nota</string>
 
     <string name="menu_done">Salva</string>
     <string name="menu_tts">Riconoscimento Vocale</string>

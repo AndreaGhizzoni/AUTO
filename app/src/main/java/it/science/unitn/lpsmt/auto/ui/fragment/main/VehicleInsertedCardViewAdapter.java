@@ -173,7 +173,7 @@ public class VehicleInsertedCardViewAdapter extends RecyclerView.Adapter<Vehicle
                     new AlertDialog.Builder(MainActivity.getApp())
                         .setTitle("Deleting Vehicle")
                         .setMessage("Are you sure? Deleting a vehicle will delete all the associated costs.")
-                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setIcon(R.drawable.ic_alert_48dp)
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int whichButton) {

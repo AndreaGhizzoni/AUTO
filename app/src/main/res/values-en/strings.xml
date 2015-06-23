@@ -111,6 +111,7 @@
     <string name="frag_view_costs_no_vehicle_selected">Select a Vehicle</string>
 
     <string name="refuel_card_view_adapter_amount" formatted="false">%s  -  %s € at %s €/l</string>
+    <string name="deadline_no_note">No notes</string>
 
     <string name="menu_done">Done</string>
     <string name="menu_tts">Speech to Text</string>

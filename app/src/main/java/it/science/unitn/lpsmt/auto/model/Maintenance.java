@@ -45,7 +45,7 @@ public class Maintenance extends Cost {
 
     public void setCalendarID( Integer id ) throws IllegalArgumentException{
         if( id != null ) {
-            if( id <= 0 )
+            if( id < -1 )
                 throw new IllegalArgumentException("Calendar ID to set can not be <= then zero.");
         }
         this.calendarID = id;
