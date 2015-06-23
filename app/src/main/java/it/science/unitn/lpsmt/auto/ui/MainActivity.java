@@ -95,7 +95,8 @@ public class MainActivity extends ActionBarActivity{
 
             case 1:{
                 Intent i = new Intent(this, VehicleInsertion.class);
-                i.putExtras(args);
+                if( args != null )
+                    i.putExtras(args);
                 startActivityForResult(i, VehicleInsertion.RESULT_CODE);
                 skip = true;
                 break;
@@ -103,6 +104,8 @@ public class MainActivity extends ActionBarActivity{
 
             case 2:{
                 Intent i = new Intent(this, RefuelInsertion.class);
+                if( args != null )
+                    i.putExtras(args);
                 startActivityForResult(i, RefuelInsertion.REQUEST_CODE);
                 skip = true;
                 break;
@@ -110,6 +113,8 @@ public class MainActivity extends ActionBarActivity{
 
             case 3:{ // maintenance insertion activity
                 Intent i = new Intent(this, MaintenanceInsertion.class);
+                if( args != null )
+                    i.putExtras(args);
                 startActivityForResult(i, MaintenanceInsertion.RESULT_CODE);
                 skip = true;
                 break;
