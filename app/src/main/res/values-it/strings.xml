@@ -45,6 +45,7 @@
     <string name="activity_maintenance_insertion_name_hint">Nome del costo</string>
     <string name="activity_maintenance_insertion_amount_hint">Ammontare pagato</string>
     <string name="activity_maintenance_insertion_notes_hint">Note</string>
+    <string name="activity_refuel_insertion_tts_notrecognized">Comando vocale non correttamente riconosciuto.</string>
 
     <string name="activity_vehicle_insertion_select_fuel">Seleziona un tipo di Carburante</string>
     <string name="activity_vehicle_insertion_name_missing">Nome del Veicolo mancante.</string>

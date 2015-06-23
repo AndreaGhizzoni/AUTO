@@ -182,7 +182,8 @@ public class RefuelInsertion extends ActionBarActivity {
     }
 
     // Match expressions like "(Oggi) ho fatto 10 euro (e 50) di benzina a 1 euro (e 20) al litro"
-    private void parseSTT( String stt ){
+    private void parseSTT( String stt ) throws Exception{
+
         //stt is the best matching stt
         ArrayDeque<String> userSpeech = new ArrayDeque<>();
         StringTokenizer tokenizer = new StringTokenizer(stt, " ");
@@ -201,7 +202,6 @@ public class RefuelInsertion extends ActionBarActivity {
             this.editDate.setText(CalendarUtils.yesterday());
         }
 
-        this.editNotes.setText(stt);
 
         // Go on until there is nothing left on the stack
         String s;
@@ -223,7 +223,7 @@ public class RefuelInsertion extends ActionBarActivity {
                     userSpeech.pop();
 
                 // Now, look for a fractional cost, if there's still something in the deque
-                if (userSpeech.peek() != null) {
+                if (!userSpeech.isEmpty()) {
                     s = userSpeech.peek();
                     if (s.equals("e")) {
                         // Discard "e"
@@ -235,11 +235,11 @@ public class RefuelInsertion extends ActionBarActivity {
                     }
                 }
 
-                    // if this.editAmount is not empty, fill this.editPpl
-                    if (this.editAmount.getText().toString().isEmpty())
-                        this.editAmount.setText((intPart + fractPart) + "");
-                    else
-                        this.editPpl.setText((intPart + fractPart) + "");
+                // if this.editAmount is not empty, fill this.editPpl
+                if (this.editAmount.getText().toString().isEmpty())
+                    this.editAmount.setText((intPart + fractPart) + "");
+                else
+                    this.editPpl.setText((intPart + fractPart) + "");
             }
         }
     }
@@ -418,11 +418,13 @@ public class RefuelInsertion extends ActionBarActivity {
         if( resultCode == Activity.RESULT_OK ){
             switch( requestCode ){
                 case STT_REQUEST_CODE:{
-                    if( data == null ) {
-                        Toast.makeText(getApplicationContext(), "date == null", Toast.LENGTH_LONG).show();
-                    }else{
+                    if( data != null ) {
                         ArrayList<String> res = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-                        parseSTT(res.get(0));
+                        try {
+                            parseSTT(res.get(0));
+                        } catch (Exception e) {
+                            Toast.makeText(this.getApplicationContext(), this.getResources().getString(R.string.activity_refuel_insertion_tts_notrecognized), Toast.LENGTH_LONG);
+                        }
                     }
                     break;
                 }
