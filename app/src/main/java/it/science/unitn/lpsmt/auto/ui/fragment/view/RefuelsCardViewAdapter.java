@@ -1,8 +1,15 @@
 package it.science.unitn.lpsmt.auto.ui.fragment.view;
 
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.v7.widget.RecyclerView;
+import android.view.ActionMode;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -66,29 +73,90 @@ public class RefuelsCardViewAdapter extends RecyclerView.Adapter<RefuelsCardView
 //==================================================================================================
 //  INNER CLASS
 //==================================================================================================
-    public static class ViewHolder extends RecyclerView.ViewHolder{
+    public Drawable DEFAULT_BG;
+    public MyActionMode mode;
+
+    public class ViewHolder extends RecyclerView.ViewHolder{
         public Refuel refuelAssociated;
         public TextView address;
         public TextView amount;
-        public ViewHolder(View itemView) {
+        public ViewHolder( final View itemView) {
             super(itemView);
+            DEFAULT_BG = itemView.getBackground();
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(view.getContext(), "Refuel id: " + refuelAssociated.getId(),
-                            Toast.LENGTH_LONG).show();
+                    if (mode == null) {
+                        Toast.makeText(view.getContext(), "Refuel id: " + refuelAssociated.getId(),
+                                Toast.LENGTH_LONG).show();
+                    }
                 }
             });
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
-                    Toast.makeText(view.getContext(), "Long press on Refuel id: " + refuelAssociated.getId(),
-                            Toast.LENGTH_LONG).show();
-                    return false;
+                    if( mode == null ) {
+                        mode = new MyActionMode(itemView);
+                        view.startActionMode(mode);
+                        itemView.setBackgroundColor(Color.rgb(197, 202, 233));
+                        return true;
+                    }else{
+                        return false;
+                    }
                 }
             });
             address = (TextView) itemView.findViewById(R.id.card_view_last_refuel_address);
             amount  = ( TextView ) itemView.findViewById(R.id.card_view_last_refuel_amount);
+        }
+    }
+
+    // https://goo.gl/1jIz4a
+    public class MyActionMode implements ActionMode.Callback {
+        private View item;
+        public MyActionMode(View item) { this.item = item; }
+
+        @Override // Called when the action mode is created; startActionMode() was called
+        public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
+            actionMode.setTitle("Actions");
+            actionMode.getMenuInflater().inflate(R.menu.menu_action_delete_and_modify, menu);
+            return true;
+        }
+
+        @Override // Called each time the action mode is shown.
+        public boolean onPrepareActionMode(ActionMode actionMode, Menu menu) {
+            return false;
+        }
+
+        @Override // Called when the user selects a contextual menu item
+        public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem) {
+            switch (menuItem.getItemId()) {
+                case R.id.modify: {
+                    Toast.makeText(
+                        RefuelsCardViewAdapter.this.context,
+                        "modify action",
+                        Toast.LENGTH_LONG
+                    ).show();
+                    actionMode.finish();
+                    return true;
+                }
+                case R.id.delete: {
+                    Toast.makeText(
+                        RefuelsCardViewAdapter.this.context,
+                        "delete action",
+                        Toast.LENGTH_LONG
+                    ).show();
+                    actionMode.finish();
+                    return true;
+                }
+                default: return false;
+            }
+        }
+
+        @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+        @Override // Called when the user exits the action mode
+        public void onDestroyActionMode(ActionMode actionMode) {
+            mode = null;
+            item.setBackground(DEFAULT_BG);
         }
     }
 }
